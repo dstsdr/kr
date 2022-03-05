@@ -98,14 +98,46 @@ namespace kr
                 var city = reader.GetValue(4);
                 var street = reader.GetValue(5);
                 var hn = reader.GetValue(6);
-                string adres = "г. "+city.ToString() + " ул. "+ street.ToString() + " дом "+ hn.ToString();
+                string summa = dataGridView1.CurrentRow.Cells[3].Value.ToString();
+                string naznach = dataGridView1.CurrentRow.Cells[2].Value.ToString();
+                string percent = dataGridView1.CurrentRow.Cells[4].Value.ToString();
+                string adres = "г. "+city.ToString() + ", ул. "+ street.ToString() + ", "+ hn.ToString();
+                string date = dataGridView1.CurrentRow.Cells[6].Value.ToString();
+                string[] words = date.Split('/');
+                string ch = words[0];
+                string month = words[1];
+                string year = words[2];
+                if (month == "01") month = "января";
+                if (month == "02") month = "февраля";
+                if (month == "03") month = "марта";
+                if (month == "04") month = "апреля";
+                if (month == "05") month = "мая";
+                if (month == "06") month = "июня";
+                if (month == "07") month = "июля";
+                if (month == "08") month = "августа";
+                if (month == "09") month = "сентября";
+                if (month == "10") month = "октября";
+                if (month == "11") month = "ноября";
+                if (month == "12") month = "декабря";  
                 ReplaceWordStub("{city}", city.ToString(), wordDocument);
                 ReplaceWordStub("{bank}", name.ToString(), wordDocument);
                 ReplaceWordStub("{bank2}", name.ToString(), wordDocument);
                 ReplaceWordStub("{korS}", korS.ToString(), wordDocument);
                 ReplaceWordStub("{BIK}", BIK.ToString(), wordDocument);
                 ReplaceWordStub("{adresBanka}", adres.ToString(), wordDocument);
+                ReplaceWordStub("{number}", s, wordDocument);
+                ReplaceWordStub("{summa}", summa, wordDocument);
+                ReplaceWordStub("{naznach}", naznach, wordDocument);
+                ReplaceWordStub("{percent}", percent, wordDocument);
+                ReplaceWordStub("{d}", ch, wordDocument);
+                ReplaceWordStub("{month}", month, wordDocument);
+                ReplaceWordStub("{year}", year, wordDocument);
+
+
+
             }
+            wordDocument.SaveAs(@"C:\Users\1652090\OneDrive\Рабочий стол\" + s + "");
+            wordApp.Visible = true;
             Connection.Close();
          }
 
@@ -131,7 +163,6 @@ namespace kr
         var yearv=
         var naznach=
         var ssudSchet=
-        var summa = 
         var schet =
         var klentAdres=
         var pasport=
