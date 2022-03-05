@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace kr2.Properties
+namespace kr.Properties
 {
 
 

@@ -5,10 +5,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{CC45E62B-8D69-4E2F-A4A8-5A975019A4D9}</ProjectGuid>
+    <ProjectGuid>{BA1AF8FA-DA74-4DF3-B012-5FF38F872153}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>kr2</RootNamespace>
-    <AssemblyName>kr2</AssemblyName>
+    <RootNamespace>kr</RootNamespace>
+    <AssemblyName>kr</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -65,16 +65,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Form1.cs">
+    <Compile Include="Dogovor++.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Dogovor++.Designer.cs">
+      <DependentUpon>Dogovor++.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dogovor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dogovor.Designer.cs">
+      <DependentUpon>Dogovor.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="Dogovor++.resx">
+      <DependentUpon>Dogovor++.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dogovor.resx">
+      <DependentUpon>Dogovor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
