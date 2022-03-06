@@ -18,7 +18,7 @@ namespace kr
         {
             InitializeComponent();
         }
-        SQLiteConnection Connection = new SQLiteConnection("Data Source=kredit.db");
+        SQLiteConnection Connection = new SQLiteConnection(@"Data Source=C:\Users\1652090\OneDrive\Рабочий стол\kredit.db");
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
@@ -87,17 +87,21 @@ namespace kr
              var wordDocument = wordApp.Documents.Open(document);
              string s = dataGridView1.CurrentCell.Value.ToString();
              Connection.Open();
-             string sqlExpression = "SELECT *  FROM(Банк INNER JOIN Сотрудники ON Банк.BIK = Сотрудники.BIK) INNER JOIN Договор ON Сотрудники.id = Договор.id_sotrudnik WHERE Договор.id_dogovora='" + s + "'";
-             SQLiteCommand command = new SQLiteCommand(sqlExpression, Connection);
+             string sqlExpression = "SELECT Банк.name, Банк.korr_shet, Банк.BIK, Банк.city, Банк.street, Банк.homeNumber, Сотрудники.LastName, Сотрудники.firstName, Сотрудники.otchestvo, Клиенты.LastName, Клиенты.FirstName, Клиенты.Otchestvo," +
+                " Клиенты.seriya, Клиенты.nomer, Клиенты.dateP, Клиенты.kemP, Клиенты.whereP, Клиенты.podrazdelPas, Клиенты.ssudnyi_schet, Клиенты.schet, Клиенты.home_city, Клиенты.home_street, Клиенты.home_number FROM(Банк INNER JOIN[Целевое назначение кредита] " +
+                "INNER JOIN Сотрудники INNER JOIN[Процентная ставка] ON Банк.BIK = Сотрудники.BIK) INNER JOIN(Клиенты INNER JOIN([Группа риска] INNER JOIN([Вид кредита] INNER JOIN Договор ON[Вид кредита].id_vida = Договор.id_vida) " +
+                "ON[Группа риска].id_group = Договор.id_group) ON Клиенты.INN = Договор.INN_klienta) ON([Целевое назначение кредита].id_naznacheniya = Договор.id_naznach) AND(Сотрудники.id = Договор.id_sotrudnik)" +
+                " AND([Процентная ставка].id_stavki = Договор.id_stavki) WHERE Договор.id_dogovora= '" + s + "' AND Сотрудники.id_dolznosti = 1";
+            SQLiteCommand command = new SQLiteCommand(sqlExpression, Connection);
              SQLiteDataReader reader = command.ExecuteReader();
-                if (reader.Read()) //и считываем построчно
+                if (reader.Read()) //данные из банка и договора
                 {
                 var name = reader.GetValue(0);
                 var korS = reader.GetValue(1);
                 var BIK = reader.GetValue(2);
-                var city = reader.GetValue(4);
-                var street = reader.GetValue(5);
-                var hn = reader.GetValue(6);
+                var city = reader.GetValue(3);
+                var street = reader.GetValue(4);
+                var hn = reader.GetValue(5);
                 string summa = dataGridView1.CurrentRow.Cells[3].Value.ToString();
                 string naznach = dataGridView1.CurrentRow.Cells[2].Value.ToString();
                 string percent = dataGridView1.CurrentRow.Cells[4].Value.ToString();
@@ -118,7 +122,62 @@ namespace kr
                 if (month == "09") month = "сентября";
                 if (month == "10") month = "октября";
                 if (month == "11") month = "ноября";
-                if (month == "12") month = "декабря";  
+                if (month == "12") month = "декабря";
+                var ln = reader.GetValue(6).ToString(); //сотрудник
+                var fn = reader.GetValue(7).ToString();
+                var ot = reader.GetValue(8).ToString();
+                string dir = ln + " " + fn.Substring(0, 1) + ". " + ot.Substring(0, 1) + ".";
+                string fio = ln + " " + fn + " " + ot;
+               //клиенты
+                var kLn = reader.GetValue(9).ToString();
+                var kFn = reader.GetValue(10).ToString();
+                var kOt = reader.GetValue(11).ToString();
+                var seriya = reader.GetValue(12).ToString();
+                var nomer = reader.GetValue(13).ToString();
+                var dateP = reader.GetValue(14).ToString();
+                var kemP = reader.GetValue(15).ToString();
+                var where = reader.GetValue(16).ToString();
+                var podrazdel = reader.GetValue(17).ToString();
+                var ssuda = reader.GetValue(18).ToString();
+                var schet = reader.GetValue(19).ToString();
+                var kcity = reader.GetValue(20).ToString();
+                var kstreet = reader.GetValue(21).ToString();
+                var khn = reader.GetValue(22).ToString();
+                string adresK = "г. " + kcity.ToString() + ", ул. " + kstreet.ToString() + ", " + khn.ToString();
+                string[] pass = date.Split('/');
+                string chP = pass[0];
+                string monthP = words[1];
+                string yearP = pass[2];
+                if (monthP == "01") monthP = "января";
+                if (monthP == "02") monthP = "февраля";
+                if (monthP == "03") monthP = "марта";
+                if (monthP == "04") monthP = "апреля";
+                if (monthP == "05") monthP = "мая";
+                if (monthP == "06") monthP = "июня";
+                if (monthP == "07") monthP = "июля";
+                if (monthP == "08") monthP = "августа";
+                if (monthP == "09") monthP = "сентября";
+                if (monthP == "10") monthP= "октября";
+                if (monthP == "11") monthP = "ноября";
+                if (monthP == "12") monthP = "декабря";
+                string klient = kLn + " " + kFn.Substring(0, 1) + ". " + kOt.Substring(0, 1) + ".";
+                string kfio = kLn + " " + kFn + " " + kOt;
+                string pasport = seriya + " " + nomer;
+                ReplaceWordStub("{pd}", chP, wordDocument);
+                ReplaceWordStub("{pmon}", monthP, wordDocument);
+                ReplaceWordStub("{pyear}", yearP, wordDocument);
+                ReplaceWordStub("{kem}", kemP, wordDocument);
+                ReplaceWordStub("{where}", where, wordDocument);
+                ReplaceWordStub("{raz}", podrazdel, wordDocument);
+                ReplaceWordStub("{klientAdres}", adresK, wordDocument);
+                ReplaceWordStub("{pasport}", pasport, wordDocument);
+                ReplaceWordStub("{klientFIO}", klient, wordDocument);
+                ReplaceWordStub("{FIOklienta}", kfio, wordDocument);
+                ReplaceWordStub("{pasport}", pasport, wordDocument);
+
+                ReplaceWordStub("{dir}", dir, wordDocument);
+                ReplaceWordStub("{FIOdira}", fio, wordDocument);
+
                 ReplaceWordStub("{city}", city.ToString(), wordDocument);
                 ReplaceWordStub("{bank}", name.ToString(), wordDocument);
                 ReplaceWordStub("{bank2}", name.ToString(), wordDocument);
@@ -132,10 +191,8 @@ namespace kr
                 ReplaceWordStub("{d}", ch, wordDocument);
                 ReplaceWordStub("{month}", month, wordDocument);
                 ReplaceWordStub("{year}", year, wordDocument);
-
-
-
-            }
+                Connection.Close();
+            } 
             wordDocument.SaveAs(@"C:\Users\1652090\OneDrive\Рабочий стол\" + s + "");
             wordApp.Visible = true;
             Connection.Close();
@@ -147,28 +204,6 @@ namespace kr
             range.Find.ClearFormatting();
             range.Find.Execute(FindText: stubToReplace, ReplaceWith: text);
         }
-        /*var d=
-        var month =
-        var year =
-        var dir = 
-        var pd =
-        var pmon =
-        var pyear =
-        var klientFIO =
-        var where = 
-        var kem =
-        var raz=
-        var dv=
-        var monthv=
-        var yearv=
-        var naznach=
-        var ssudSchet=
-        var schet =
-        var klentAdres=
-        var pasport=
-        var FIOdira=
-        var FIOklienta=
-          */
     }
 
 }
