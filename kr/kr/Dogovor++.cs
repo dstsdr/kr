@@ -13,7 +13,7 @@ namespace kr
 {
     public partial class Dogovor__ : Form
     {
-        SQLiteConnection Connection = new SQLiteConnection("Data Source=kredit.db");
+        SQLiteConnection Connection = new SQLiteConnection(@"Data Source=C:\Users\1652090\OneDrive\Рабочий стол\kredit.db");
         public Dogovor__()
         {
             InitializeComponent();
@@ -69,7 +69,7 @@ namespace kr
             SQLiteCommand cmd4 = Connection.CreateCommand();
             cmd4.CommandType = CommandType.Text;
             cmd4.CommandText = "SELECT percent FROM [Процентная ставка]";
-            cmd3.ExecuteNonQuery();
+            cmd4.ExecuteNonQuery();
             DataTable dt4 = new DataTable();
             SQLiteDataAdapter da4 = new SQLiteDataAdapter(cmd4);
             da4.Fill(dt4);
