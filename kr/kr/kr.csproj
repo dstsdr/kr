@@ -58,6 +58,7 @@
     <Reference Include="System.Data.SQLite.Linq, Version=1.0.115.5, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Data.SQLite.Linq.1.0.115.5\lib\net46\System.Data.SQLite.Linq.dll</HintPath>
     </Reference>
+    <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -69,6 +70,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="bank.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="bank.Designer.cs">
+      <DependentUpon>bank.cs</DependentUpon>
+    </Compile>
     <Compile Include="Dogovor++.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -87,11 +94,35 @@
     <Compile Include="grafik.Designer.cs">
       <DependentUpon>grafik.cs</DependentUpon>
     </Compile>
+    <Compile Include="kalendar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="kalendar.Designer.cs">
+      <DependentUpon>kalendar.cs</DependentUpon>
+    </Compile>
     <Compile Include="klient.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="klient.Designer.cs">
       <DependentUpon>klient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="klientwiew.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="klientwiew.Designer.cs">
+      <DependentUpon>klientwiew.cs</DependentUpon>
+    </Compile>
+    <Compile Include="naznach.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="naznach.Designer.cs">
+      <DependentUpon>naznach.cs</DependentUpon>
+    </Compile>
+    <Compile Include="percent.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="percent.Designer.cs">
+      <DependentUpon>percent.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -101,12 +132,33 @@
     <Compile Include="raschet.Designer.cs">
       <DependentUpon>raschet.cs</DependentUpon>
     </Compile>
+    <Compile Include="risk.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="risk.Designer.cs">
+      <DependentUpon>risk.cs</DependentUpon>
+    </Compile>
     <Compile Include="sotridnik.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="sotridnik.Designer.cs">
       <DependentUpon>sotridnik.cs</DependentUpon>
     </Compile>
+    <Compile Include="statistika.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="statistika.Designer.cs">
+      <DependentUpon>statistika.cs</DependentUpon>
+    </Compile>
+    <Compile Include="vid.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="vid.Designer.cs">
+      <DependentUpon>vid.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="bank.resx">
+      <DependentUpon>bank.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Dogovor++.resx">
       <DependentUpon>Dogovor++.cs</DependentUpon>
     </EmbeddedResource>
@@ -116,8 +168,20 @@
     <EmbeddedResource Include="grafik.resx">
       <DependentUpon>grafik.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="kalendar.resx">
+      <DependentUpon>kalendar.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="klient.resx">
       <DependentUpon>klient.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="klientwiew.resx">
+      <DependentUpon>klientwiew.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="naznach.resx">
+      <DependentUpon>naznach.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="percent.resx">
+      <DependentUpon>percent.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -131,8 +195,17 @@
     <EmbeddedResource Include="raschet.resx">
       <DependentUpon>raschet.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="risk.resx">
+      <DependentUpon>risk.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="sotridnik.resx">
       <DependentUpon>sotridnik.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="statistika.resx">
+      <DependentUpon>statistika.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="vid.resx">
+      <DependentUpon>vid.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="kredit.db">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

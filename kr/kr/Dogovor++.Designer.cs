@@ -41,12 +41,13 @@
             this.label9 = new System.Windows.Forms.Label();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.textBox3 = new System.Windows.Forms.TextBox();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
-            this.comboBox3 = new System.Windows.Forms.ComboBox();
-            this.comboBox4 = new System.Windows.Forms.ComboBox();
-            this.comboBox5 = new System.Windows.Forms.ComboBox();
-            this.comboBox6 = new System.Windows.Forms.ComboBox();
+            this.klientcmb = new System.Windows.Forms.ComboBox();
+            this.nazn = new System.Windows.Forms.ComboBox();
+            this.vid = new System.Windows.Forms.ComboBox();
+            this.procent = new System.Windows.Forms.ComboBox();
+            this.risk = new System.Windows.Forms.ComboBox();
+            this.sotr = new System.Windows.Forms.ComboBox();
+            this.textBox4 = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // button1
@@ -162,77 +163,88 @@
             this.textBox3.Size = new System.Drawing.Size(288, 22);
             this.textBox3.TabIndex = 12;
             // 
-            // comboBox1
+            // klientcmb
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Items.AddRange(new object[] {
+            this.klientcmb.FormattingEnabled = true;
+            this.klientcmb.ImeMode = System.Windows.Forms.ImeMode.On;
+            this.klientcmb.Items.AddRange(new object[] {
             "Добавить клиента"});
-            this.comboBox1.Location = new System.Drawing.Point(266, 81);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(289, 24);
-            this.comboBox1.TabIndex = 13;
-            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
+            this.klientcmb.Location = new System.Drawing.Point(266, 81);
+            this.klientcmb.Name = "klientcmb";
+            this.klientcmb.Size = new System.Drawing.Size(289, 24);
+            this.klientcmb.TabIndex = 13;
+            this.klientcmb.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
-            // comboBox2
+            // nazn
             // 
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Items.AddRange(new object[] {
+            this.nazn.FormattingEnabled = true;
+            this.nazn.Items.AddRange(new object[] {
             "Добавить назначение"});
-            this.comboBox2.Location = new System.Drawing.Point(198, 467);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(357, 24);
-            this.comboBox2.TabIndex = 14;
-            this.comboBox2.SelectedIndexChanged += new System.EventHandler(this.comboBox2_SelectedIndexChanged);
+            this.nazn.Location = new System.Drawing.Point(198, 467);
+            this.nazn.Name = "nazn";
+            this.nazn.Size = new System.Drawing.Size(357, 24);
+            this.nazn.TabIndex = 14;
+            this.nazn.SelectedIndexChanged += new System.EventHandler(this.comboBox2_SelectedIndexChanged);
             // 
-            // comboBox3
+            // vid
             // 
-            this.comboBox3.FormattingEnabled = true;
-            this.comboBox3.Location = new System.Drawing.Point(267, 191);
-            this.comboBox3.Name = "comboBox3";
-            this.comboBox3.Size = new System.Drawing.Size(288, 24);
-            this.comboBox3.TabIndex = 15;
+            this.vid.FormattingEnabled = true;
+            this.vid.Location = new System.Drawing.Point(267, 191);
+            this.vid.Name = "vid";
+            this.vid.Size = new System.Drawing.Size(288, 24);
+            this.vid.TabIndex = 15;
             // 
-            // comboBox4
+            // procent
             // 
-            this.comboBox4.FormattingEnabled = true;
-            this.comboBox4.Items.AddRange(new object[] {
+            this.procent.FormattingEnabled = true;
+            this.procent.Items.AddRange(new object[] {
             "Добавить процентную ставку"});
-            this.comboBox4.Location = new System.Drawing.Point(267, 247);
-            this.comboBox4.Name = "comboBox4";
-            this.comboBox4.Size = new System.Drawing.Size(288, 24);
-            this.comboBox4.TabIndex = 16;
-            this.comboBox4.SelectedIndexChanged += new System.EventHandler(this.comboBox4_SelectedIndexChanged);
+            this.procent.Location = new System.Drawing.Point(267, 247);
+            this.procent.Name = "procent";
+            this.procent.Size = new System.Drawing.Size(288, 24);
+            this.procent.TabIndex = 16;
+            this.procent.SelectedIndexChanged += new System.EventHandler(this.comboBox4_SelectedIndexChanged);
             // 
-            // comboBox5
+            // risk
             // 
-            this.comboBox5.FormattingEnabled = true;
-            this.comboBox5.Location = new System.Drawing.Point(266, 411);
-            this.comboBox5.Name = "comboBox5";
-            this.comboBox5.Size = new System.Drawing.Size(289, 24);
-            this.comboBox5.TabIndex = 17;
+            this.risk.FormattingEnabled = true;
+            this.risk.Location = new System.Drawing.Point(266, 411);
+            this.risk.Name = "risk";
+            this.risk.Size = new System.Drawing.Size(289, 24);
+            this.risk.TabIndex = 17;
+            this.risk.SelectedIndexChanged += new System.EventHandler(this.comboBox5_SelectedIndexChanged);
             // 
-            // comboBox6
+            // sotr
             // 
-            this.comboBox6.FormattingEnabled = true;
-            this.comboBox6.Items.AddRange(new object[] {
+            this.sotr.FormattingEnabled = true;
+            this.sotr.Items.AddRange(new object[] {
             "Добавить сотрудника"});
-            this.comboBox6.Location = new System.Drawing.Point(267, 25);
-            this.comboBox6.Name = "comboBox6";
-            this.comboBox6.Size = new System.Drawing.Size(288, 24);
-            this.comboBox6.TabIndex = 18;
-            this.comboBox6.SelectedIndexChanged += new System.EventHandler(this.comboBox6_SelectedIndexChanged);
+            this.sotr.Location = new System.Drawing.Point(267, 25);
+            this.sotr.Name = "sotr";
+            this.sotr.Size = new System.Drawing.Size(288, 24);
+            this.sotr.TabIndex = 18;
+            this.sotr.SelectedIndexChanged += new System.EventHandler(this.comboBox6_SelectedIndexChanged);
+            // 
+            // textBox4
+            // 
+            this.textBox4.Location = new System.Drawing.Point(585, 27);
+            this.textBox4.Multiline = true;
+            this.textBox4.Name = "textBox4";
+            this.textBox4.Size = new System.Drawing.Size(288, 465);
+            this.textBox4.TabIndex = 19;
             // 
             // Dogovor__
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(567, 572);
-            this.Controls.Add(this.comboBox6);
-            this.Controls.Add(this.comboBox5);
-            this.Controls.Add(this.comboBox4);
-            this.Controls.Add(this.comboBox3);
-            this.Controls.Add(this.comboBox2);
-            this.Controls.Add(this.comboBox1);
+            this.ClientSize = new System.Drawing.Size(1082, 572);
+            this.Controls.Add(this.textBox4);
+            this.Controls.Add(this.sotr);
+            this.Controls.Add(this.risk);
+            this.Controls.Add(this.procent);
+            this.Controls.Add(this.vid);
+            this.Controls.Add(this.nazn);
+            this.Controls.Add(this.klientcmb);
             this.Controls.Add(this.textBox3);
             this.Controls.Add(this.textBox2);
             this.Controls.Add(this.label9);
@@ -269,11 +281,12 @@
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.ComboBox comboBox2;
-        private System.Windows.Forms.ComboBox comboBox3;
-        private System.Windows.Forms.ComboBox comboBox4;
-        private System.Windows.Forms.ComboBox comboBox5;
-        private System.Windows.Forms.ComboBox comboBox6;
+        private System.Windows.Forms.ComboBox klientcmb;
+        private System.Windows.Forms.ComboBox nazn;
+        private System.Windows.Forms.ComboBox vid;
+        private System.Windows.Forms.ComboBox procent;
+        private System.Windows.Forms.ComboBox risk;
+        private System.Windows.Forms.ComboBox sotr;
+        private System.Windows.Forms.TextBox textBox4;
     }
 }

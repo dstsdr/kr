@@ -30,13 +30,22 @@ namespace kr
 	    SQLiteConnection Connection = new SQLiteConnection(@"Data Source=C:\Users\1652090\OneDrive\Рабочий стол\kredit.db");
         private void button1_Click(object sender, EventArgs e)
         {
+            string dolznost;
             string Combo = comboBox2.Text;
             string[] words = Combo.Split(' ');
             string BIK = words[0];
-            Combo = comboBox1.Text;
+         /*   Combo = comboBox1.Text;
             words = Combo.Split(' ');
-            string dolznost = words[0];
+            string dolznost = words[0];*/
             Connection.Open();
+            SQLiteCommand cmd2 = Connection.CreateCommand();
+            cmd2.CommandType = CommandType.Text;
+            cmd2.CommandText = "SELECT id_dolznosti FROM Должность WHERE name='" + comboBox1.Text + "'";
+            cmd2.ExecuteNonQuery();
+            DataTable dt2 = new DataTable();
+            SQLiteDataAdapter da2 = new SQLiteDataAdapter(cmd2);
+            da2.Fill(dt2);
+            dolznost = dt2.Rows[0][0].ToString();            
             string sql = "insert into Сотрудники(seriya, nomer, LastName, firstName, otchestvo, BIK, id_dolznosti, phone) " + "Values ('" + textBox4.Text + "','" + textBox5.Text + "','" + textBox1.Text + "','" + textBox2.Text + "','" + textBox3.Text + "','" + BIK + "','" + dolznost + "','" + textBox6.Text + "')";
             SQLiteCommand command = new SQLiteCommand(sql, Connection);
             command.ExecuteNonQuery();
@@ -69,14 +78,14 @@ namespace kr
             }
             SQLiteCommand cmd2 = Connection.CreateCommand();
             cmd2.CommandType = CommandType.Text;
-            cmd2.CommandText = "SELECT * FROM Должность";
+            cmd2.CommandText = "SELECT name FROM Должность";
             cmd2.ExecuteNonQuery();
             DataTable dt2 = new DataTable();
             SQLiteDataAdapter da2 = new SQLiteDataAdapter(cmd2);
             da2.Fill(dt2);
             foreach (DataRow dr2 in dt2.Rows)
             {
-                comboBox1.Items.Add(dr2["id_dolznosti"].ToString()+ " " + dr2["name"].ToString());
+                comboBox1.Items.Add(dr2["name"].ToString());
             }
 
             Connection.Close();
