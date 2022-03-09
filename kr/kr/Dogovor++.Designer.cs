@@ -47,7 +47,6 @@
             this.procent = new System.Windows.Forms.ComboBox();
             this.risk = new System.Windows.Forms.ComboBox();
             this.sotr = new System.Windows.Forms.ComboBox();
-            this.textBox4 = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // button1
@@ -225,20 +224,11 @@
             this.sotr.TabIndex = 18;
             this.sotr.SelectedIndexChanged += new System.EventHandler(this.comboBox6_SelectedIndexChanged);
             // 
-            // textBox4
-            // 
-            this.textBox4.Location = new System.Drawing.Point(585, 27);
-            this.textBox4.Multiline = true;
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(288, 465);
-            this.textBox4.TabIndex = 19;
-            // 
             // Dogovor__
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1082, 572);
-            this.Controls.Add(this.textBox4);
+            this.ClientSize = new System.Drawing.Size(604, 572);
             this.Controls.Add(this.sotr);
             this.Controls.Add(this.risk);
             this.Controls.Add(this.procent);
@@ -287,6 +277,5 @@
         private System.Windows.Forms.ComboBox procent;
         private System.Windows.Forms.ComboBox risk;
         private System.Windows.Forms.ComboBox sotr;
-        private System.Windows.Forms.TextBox textBox4;
     }
 }

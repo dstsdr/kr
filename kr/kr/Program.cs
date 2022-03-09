@@ -16,7 +16,7 @@ namespace kr
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new statistika());
+            Application.Run(new Dogovor__());
         }
     }
 }
