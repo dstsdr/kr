@@ -16,7 +16,7 @@ namespace kr
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new risk());
+            Application.Run(new klientwiew());
         }
     }
 }

@@ -50,7 +50,7 @@ namespace kr
         private void button3_Click(object sender, EventArgs e)
         {           
             Connection.Open();
-            string query = "DELETE FROM [Группа риска] WHERE [№]= " + dataGridView1.CurrentCell.Value;
+            string query = "DELETE FROM [Группа риска] WHERE [№]= " + dataGridView1.CurrentRow.Cells[0].Value;
             SqlCommand command = new SqlCommand(query, Connection);
             if (command.ExecuteNonQuery() != 1)
             {

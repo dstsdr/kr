@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Data.SQLite;
 using System.Drawing;
 using System.Linq;
@@ -17,20 +18,91 @@ namespace kr
         {
             InitializeComponent();
         }
-        SQLiteConnection Connection = new SQLiteConnection(@"Data Source=C:\Users\1652090\OneDrive\Рабочий стол\kredit.db");
-
-        private void klientwiew_Load(object sender, EventArgs e)
+        SqlConnection Connection = new SqlConnection(@"Data Source=LAPTOP-862V88EF\SQLEXPRESS;Initial Catalog=kredit;Integrated Security=True");
+        private void dataset()
         {
             Connection.Open();
-            SQLiteDataAdapter adapter = new SQLiteDataAdapter("SELECT * FROM Сотрудники ", Connection);
+            SqlDataAdapter adapter = new SqlDataAdapter("SELECT *  FROM Клиенты", Connection);
             DataSet ds = new DataSet();
             adapter.Fill(ds, "info");
             dataGridView1.DataSource = ds.Tables[0];
-            adapter = new SQLiteDataAdapter("SELECT * FROM Должность ", Connection);
-            DataSet ds2 = new DataSet();
-            adapter.Fill(ds2, "info");
-            dataGridView2.DataSource = ds2.Tables[0];
             Connection.Close();
+            int rows = dataGridView1.Rows.Count - 1;
+            label7.Text = "Количество записей " + rows.ToString();
+        }
+        private void klientwiew_Load(object sender, EventArgs e)
+        {
+            dataset();
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            int index = dataGridView1.CurrentRow.Index;
+            if (index != dataGridView1.Rows.Count - 2)
+            {
+                dataGridView1.Rows[index].Selected = true;
+                dataGridView1.CurrentCell = dataGridView1[0, index + 1];
+            }
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            int index = dataGridView1.CurrentRow.Index;
+            if (index != 0)
+            {
+                dataGridView1.Rows[index].Selected = true;
+                dataGridView1.CurrentCell = dataGridView1[0, index - 1];
+            }
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            Connection.Open();
+            string query = "DELETE FROM [Клиенты] WHERE [ИНН]= " + dataGridView1.CurrentRow.Cells[0].Value;
+            SqlCommand command = new SqlCommand(query, Connection);
+            if (command.ExecuteNonQuery() != 1)
+            {
+                MessageBox.Show("Возникла ошибка при удалении");
+            }
+            else MessageBox.Show("Данные удалены");
+            Connection.Close();
+            dataset();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            SqlDataAdapter adapter = new SqlDataAdapter("SELECT* FROM Клиенты where [Серия паспорта] like '%" + textBox7.Text + "%' or [Номер паспорта] like" +
+               " '%" + textBox7.Text + "%' or Имя like '%" + textBox7.Text + "%' or Отчество like '%" + textBox7.Text + "%'" + "%'or [Город прописки] like '%" + textBox7.Text + "%'" +
+               " or Фамилия like '%" + textBox7.Text + "%'or Телефон like '%" + textBox7.Text + "%'" + "%'or [Ссудный счет] like '%" + textBox7.Text + "%'" +
+               "or  ИНН like '%" + textBox7.Text + "%'or Счет like '%" + textBox7.Text + "%'" + "%'or Телефон like '%" + textBox7.Text + "%'" + "%'or Работа like '%" + textBox7.Text + "%'" +
+               "or [Улица прописки] like '%" + textBox7.Text + "%';", Connection);
+           /* "insert into Клиенты([Серия паспорта],[Номер паспорта],Фамилия, Имя, Отчество, Телефон, ИНН, Доход, Счет, Работа, Стаж, [Улица прописки], " +
+                "[Город прописки], [Дом прописки], [Ссудный счет], Подразделение, [Кем выдан], [Где выдан], [Дата выдачи]) Values" +
+                " ('" + seriya.Text + "','" + nomer.Text + "','" + LastName.Text + "','" + FirstName.Text + "','" + otchestvo.Text + "','" + phone.Text + "','" + INN.Text + "','" + dohod.Text + "','" + schet.Text + "','" + job.Text + "','" + stash.Text + "','" + street.Text + "','" + city.Text + "','"
+                + home.Text + "','" + ssuda.Text + "','" + podrazdel.Text + "','" + kem.Text + "','" + where.Text + "','" + date + "')";
+           */
+
+            DataSet ds = new DataSet();
+            adapter.Fill(ds, "info");
+            dataGridView1.DataSource = ds.Tables[0];
+            Connection.Close();
+            int rows = dataGridView1.Rows.Count - 1;
+            label7.Text = "Количество записей " + rows.ToString();
+        }
+
+        private void dataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+          /*  Connection.Open();
+            SqlCommand command = new SqlCommand("UPDATE [Клиенты] SET [Название] = '" + dataGridView1.CurrentRow.Cells[0].Value.ToString() + "', [Кор. счет]" +
+                "='" + dataGridView1.CurrentRow.Cells[1].Value.ToString() + "', Подразделение='" + dataGridView1.CurrentRow.Cells[3].Value.ToString() + "'," +
+                "Город='" + dataGridView1.CurrentRow.Cells[4].Value.ToString() + "', Улица='" + dataGridView1.CurrentRow.Cells[5].Value.ToString() + "'," +
+                "Дом='" + dataGridView1.CurrentRow.Cells[6].Value.ToString() + "' WHERE [БИК]= " + dataGridView1.CurrentRow.Cells[2].Value, Connection);
+            command.Parameters.AddWithValue("@percent", dataGridView1.CurrentCell.Value);
+            if (command.ExecuteNonQuery() != 1)
+            {
+                MessageBox.Show("Возникла ошибка при изменении");
+            }
+            Connection.Close();*/
         }
     }
 }

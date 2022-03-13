@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Data.SQLite;
 using System.Drawing;
 using System.Linq;
@@ -32,17 +33,17 @@ namespace kr
         {
             
         }
-        SQLiteConnection Connection = new SQLiteConnection(@"Data Source=C:\Users\1652090\OneDrive\Рабочий стол\kredit.db");
+        SqlConnection Connection = new SqlConnection(@"Data Source=LAPTOP-862V88EF\SQLEXPRESS;Initial Catalog=kredit;Integrated Security=True");
         private void button1_Click(object sender, EventArgs e)
         {
             string date = dateTimePicker1.Text;
             Connection.Open();
             
-            string sql = "insert into Клиенты(seriya,nomer,LastName, firstName, otchestvo, phone, INN, Doxod, schet, rabota, stash, home_street, " +
-                "home_city, home_number, ssudnyi_schet, podrazdelPas, kemP, whereP, dateP) Values" +
+            string sql = "insert into Клиенты([Серия паспорта],[Номер паспорта],Фамилия, Имя, Отчество, Телефон, ИНН, Доход, Счет, Работа, Стаж, [Улица прописки], " +
+                "[Город прописки], [Дом прописки], [Ссудный счет], Подразделение, [Кем выдан], [Где выдан], [Дата выдачи]) Values" +
                 " ('" + seriya.Text + "','" + nomer.Text + "','" + LastName.Text + "','" + FirstName.Text + "','" + otchestvo.Text + "','" + phone.Text + "','" + INN.Text + "','" + dohod.Text + "','" + schet.Text + "','" + job.Text + "','" + stash.Text + "','" + street.Text + "','" + city.Text + "','" 
                 + home.Text + "','" + ssuda.Text + "','" + podrazdel.Text + "','" + kem.Text + "','" + where.Text + "','" + date + "')";
-            SQLiteCommand command = new SQLiteCommand(sql, Connection);
+            SqlCommand command = new SqlCommand(sql, Connection);
             command.ExecuteNonQuery();
             Connection.Close();
         }

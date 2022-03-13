@@ -93,6 +93,12 @@
     <Compile Include="Dogovor.Designer.cs">
       <DependentUpon>Dogovor.cs</DependentUpon>
     </Compile>
+    <Compile Include="dolznost.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="dolznost.Designer.cs">
+      <DependentUpon>dolznost.cs</DependentUpon>
+    </Compile>
     <Compile Include="grafik.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -169,6 +175,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Dogovor.resx">
       <DependentUpon>Dogovor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="dolznost.resx">
+      <DependentUpon>dolznost.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="grafik.resx">
       <DependentUpon>grafik.cs</DependentUpon>

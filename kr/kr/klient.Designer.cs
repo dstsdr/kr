@@ -66,20 +66,22 @@
             this.podrazdel = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
             this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+            this.label19 = new System.Windows.Forms.Label();
+            this.label20 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(20, 30);
+            this.label6.Location = new System.Drawing.Point(12, 27);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(38, 16);
+            this.label6.Size = new System.Drawing.Size(66, 16);
             this.label6.TabIndex = 9;
-            this.label6.Text = "ФИО";
+            this.label6.Text = "Фамилия";
             // 
             // LastName
             // 
-            this.LastName.Location = new System.Drawing.Point(156, 24);
+            this.LastName.Location = new System.Drawing.Point(92, 24);
             this.LastName.Name = "LastName";
             this.LastName.Size = new System.Drawing.Size(168, 22);
             this.LastName.TabIndex = 8;
@@ -233,14 +235,14 @@
             // 
             // otchestvo
             // 
-            this.otchestvo.Location = new System.Drawing.Point(567, 24);
+            this.otchestvo.Location = new System.Drawing.Point(582, 24);
             this.otchestvo.Name = "otchestvo";
             this.otchestvo.Size = new System.Drawing.Size(168, 22);
             this.otchestvo.TabIndex = 34;
             // 
             // FirstName
             // 
-            this.FirstName.Location = new System.Drawing.Point(371, 24);
+            this.FirstName.Location = new System.Drawing.Point(327, 24);
             this.FirstName.Name = "FirstName";
             this.FirstName.Size = new System.Drawing.Size(168, 22);
             this.FirstName.TabIndex = 35;
@@ -298,7 +300,7 @@
             // 
             this.where.Location = new System.Drawing.Point(131, 182);
             this.where.Name = "where";
-            this.where.Size = new System.Drawing.Size(524, 22);
+            this.where.Size = new System.Drawing.Size(607, 22);
             this.where.TabIndex = 42;
             // 
             // label15
@@ -376,11 +378,31 @@
             this.dateTimePicker1.Size = new System.Drawing.Size(193, 22);
             this.dateTimePicker1.TabIndex = 51;
             // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(288, 27);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(33, 16);
+            this.label19.TabIndex = 52;
+            this.label19.Text = "Имя";
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(510, 27);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(70, 16);
+            this.label20.TabIndex = 53;
+            this.label20.Text = "Отчество";
+            // 
             // klient
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 525);
+            this.Controls.Add(this.label20);
+            this.Controls.Add(this.label19);
             this.Controls.Add(this.dateTimePicker1);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.podrazdel);
@@ -467,5 +489,7 @@
         private System.Windows.Forms.TextBox podrazdel;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.DateTimePicker dateTimePicker1;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.Label label20;
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace kr
 {
-    partial class vid
+    partial class dolznost
     {
         /// <summary>
         /// Required designer variable.
@@ -28,11 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.dataSet1 = new kr.DataSet1();
-            this.вид_кредитаBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.вид_кредитаTableAdapter = new kr.DataSet1TableAdapters.Вид_кредитаTableAdapter();
-            this.tableAdapterManager = new kr.DataSet1TableAdapters.TableAdapterManager();
             this.button5 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
@@ -43,57 +38,25 @@
             this.label1 = new System.Windows.Forms.Label();
             this.namebox = new System.Windows.Forms.TextBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            ((System.ComponentModel.ISupportInitialize)(this.dataSet1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.вид_кредитаBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
-            // dataSet1
-            // 
-            this.dataSet1.DataSetName = "DataSet1";
-            this.dataSet1.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
-            // вид_кредитаBindingSource
-            // 
-            this.вид_кредитаBindingSource.DataMember = "Вид кредита";
-            this.вид_кредитаBindingSource.DataSource = this.dataSet1;
-            // 
-            // вид_кредитаTableAdapter
-            // 
-            this.вид_кредитаTableAdapter.ClearBeforeFill = true;
-            // 
-            // tableAdapterManager
-            // 
-            this.tableAdapterManager.BackupDataSetBeforeUpdate = false;
-            this.tableAdapterManager.UpdateOrder = kr.DataSet1TableAdapters.TableAdapterManager.UpdateOrderOption.InsertUpdateDelete;
-            this.tableAdapterManager.БанкTableAdapter = null;
-            this.tableAdapterManager.Вид_кредитаTableAdapter = this.вид_кредитаTableAdapter;
-            this.tableAdapterManager.Группа_рискаTableAdapter = null;
-            this.tableAdapterManager.ДоговорTableAdapter = null;
-            this.tableAdapterManager.ДолжностьTableAdapter = null;
-            this.tableAdapterManager.КалендарьTableAdapter = null;
-            this.tableAdapterManager.КлиентыTableAdapter = null;
-            this.tableAdapterManager.Процентная_ставкаTableAdapter = null;
-            this.tableAdapterManager.РефинансированиеTableAdapter = null;
-            this.tableAdapterManager.СотрудникиTableAdapter = null;
-            this.tableAdapterManager.Целевое_назначение_кредитаTableAdapter = null;
-            // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(313, 314);
+            this.button5.Location = new System.Drawing.Point(323, 322);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(33, 26);
-            this.button5.TabIndex = 73;
+            this.button5.TabIndex = 83;
             this.button5.Text = ">";
             this.button5.UseVisualStyleBackColor = true;
             this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(278, 314);
+            this.button4.Location = new System.Drawing.Point(288, 322);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(33, 26);
-            this.button4.TabIndex = 72;
+            this.button4.TabIndex = 82;
             this.button4.Text = "<";
             this.button4.UseVisualStyleBackColor = true;
             this.button4.Click += new System.EventHandler(this.button4_Click);
@@ -101,64 +64,64 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(2, 39);
+            this.label2.Location = new System.Drawing.Point(12, 47);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(146, 16);
-            this.label2.TabIndex = 71;
+            this.label2.TabIndex = 81;
             this.label2.Text = "Количество записей:";
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(2, 390);
+            this.button3.Location = new System.Drawing.Point(12, 398);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(344, 32);
-            this.button3.TabIndex = 70;
+            this.button3.TabIndex = 80;
             this.button3.Text = "Удалить";
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(261, 4);
+            this.button2.Location = new System.Drawing.Point(271, 12);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(84, 32);
-            this.button2.TabIndex = 69;
+            this.button2.TabIndex = 79;
             this.button2.Text = "Поиск";
             this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click_1);
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(1, 9);
+            this.textBox1.Location = new System.Drawing.Point(11, 17);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(254, 22);
-            this.textBox1.TabIndex = 68;
+            this.textBox1.TabIndex = 78;
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(250, 355);
+            this.button1.Location = new System.Drawing.Point(260, 363);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(96, 32);
-            this.button1.TabIndex = 67;
+            this.button1.TabIndex = 77;
             this.button1.Text = "Добавить";
             this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click_1);
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(-1, 363);
+            this.label1.Location = new System.Drawing.Point(9, 371);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(35, 16);
-            this.label1.TabIndex = 66;
-            this.label1.Text = "Вид:";
+            this.label1.Size = new System.Drawing.Size(73, 16);
+            this.label1.TabIndex = 76;
+            this.label1.Text = "Название";
             // 
             // namebox
             // 
-            this.namebox.Location = new System.Drawing.Point(62, 360);
+            this.namebox.Location = new System.Drawing.Point(88, 368);
             this.namebox.Name = "namebox";
-            this.namebox.Size = new System.Drawing.Size(182, 22);
-            this.namebox.TabIndex = 65;
+            this.namebox.Size = new System.Drawing.Size(166, 22);
+            this.namebox.TabIndex = 75;
             // 
             // dataGridView1
             // 
@@ -166,21 +129,21 @@
             this.dataGridView1.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
             this.dataGridView1.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(2, 62);
+            this.dataGridView1.Location = new System.Drawing.Point(12, 70);
             this.dataGridView1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToDisplayedHeaders;
             this.dataGridView1.RowTemplate.Height = 24;
             this.dataGridView1.Size = new System.Drawing.Size(344, 247);
-            this.dataGridView1.TabIndex = 64;
+            this.dataGridView1.TabIndex = 74;
             this.dataGridView1.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellValueChanged);
             // 
-            // vid
+            // dolznost
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(345, 419);
+            this.ClientSize = new System.Drawing.Size(379, 450);
             this.Controls.Add(this.button5);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.label2);
@@ -191,11 +154,9 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.namebox);
             this.Controls.Add(this.dataGridView1);
-            this.Name = "vid";
-            this.Text = "vid";
-            this.Load += new System.EventHandler(this.vid_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.dataSet1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.вид_кредитаBindingSource)).EndInit();
+            this.Name = "dolznost";
+            this.Text = "dolznost";
+            this.Load += new System.EventHandler(this.dolznost_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -203,10 +164,7 @@
         }
 
         #endregion
-        private DataSet1 dataSet1;
-        private System.Windows.Forms.BindingSource вид_кредитаBindingSource;
-        private DataSet1TableAdapters.Вид_кредитаTableAdapter вид_кредитаTableAdapter;
-        private DataSet1TableAdapters.TableAdapterManager tableAdapterManager;
+
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Label label2;

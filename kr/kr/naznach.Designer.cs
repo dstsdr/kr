@@ -34,6 +34,10 @@
             this.label1 = new System.Windows.Forms.Label();
             this.namebox = new System.Windows.Forms.TextBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.label2 = new System.Windows.Forms.Label();
+            this.button5 = new System.Windows.Forms.Button();
+            this.button4 = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -56,7 +60,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(265, 343);
+            this.button1.Location = new System.Drawing.Point(268, 390);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(84, 32);
             this.button1.TabIndex = 51;
@@ -67,17 +71,17 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(5, 318);
+            this.label1.Location = new System.Drawing.Point(5, 365);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(57, 16);
+            this.label1.Size = new System.Drawing.Size(92, 16);
             this.label1.TabIndex = 50;
-            this.label1.Text = "Группа:";
+            this.label1.Text = "Назначение:";
             // 
             // namebox
             // 
-            this.namebox.Location = new System.Drawing.Point(68, 315);
+            this.namebox.Location = new System.Drawing.Point(103, 362);
             this.namebox.Name = "namebox";
-            this.namebox.Size = new System.Drawing.Size(284, 22);
+            this.namebox.Size = new System.Drawing.Size(249, 22);
             this.namebox.TabIndex = 49;
             // 
             // dataGridView1
@@ -86,7 +90,7 @@
             this.dataGridView1.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
             this.dataGridView1.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(8, 54);
+            this.dataGridView1.Location = new System.Drawing.Point(8, 76);
             this.dataGridView1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersVisible = false;
@@ -94,12 +98,56 @@
             this.dataGridView1.RowTemplate.Height = 24;
             this.dataGridView1.Size = new System.Drawing.Size(344, 247);
             this.dataGridView1.TabIndex = 48;
+            this.dataGridView1.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellValueChanged);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(10, 56);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(146, 16);
+            this.label2.TabIndex = 72;
+            this.label2.Text = "Количество записей:";
+            // 
+            // button5
+            // 
+            this.button5.Location = new System.Drawing.Point(319, 330);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(33, 26);
+            this.button5.TabIndex = 75;
+            this.button5.Text = ">";
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
+            // 
+            // button4
+            // 
+            this.button4.Location = new System.Drawing.Point(284, 330);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(33, 26);
+            this.button4.TabIndex = 74;
+            this.button4.Text = "<";
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(8, 390);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(84, 32);
+            this.button3.TabIndex = 76;
+            this.button3.Text = "Удалить";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // naznach
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(368, 387);
+            this.ClientSize = new System.Drawing.Size(368, 427);
+            this.Controls.Add(this.button3);
+            this.Controls.Add(this.button5);
+            this.Controls.Add(this.button4);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.button1);
@@ -123,5 +171,9 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox namebox;
         private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button button3;
     }
 }
