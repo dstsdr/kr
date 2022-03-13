@@ -7,13 +7,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Data.SQLite;
+using System.Data.SqlClient;
 
 namespace kr
 {
     public partial class Dogovor__ : Form
     {
-        SQLiteConnection Connection = new SQLiteConnection(@"Data Source=C:\Users\1652090\OneDrive\Рабочий стол\kredit.db");
+        SqlConnection Connection = new SqlConnection(@"Data Source=LAPTOP-862V88EF\SQLEXPRESS;Initial Catalog=kredit;Integrated Security=True");
         public Dogovor__()
         {
             InitializeComponent();
@@ -34,68 +34,80 @@ namespace kr
             {
                 double procent = SumCreditOperation * (InterestRateYear / 100) / 12;
                 SumCreditOperation -= vuplata - procent;
-                string osn, percent, ostatok, kd;
+                decimal osn, percent, ostatok, kd;
                 // month = i + 1; //номер месяца
                 months=months.AddMonths(1);
                 //textBox4.Text = months.ToString("dd'/'MM'/'yyyy") +"\n";
-                   kd = vuplata.ToString("N2"); //Ежемесячный платеж
-                  osn = (vuplata - procent).ToString("N2"); //Платеж за основной долг
-                  percent = procent.ToString("N2"); //Платеж процента
-                  ostatok = SumCreditOperation.ToString("N2"); //Основной остаток
+                 //  kd = vuplata.ToString("N2"); //Ежемесячный платеж
+                  osn = Convert.ToDecimal(vuplata - procent); //Платеж за основной долг
+                  percent = Convert.ToDecimal(procent); //Платеж процента
+                  ostatok =Convert.ToDecimal(SumCreditOperation); //Основной остаток
                   ItogCreditSumOperation -= vuplata;
                   ItogPlus = Convert.ToDouble(ostatok);
                   Connection.Open();
-                  string sql = "insert into kalendar(summ, date_plan, [osn dolg],[po percent], ostatok) Values" +
-                  " ('" + kd + "','" + months.ToString("dd'/'MM'/'yyyy") + "','" + osn + "','" + percent + "','" + ostatok + "')";
-                  SQLiteCommand command = new SQLiteCommand(sql, Connection);
-                  command.ExecuteNonQuery();
+                /*   string sql = "insert into [Календарь]([Дата запланированная], [Основной долг], [Проценты], [Остаток]) Values" +
+                   " ('" + months.ToString("dd'.'MM'.'yyyy") + "','" + osn + "','" + percent + "','" + ostatok + "')";
+                 SqlCommand command = new SqlCommand(sql, Connection);*/
+                SqlCommand command = new SqlCommand("insert into [Календарь]([Дата запланированная], [Основной долг], [Проценты], [Остаток]) Values" +
+                  " (@date, @OSN, @PERCENT, @OST)", Connection);
+                command.Parameters.AddWithValue("@date", months.ToString("dd'.'MM'.'yyyy"));
+                command.Parameters.AddWithValue("@OSN", osn);
+                command.Parameters.AddWithValue("@PERCENT", percent);
+                command.Parameters.AddWithValue("@OST", ostatok);
+                command.ExecuteNonQuery();
                   Connection.Close();
             }
         }
 
             private void button1_Click(object sender, EventArgs e)
         {
+            string vozvrat = dateTimePicker1.Value.ToString();
+            vozvrat = vozvrat.Substring(0, vozvrat.IndexOf(' ') + 1);
+            int CreditPeriod = ((dateTimePicker1.Value.Year - DateTime.Today.Year) * 12) + dateTimePicker1.Value.Month - DateTime.Today.Month;
             double SumCredit = Convert.ToDouble(textBox3.Text); // Сумма кредита
             double InterestRateYear = Convert.ToDouble(procent.Text); // Процентная ставка, ГОДОВАЯ
             double InterestRateMonth = InterestRateYear / 100 / 12; // Процентная ставка, МЕСЯЧНАЯ
-            int CreditPeriod = Convert.ToInt32(textBox2.Text); // Срок кредита, переводим в месяцы, если указан в годах
+           // int CreditPeriod = Convert.ToInt32(textBox2.Text); // Срок кредита, переводим в месяцы, если указан в годах
             CreditPeriod *= 12;
-            double vuplata = SumCredit * (InterestRateMonth / (1 - Math.Pow(1 + InterestRateMonth, -CreditPeriod))); // Ежемесячный платеж
-            kalendar(vuplata, CreditPeriod, SumCredit, InterestRateYear);
-           /* string date = DateTime.Today.ToString("dd'/'MM'/'yyyy");          //дата  
+            decimal vuplata = Convert.ToDecimal(SumCredit * (InterestRateMonth / (1 - Math.Pow(1 + InterestRateMonth, -CreditPeriod)))); // Ежемесячный платеж
+            kalendar(Convert.ToDouble(vuplata), CreditPeriod, SumCredit, InterestRateYear);
+
+            string date = DateTime.Today.ToString("dd'.'MM'.'yyyy");          //дата  
+           
+
             string group, naznach, percent, vid, sotrud, klient;
             Connection.Open();
-            SQLiteCommand cmd5 = Connection.CreateCommand(); // группа риска
+            SqlCommand cmd5 = Connection.CreateCommand(); // группа риска
             cmd5.CommandType = CommandType.Text;
-            cmd5.CommandText = "SELECT id_group FROM [Группа риска] WHERE name='" + risk.Text + "'";
+            cmd5.CommandText = "SELECT [№] FROM [Группа риска] WHERE [Группа]='" + risk.Text + "'";
             cmd5.ExecuteNonQuery();
             DataTable dt5 = new DataTable();
-            SQLiteDataAdapter da5 = new SQLiteDataAdapter(cmd5);
+            SqlDataAdapter da5 = new SqlDataAdapter(cmd5);
             da5.Fill(dt5);
-            group = dt5.Rows[0][0].ToString();            
-            SQLiteCommand cmd2 = Connection.CreateCommand(); //целевое назначение
+            group = dt5.Rows[0][0].ToString();
+            SqlCommand cmd2 = Connection.CreateCommand(); //целевое назначение
             cmd2.CommandType = CommandType.Text;
-            cmd2.CommandText = "SELECT id_naznacheniya FROM [Целевое назначение кредита] WHERE name='" + nazn.Text + "'";
+            cmd2.CommandText = "SELECT [№] FROM [Целевое назначение кредита] WHERE [Название]='" + nazn.Text + "'";
             cmd2.ExecuteNonQuery();
             DataTable dt2 = new DataTable();
-            SQLiteDataAdapter da2 = new SQLiteDataAdapter(cmd2);
+            SqlDataAdapter da2 = new SqlDataAdapter(cmd2);
             da2.Fill(dt2);
             naznach=dt2.Rows[0][0].ToString();
-            SQLiteCommand cmd3 = Connection.CreateCommand(); // вид кредита
+            SqlCommand cmd3 = Connection.CreateCommand(); // вид кредита
             cmd3.CommandType = CommandType.Text;
-            cmd3.CommandText = "SELECT id_vida FROM [Вид кредита] WHERE name='" + this.vid.Text + "'";
+            cmd3.CommandText = "SELECT [Код] FROM [Вид кредита] WHERE [Вид]='" + this.vid.Text + "'";
             cmd3.ExecuteNonQuery();
             DataTable dt3 = new DataTable();
-            SQLiteDataAdapter da3 = new SQLiteDataAdapter(cmd3);
+            SqlDataAdapter da3 = new SqlDataAdapter(cmd3);
             da3.Fill(dt3);            
             vid=dt3.Rows[0][0].ToString();
-            SQLiteCommand cmd4 = Connection.CreateCommand(); //проценты
+            SqlCommand cmd4 = Connection.CreateCommand(); //проценты
             cmd4.CommandType = CommandType.Text;
             string pr= procent.Text.Replace(",", ".");
-            cmd4.CommandText = "SELECT id_stavki FROM [Процентная ставка] WHERE percent='" + pr + "'";
+            cmd4.CommandText = "SELECT [№] FROM [Процентная ставка] WHERE [%]='" + pr + "'";
             cmd4.ExecuteNonQuery();
             DataTable dt4 = new DataTable();
-            SQLiteDataAdapter da4 = new SQLiteDataAdapter(cmd4);
+            SqlDataAdapter da4 = new SqlDataAdapter(cmd4);
             da4.Fill(dt4);            
             percent=dt4.Rows[0][0].ToString();
             // сотрудник
@@ -106,84 +118,96 @@ namespace kr
             // klient
             Combo = klientcmb.Text;
             words = Combo.Split(' ');
-            klient = words[0]; 
-             //добавление
-             string sql = "insert into Договор(id_group,id_sotrudnik,INN_klienta, id_naznach, id_vida, data_zakluch, srok_pogasheniya, vuplata, id_stavki, cost_naznach, Neustoyka) Values" +
-                " ('" + group + "','" + sotrud + "','" + klient + "','" + naznach + "','" + vid + "','" + date + "','" + textBox2.Text + "','" + vuplata + "','" + percent + "','" + textBox3.Text + "','" + textBox1.Text +"')";
-            SQLiteCommand command = new SQLiteCommand(sql, Connection);
+            klient = words[0];
+            //добавление
+          /*   string sql = "insert into Договор([№ группы риска],[№ сотрудника],[ИНН клиента], [№ назначения], [№ вида], [дата заключения], [Срок погашения], [Ежемесячный платеж], [№ ставки], [Сумма], [Неустойка]) Values" +
+                " ('" + group + "','" + sotrud + "','" + klient + "','" + naznach + "','" + vid + "','" + date + "','" + vozvrat + "','" + vuplata + "','" + percent + "','" + textBox3.Text + "','" + textBox1.Text +"')";
+           */ SqlCommand command = new SqlCommand("insert into Договор([№ группы риска],[№ сотрудника],[ИНН клиента], [№ назначения], [№ вида], [дата заключения], [Срок погашения], [Ежемесячный платеж], [№ ставки], [Сумма], [Неустойка]) Values" +
+                " (@group, @sotr, @klient, @naznach, @vid, @date, @vozvrat, @vuplata, @percent, @summ, @neust)", Connection);
+            command.Parameters.AddWithValue("@group", group);
+            command.Parameters.AddWithValue("@sotr", sotrud);
+            command.Parameters.AddWithValue("@klient", klient);
+            command.Parameters.AddWithValue("@naznach", naznach);
+            command.Parameters.AddWithValue("@vid", vid);
+            command.Parameters.AddWithValue("@date", date);
+            command.Parameters.AddWithValue("@vozvrat", vozvrat);
+            command.Parameters.AddWithValue("@vuplata", vuplata);
+            command.Parameters.AddWithValue("@percent", percent);
+            command.Parameters.AddWithValue("@summ", Convert.ToDecimal(textBox3.Text));
+            command.Parameters.AddWithValue("@neust", float.Parse(textBox1.Text));
             command.ExecuteNonQuery();
-            Connection.Close();*/
+            Connection.Close();
         }
 
         private void Dogovor___Load(object sender, EventArgs e)
         {
            // Connection.Close();
             Connection.Open();  
-            SQLiteCommand cmd = Connection.CreateCommand();
+            SqlCommand cmd = Connection.CreateCommand();
             cmd.CommandType = CommandType.Text;
-            cmd.CommandText = "SELECT INN, LastName FROM Клиенты";
+            cmd.CommandText = "SELECT ИНН, Фамилия FROM Клиенты";
             cmd.ExecuteNonQuery();  
             DataTable dt = new DataTable();
-            SQLiteDataAdapter da = new SQLiteDataAdapter(cmd);
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
             da.Fill(dt);    
             foreach (DataRow dr in dt.Rows)
             {
-                klientcmb.Items.Add(dr["INN"].ToString()+ " " + dr["LastName"]);
+                klientcmb.Items.Add(dr["ИНН"].ToString()+ " " + dr["Фамилия"]);
             }
-            SQLiteCommand cmd2 = Connection.CreateCommand();
+            SqlCommand cmd2 = Connection.CreateCommand();
             cmd2.CommandType = CommandType.Text;
-            cmd2.CommandText = "SELECT name FROM [Целевое назначение кредита]";
+            cmd2.CommandText = "SELECT [Название] FROM [Целевое назначение кредита]";
             cmd2.ExecuteNonQuery();
             DataTable dt2 = new DataTable();
-            SQLiteDataAdapter da2 = new SQLiteDataAdapter(cmd2);
+            SqlDataAdapter da2 = new SqlDataAdapter(cmd2);
             da2.Fill(dt2);
             foreach (DataRow dr2 in dt2.Rows)
             {
-                nazn.Items.Add(dr2["name"].ToString());
+                nazn.Items.Add(dr2["Название"].ToString());
             }
-            SQLiteCommand cmd3 = Connection.CreateCommand();
+            SqlCommand cmd3 = Connection.CreateCommand();
             cmd3.CommandType = CommandType.Text;
-            cmd3.CommandText = "SELECT name FROM [Вид кредита]";
+            cmd3.CommandText = "SELECT [Вид] FROM [Вид кредита]";
             cmd3.ExecuteNonQuery();
             DataTable dt3 = new DataTable();
-            SQLiteDataAdapter da3 = new SQLiteDataAdapter(cmd3);
+            SqlDataAdapter da3 = new SqlDataAdapter(cmd3);
             da3.Fill(dt3);
             foreach (DataRow dr3 in dt3.Rows)
             {
-                vid.Items.Add(dr3["name"].ToString());
+                vid.Items.Add(dr3["Вид"].ToString());
             }
-            SQLiteCommand cmd4 = Connection.CreateCommand();
+            SqlCommand cmd4 = Connection.CreateCommand();
             cmd4.CommandType = CommandType.Text;
-            cmd4.CommandText = "SELECT percent FROM [Процентная ставка]";
+            cmd4.CommandText = "SELECT [%] FROM [Процентная ставка]";
             cmd4.ExecuteNonQuery();
             DataTable dt4 = new DataTable();
-            SQLiteDataAdapter da4 = new SQLiteDataAdapter(cmd4);
+            SqlDataAdapter da4 = new SqlDataAdapter(cmd4);
             da4.Fill(dt4);
             foreach (DataRow dr4 in dt4.Rows)
             {
-                procent.Items.Add(dr4["percent"].ToString());
+                procent.Items.Add(dr4["%"].ToString());
             }
-            SQLiteCommand cmd5 = Connection.CreateCommand();
+            SqlCommand cmd5 = Connection.CreateCommand();
             cmd5.CommandType = CommandType.Text;
-            cmd5.CommandText = "SELECT name FROM [Группа риска]";
+            cmd5.CommandText = "SELECT [Группа] FROM [Группа риска]";
             cmd5.ExecuteNonQuery();
             DataTable dt5 = new DataTable();
-            SQLiteDataAdapter da5 = new SQLiteDataAdapter(cmd5);
+            SqlDataAdapter da5 = new SqlDataAdapter(cmd5);
             da5.Fill(dt5);
             foreach (DataRow dr5 in dt5.Rows)
             {
-                risk.Items.Add(dr5["name"]);
+                risk.Items.Add(dr5["Группа"]);
             }
-            SQLiteCommand cmd6 = Connection.CreateCommand();
+            SqlCommand cmd6 = Connection.CreateCommand();
             cmd6.CommandType = CommandType.Text;
-            cmd6.CommandText = "SELECT Сотрудники.id, Сотрудники.LastName, Должность.name  FROM Должность INNER JOIN Сотрудники ON Должность.id_dolznosti = Сотрудники.id";
+            cmd6.CommandText = "SELECT Сотрудники.[№], Сотрудники.[Фамилия], Должность.[Название]  FROM Должность INNER JOIN Сотрудники ON Должность.[№] = Сотрудники.[Должность]";
             cmd6.ExecuteNonQuery();
             DataTable dt6 = new DataTable();
-            SQLiteDataAdapter da6 = new SQLiteDataAdapter(cmd6);
+            SqlDataAdapter da6 = new SqlDataAdapter(cmd6);
             da6.Fill(dt6);
             foreach (DataRow dr6 in dt6.Rows)
             {
-                sotr.Items.Add(dr6["id"].ToString()+ " " + dr6["LastName"] + " " + dr6["name"]);
+                sotr.Items.Add(dr6["№"].ToString()+ " " + dr6["Фамилия"] + " " + dr6["Название"]);
             }
             Connection.Close();
         }

@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Data.SQLite;
 using Word = Microsoft.Office.Interop.Word;
 
 namespace kr
@@ -18,7 +18,7 @@ namespace kr
         {
             InitializeComponent();
         }
-        SQLiteConnection Connection = new SQLiteConnection(@"Data Source=C:\Users\1652090\OneDrive\Рабочий стол\kredit.db");
+        SqlConnection Connection = new SqlConnection(@"Data Source=LAPTOP-862V88EF\SQLEXPRESS;Initial Catalog=kredit;Integrated Security=True");
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
@@ -27,12 +27,13 @@ namespace kr
         private void Form1_Load(object sender, EventArgs e)
         {
             Connection.Open();
-            SQLiteDataAdapter adapter = new SQLiteDataAdapter("SELECT Договор.id_dogovora AS [№ договора],  Клиенты.LastName AS[Клиент], [Целевое назначение кредита].name AS[Цель], Договор.cost_naznach AS [Сумма], " +
-                "[Процентная ставка].percent  AS [%] ,Договор.Neustoyka AS [Неустойка], Договор.data_zakluch AS [Дата заключения], Договор.srok_pogasheniya AS[Срок], [Вид кредита].name AS[Вид], " +
-                "Договор.vuplata AS[Ежемесячная выплата], [Группа риска].name AS[Группа риска], Сотрудники.LastName AS[Сотрудник], Банк.name AS[Название банка] " +
-                              "FROM(Банк INNER JOIN[Целевое назначение кредита] INNER JOIN Сотрудники INNER JOIN[Процентная ставка] ON Банк.BIK = Сотрудники.BIK) INNER JOIN(Клиенты INNER JOIN([Группа риска] " +
-                "INNER JOIN([Вид кредита] INNER JOIN Договор ON[Вид кредита].id_vida = Договор.id_vida) ON[Группа риска].id_group = Договор.id_group) ON Клиенты.INN = Договор.INN_klienta) " +
-                "ON([Целевое назначение кредита].id_naznacheniya = Договор.id_naznach) AND(Сотрудники.id = Договор.id_sotrudnik) AND([Процентная ставка].id_stavki = Договор.id_stavki); ", Connection);
+            SqlDataAdapter adapter = new SqlDataAdapter("SELECT Договор.[№] AS [№ договора],  Клиенты.Фамилия AS[Клиент], [Целевое назначение кредита].[Название] AS[Цель], " +
+                "Договор.[Сумма] AS[Сумма], [Процентная ставка].[%]  AS[%], Договор.[Неустойка] AS[Неустойка], Договор.[дата заключения] AS[Дата заключения]," +
+                " Договор.[Срок погашения] AS[Дата погашения], [Вид кредита].[Вид] AS[Вид], Договор.[Ежемесячный платеж] AS[Ежемесячная выплата], [Группа риска].Группа AS[Группа риска]," +
+                " Сотрудники.Фамилия AS[Сотрудник], Банк.Название FROM Договор Inner join[Вид кредита] ON[Вид кредита].[Код] = Договор.[№ вида] Inner join[Группа риска] " +
+                "ON[Группа риска].[№] = Договор.[№ группы риска] Inner join Клиенты ON Клиенты.ИНН = Договор.[ИНН клиента] Inner join[Целевое назначение кредита] " +
+                "ON[Целевое назначение кредита].[№] = Договор.[№ назначения] Inner join(Сотрудники inner join Банк ON Сотрудники.БИК = Банк.БИК) " +
+                "ON Сотрудники.[№] = Договор.[№ сотрудника] Inner join[Процентная ставка] ON[Процентная ставка].[№] = Договор.[№ ставки]", Connection);
             DataSet ds = new DataSet();
             adapter.Fill(ds, "info");
             dataGridView1.DataSource = ds.Tables[0];
@@ -48,7 +49,7 @@ namespace kr
         {
             string s = dataGridView1.CurrentCell.Value.ToString();
             Connection.Open();
-            SQLiteDataAdapter adapter = new SQLiteDataAdapter("SELECT Клиенты.* FROM Клиенты INNER JOIN Договор ON Клиенты.INN = Договор.INN_klienta WHERE Договор.id_dogovora='" + s + "'", Connection);
+            SqlDataAdapter adapter = new SqlDataAdapter("SELECT Клиенты.* FROM Клиенты INNER JOIN Договор ON Клиенты.ИНН = Договор.[ИНН клиента] WHERE Договор.[№]='" + s + "'", Connection);
             DataSet ds2 = new DataSet();
             adapter.Fill(ds2, "info");
             dataGridView2.DataSource = ds2.Tables[0];
@@ -59,9 +60,9 @@ namespace kr
         {
             string s = dataGridView1.CurrentCell.Value.ToString();
             Connection.Open();
-            SQLiteDataAdapter adapter = new SQLiteDataAdapter("SELECT Сотрудники.LastName, Сотрудники.firstName, Сотрудники.otchestvo, Сотрудники.phone, Сотрудники.seriya, " +
-                "Сотрудники.nomer, Должность.name FROM(Должность INNER JOIN Сотрудники ON Должность.id_dolznosti = Сотрудники.id_dolznosti) INNER JOIN Договор" +
-                " ON Сотрудники.id = Договор.id_sotrudnik WHERE Договор.id_dogovora = '" + s + "'", Connection);
+            SqlDataAdapter adapter = new SqlDataAdapter("SELECT Сотрудники.Фамилия, Сотрудники.Имя, Сотрудники.Отчество, Сотрудники.Телефон, Сотрудники.[Серия паспорта], " +
+                "Сотрудники.[Номер паспорта], Должность.Название FROM(Должность INNER JOIN Сотрудники ON Должность.[№] = Сотрудники.Должность) INNER JOIN Договор" +
+                " ON Сотрудники.[№] = Договор.[№ сотрудника] WHERE Договор.[№]='" + s + "'", Connection);
             DataSet ds2 = new DataSet();
             adapter.Fill(ds2, "info");
             dataGridView2.DataSource = ds2.Tables[0];
@@ -72,8 +73,8 @@ namespace kr
         {
             string s = dataGridView1.CurrentCell.Value.ToString();
             Connection.Open();
-            SQLiteDataAdapter adapter = new SQLiteDataAdapter("SELECT Банк.* FROM(Банк INNER JOIN Сотрудники ON Банк.BIK = Сотрудники.BIK) INNER JOIN Договор ON " +
-                "Сотрудники.id = Договор.id_sotrudnik WHERE Договор.id_dogovora='" + s + "'", Connection);
+            SqlDataAdapter adapter = new SqlDataAdapter("SELECT Банк.* FROM(Банк INNER JOIN Сотрудники ON Банк.БИК = Сотрудники.БИК) INNER JOIN Договор ON " +
+                "Сотрудники.[№] = Договор.[№ сотрудника] WHERE Договор.[№]='" + s + "'", Connection);
             DataSet ds2 = new DataSet();
             adapter.Fill(ds2, "info");
             dataGridView2.DataSource = ds2.Tables[0];
@@ -87,13 +88,13 @@ namespace kr
              var wordDocument = wordApp.Documents.Open(document);
              string s = dataGridView1.CurrentCell.Value.ToString();
              Connection.Open();
-             string sqlExpression = "SELECT Банк.name, Банк.korr_shet, Банк.BIK, Банк.city, Банк.street, Банк.homeNumber, Сотрудники.LastName, Сотрудники.firstName, Сотрудники.otchestvo, Клиенты.LastName, Клиенты.FirstName, Клиенты.Otchestvo," +
-                " Клиенты.seriya, Клиенты.nomer, Клиенты.dateP, Клиенты.kemP, Клиенты.whereP, Клиенты.podrazdelPas, Клиенты.ssudnyi_schet, Клиенты.schet, Клиенты.home_city, Клиенты.home_street, Клиенты.home_number FROM(Банк INNER JOIN[Целевое назначение кредита] " +
-                "INNER JOIN Сотрудники INNER JOIN[Процентная ставка] ON Банк.BIK = Сотрудники.BIK) INNER JOIN(Клиенты INNER JOIN([Группа риска] INNER JOIN([Вид кредита] INNER JOIN Договор ON[Вид кредита].id_vida = Договор.id_vida) " +
-                "ON[Группа риска].id_group = Договор.id_group) ON Клиенты.INN = Договор.INN_klienta) ON([Целевое назначение кредита].id_naznacheniya = Договор.id_naznach) AND(Сотрудники.id = Договор.id_sotrudnik)" +
-                " AND([Процентная ставка].id_stavki = Договор.id_stavki) WHERE Договор.id_dogovora= '" + s + "' AND Сотрудники.id_dolznosti = 1";
-            SQLiteCommand command = new SQLiteCommand(sqlExpression, Connection);
-             SQLiteDataReader reader = command.ExecuteReader();
+             string sqlExpression = "SELECT Банк.Название, Банк.[Кор. счет], Банк.БИК, Банк.Город, Банк.Улица, Банк.Дом, Сотрудники.Фамилия, " +
+                "Сотрудники.Имя, Сотрудники.Отчество, Клиенты.Фамилия, Клиенты.Имя, Клиенты.Отчество, Клиенты.[Серия паспорта], Клиенты.[Номер паспорта], " +
+                "Клиенты.[Дата выдачи], Клиенты.[Кем выдан], Клиенты.[Где выдан], Клиенты.Подразделение, Клиенты.[Ссудный счет], Клиенты.Счет," +
+                " Клиенты.[Город прописки], Клиенты.[Улица прописки], Клиенты.[Дом прописки], Договор.[№], Договор.[Срок погашения] " +
+                "FROM Договор Inner join Клиенты ON Клиенты.ИНН = Договор.[ИНН клиента] Inner join(Сотрудники inner join Банк ON Сотрудники.БИК= Банк.БИК) ON Сотрудники.[№] = Договор.[№ сотрудника] WHERE  Договор.[№]= '" + s + "' AND Сотрудники.[Должность] = 1";
+            SqlCommand command = new SqlCommand(sqlExpression, Connection);
+             SqlDataReader reader = command.ExecuteReader();
                 if (reader.Read()) //данные из банка и договора
                 {
                 var name = reader.GetValue(0);
@@ -107,7 +108,8 @@ namespace kr
                 string percent = dataGridView1.CurrentRow.Cells[4].Value.ToString();
                 string adres = "г. "+city.ToString() + ", ул. "+ street.ToString() + ", "+ hn.ToString();
                 string date = dataGridView1.CurrentRow.Cells[6].Value.ToString();
-                string[] words = date.Split('/');
+                date = date.Substring(0, date.IndexOf(' ') + 1);
+                string[] words = date.Split('.');
                 string ch = words[0];
                 string month = words[1];
                 string year = words[2];
@@ -139,14 +141,40 @@ namespace kr
                 var where = reader.GetValue(16).ToString();
                 var podrazdel = reader.GetValue(17).ToString();
                 var ssuda = reader.GetValue(18).ToString();
+                ssuda = ssuda.Substring(0, ssuda.IndexOf(' '));
                 var schet = reader.GetValue(19).ToString();
+                schet = schet.Substring(0, schet.IndexOf(' '));
                 var kcity = reader.GetValue(20).ToString();
                 var kstreet = reader.GetValue(21).ToString();
                 var khn = reader.GetValue(22).ToString();
+                var dogovornumber = reader.GetValue(23).ToString();
+                var pogashen = reader.GetValue(24).ToString();
+
+                pogashen=pogashen.Substring(0, pogashen.IndexOf(' ') + 1);
+                string[] srok = pogashen.Split('.');
+                string chZ = srok[0];
+                string monthZ = srok[1];
+                string yearZ = srok[2];
+                if (monthZ == "01") monthZ = "января";
+                if (monthZ == "02") monthZ = "февраля";
+                if (monthZ == "03") monthZ = "марта";
+                if (monthZ == "04") monthZ = "апреля";
+                if (monthZ == "05") monthZ = "мая";
+                if (monthZ == "06") monthZ = "июня";
+                if (monthZ == "07") monthZ = "июля";
+                if (monthZ == "08") monthZ = "августа";
+                if (monthZ == "09") monthZ = "сентября";
+                if (monthZ == "10") monthZ = "октября";
+                if (monthZ == "11") monthZ = "ноября";
+                if (monthZ == "12") monthZ = "декабря";
+                ReplaceWordStub("{dv}", chZ, wordDocument);
+                ReplaceWordStub("{monthv}", monthZ, wordDocument);
+                ReplaceWordStub("{yearv}", yearZ, wordDocument);
                 string adresK = "г. " + kcity.ToString() + ", ул. " + kstreet.ToString() + ", " + khn.ToString();
-                string[] pass = date.Split('/');
+                dateP = dateP.Substring(0, dateP.IndexOf(' ') + 1);
+                string[] pass = dateP.Split('.');
                 string chP = pass[0];
-                string monthP = words[1];
+                string monthP = pass[1];
                 string yearP = pass[2];
                 if (monthP == "01") monthP = "января";
                 if (monthP == "02") monthP = "февраля";
@@ -160,8 +188,8 @@ namespace kr
                 if (monthP == "10") monthP= "октября";
                 if (monthP == "11") monthP = "ноября";
                 if (monthP == "12") monthP = "декабря";
-                string klient = kLn + " " + kFn.Substring(0, 1) + ". " + kOt.Substring(0, 1) + ".";
-                string kfio = kLn + " " + kFn + " " + kOt;
+                string klient = kLn + " " + kFn.Substring(0, 1) + "." + kOt.Substring(0, 1) + ".";
+                string kfio = kLn + " " + kFn + kOt;
                 string pasport = seriya + " " + nomer;
                 ReplaceWordStub("{pd}", chP, wordDocument);
                 ReplaceWordStub("{pmon}", monthP, wordDocument);
@@ -177,7 +205,12 @@ namespace kr
 
                 ReplaceWordStub("{dir}", dir, wordDocument);
                 ReplaceWordStub("{FIOdira}", fio, wordDocument);
+                ReplaceWordStub("{number}", dogovornumber, wordDocument);
 
+
+
+                ReplaceWordStub("{ssudSchet}", ssuda, wordDocument);
+                ReplaceWordStub("{schet}", schet, wordDocument);
                 ReplaceWordStub("{city}", city.ToString(), wordDocument);
                 ReplaceWordStub("{bank}", name.ToString(), wordDocument);
                 ReplaceWordStub("{bank2}", name.ToString(), wordDocument);
@@ -196,7 +229,8 @@ namespace kr
             wordDocument.SaveAs(@"C:\Users\1652090\OneDrive\Рабочий стол\" + s + "");
             wordApp.Visible = true;
             Connection.Close();
-         }
+
+        }
 
         private void ReplaceWordStub(string stubToReplace, string text, Word.Document wordDocument)
         {

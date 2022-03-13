@@ -39,7 +39,6 @@
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
             this.textBox3 = new System.Windows.Forms.TextBox();
             this.klientcmb = new System.Windows.Forms.ComboBox();
             this.nazn = new System.Windows.Forms.ComboBox();
@@ -47,6 +46,7 @@
             this.procent = new System.Windows.Forms.ComboBox();
             this.risk = new System.Windows.Forms.ComboBox();
             this.sotr = new System.Windows.Forms.ComboBox();
+            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
             this.SuspendLayout();
             // 
             // button1
@@ -126,9 +126,9 @@
             this.label7.AutoSize = true;
             this.label7.Location = new System.Drawing.Point(25, 364);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(112, 16);
+            this.label7.Size = new System.Drawing.Size(105, 16);
             this.label7.TabIndex = 8;
-            this.label7.Text = "Срок погашения";
+            this.label7.Text = "Дата возврата";
             // 
             // label8
             // 
@@ -147,13 +147,6 @@
             this.label9.Size = new System.Drawing.Size(95, 16);
             this.label9.TabIndex = 10;
             this.label9.Text = "Группа риска";
-            // 
-            // textBox2
-            // 
-            this.textBox2.Location = new System.Drawing.Point(267, 357);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(288, 22);
-            this.textBox2.TabIndex = 11;
             // 
             // textBox3
             // 
@@ -224,11 +217,19 @@
             this.sotr.TabIndex = 18;
             this.sotr.SelectedIndexChanged += new System.EventHandler(this.comboBox6_SelectedIndexChanged);
             // 
+            // dateTimePicker1
+            // 
+            this.dateTimePicker1.Location = new System.Drawing.Point(266, 358);
+            this.dateTimePicker1.Name = "dateTimePicker1";
+            this.dateTimePicker1.Size = new System.Drawing.Size(289, 22);
+            this.dateTimePicker1.TabIndex = 19;
+            // 
             // Dogovor__
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(604, 572);
+            this.Controls.Add(this.dateTimePicker1);
             this.Controls.Add(this.sotr);
             this.Controls.Add(this.risk);
             this.Controls.Add(this.procent);
@@ -236,7 +237,6 @@
             this.Controls.Add(this.nazn);
             this.Controls.Add(this.klientcmb);
             this.Controls.Add(this.textBox3);
-            this.Controls.Add(this.textBox2);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label7);
@@ -269,7 +269,6 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.TextBox textBox3;
         private System.Windows.Forms.ComboBox klientcmb;
         private System.Windows.Forms.ComboBox nazn;
@@ -277,5 +276,6 @@
         private System.Windows.Forms.ComboBox procent;
         private System.Windows.Forms.ComboBox risk;
         private System.Windows.Forms.ComboBox sotr;
+        private System.Windows.Forms.DateTimePicker dateTimePicker1;
     }
 }

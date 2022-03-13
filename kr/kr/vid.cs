@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
-using System.Data.SQLite;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -17,43 +17,38 @@ namespace kr
         {
             InitializeComponent();
         }
-        SQLiteConnection Connection = new SQLiteConnection(@"Data Source=C:\Users\1652090\OneDrive\Рабочий стол\kredit.db");
+        SqlConnection Connection = new SqlConnection(@"Data Source=LAPTOP-862V88EF\SQLEXPRESS;Initial Catalog=kredit;Integrated Security=True");
 
         private void vid_Load(object sender, EventArgs e)
         {
-            Connection.Open();
-            SQLiteDataAdapter adapter = new SQLiteDataAdapter("SELECT id_vida AS [№], name AS [вид] FROM [Вид кредита]", Connection);
-            DataSet ds = new DataSet();
-            adapter.Fill(ds, "info");
-            dataGridView1.DataSource = ds.Tables[0];
-            Connection.Close();
+            this.вид_кредитаTableAdapter.Fill(this.dataSet1.Вид_кредита);           
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Connection.Open();
+          /*  Connection.Open();
             string sql = "insert into [Вид кредита](name) Values ('" + namebox.Text + "')";
             SQLiteCommand command = new SQLiteCommand(sql, Connection);
             command.ExecuteNonQuery();
-            Connection.Close();
+            Connection.Close();*/
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
             if (textBox1.Text == "")
             {
-                SQLiteDataAdapter adapter = new SQLiteDataAdapter("SELECT id_vida AS [№], name AS [вид] FROM [Вид кредита]", Connection);
+                SqlDataAdapter adapter = new SqlDataAdapter("SELECT Код AS [№], Вид AS [вид] FROM [Вид кредита]", Connection);
                 DataSet ds = new DataSet();
                 adapter.Fill(ds, "info");
-                dataGridView1.DataSource = ds.Tables[0];
+                вид_кредитаDataGridView.DataSource = ds.Tables[0];
                 Connection.Close();
             }
             else
             {
-                SQLiteDataAdapter adapter = new SQLiteDataAdapter("select id_vida AS [№], name AS [вид] from [Вид кредита] where id_vida AS [№] like'" + textBox1.Text + "' or name  AS [вид] like '" + textBox1.Text + "';", Connection);
+                SqlDataAdapter adapter = new SqlDataAdapter("select Код AS [№], Вид AS [вид] from [Вид кредита] where Код AS [№] like'" + textBox1.Text + "' or Вид  AS [вид] like '" + textBox1.Text + "';", Connection);
                 DataSet ds = new DataSet();
                 adapter.Fill(ds, "info");
-                dataGridView1.DataSource = ds.Tables[0];
+                вид_кредитаDataGridView.DataSource = ds.Tables[0];
                 Connection.Close();
             }
         }
@@ -74,6 +69,19 @@ namespace kr
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void вид_кредитаBindingNavigatorSaveItem_Click(object sender, EventArgs e)
+        {
+            this.Validate();
+            this.вид_кредитаBindingSource.EndEdit();
+            this.tableAdapterManager.UpdateAll(this.dataSet1);
+
+        }
+
+        private void bindingNavigatorMoveFirstItem_Click(object sender, EventArgs e)
         {
 
         }
