@@ -99,11 +99,11 @@
     <Compile Include="dolznost.Designer.cs">
       <DependentUpon>dolznost.cs</DependentUpon>
     </Compile>
-    <Compile Include="grafik.cs">
+    <Compile Include="GUI.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="grafik.Designer.cs">
-      <DependentUpon>grafik.cs</DependentUpon>
+    <Compile Include="GUI.Designer.cs">
+      <DependentUpon>GUI.cs</DependentUpon>
     </Compile>
     <Compile Include="kalendar.cs">
       <SubType>Form</SubType>
@@ -179,8 +179,8 @@
     <EmbeddedResource Include="dolznost.resx">
       <DependentUpon>dolznost.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="grafik.resx">
-      <DependentUpon>grafik.cs</DependentUpon>
+    <EmbeddedResource Include="GUI.resx">
+      <DependentUpon>GUI.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="kalendar.resx">
       <DependentUpon>kalendar.cs</DependentUpon>

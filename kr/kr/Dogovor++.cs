@@ -233,7 +233,7 @@ namespace kr
         {
             switch (procent.Text)
             {
-            //    case "0": сделать ++ через месседж бокс break;
+               case "0":  percent frm2 = new percent(); frm2.Show(); break;
             }
         }
 
@@ -241,7 +241,7 @@ namespace kr
         {
             switch (nazn.Text)
             {
-                //    case "0": сделать ++ через месседж бокс break;
+                   case "0":  naznach frm2 = new naznach(); frm2.Show(); break;
             }
         }
 

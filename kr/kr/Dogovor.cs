@@ -38,11 +38,13 @@ namespace kr
             adapter.Fill(ds, "info");
             dataGridView1.DataSource = ds.Tables[0];
             Connection.Close();
+            int rows = dataGridView1.Rows.Count - 1;
+            label1.Text = "Количество записей " + rows.ToString();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-
+            Dogovor__ frm2 = new Dogovor__(); frm2.Show();
         }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
@@ -237,6 +239,49 @@ namespace kr
             var range = wordDocument.Content;
             range.Find.ClearFormatting();
             range.Find.Execute(FindText: stubToReplace, ReplaceWith: text);
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            SqlDataAdapter adapter = new SqlDataAdapter("SELECT Договор.[№] AS [№ договора],  Клиенты.Фамилия AS[Клиент], [Целевое назначение кредита].[Название] AS[Цель], " +
+               "Договор.[Сумма] AS[Сумма], [Процентная ставка].[%]  AS[%], Договор.[Неустойка] AS[Неустойка], Договор.[дата заключения] AS[Дата заключения]," +
+               " Договор.[Срок погашения] AS[Дата погашения], [Вид кредита].[Вид] AS[Вид], Договор.[Ежемесячный платеж] AS[Ежемесячная выплата], [Группа риска].Группа AS[Группа риска]," +
+               " Сотрудники.Фамилия AS[Сотрудник], Банк.Название FROM Договор Inner join[Вид кредита] ON[Вид кредита].[Код] = Договор.[№ вида] Inner join[Группа риска] " +
+               "ON[Группа риска].[№] = Договор.[№ группы риска] Inner join Клиенты ON Клиенты.ИНН = Договор.[ИНН клиента] Inner join[Целевое назначение кредита] " +
+               "ON[Целевое назначение кредита].[№] = Договор.[№ назначения] Inner join(Сотрудники inner join Банк ON Сотрудники.БИК = Банк.БИК) " +
+               "ON Сотрудники.[№] = Договор.[№ сотрудника] Inner join[Процентная ставка] ON[Процентная ставка].[№] = Договор.[№ ставки] where Договор.[№] like " +
+               "'%" + textBox1.Text + "%' or Клиенты.Фамилия like '%" + textBox1.Text + "%' or [Целевое назначение кредита].[Название] like '%" + textBox1.Text + "%' or Договор.[Сумма] like '%" + textBox1.Text + "%'" +
+               " or [Процентная ставка].[%] like '%" + textBox1.Text + "%'or Договор.[Неустойка] like '%" + textBox1.Text + "%'" +
+                "or  Договор.[дата заключения] like '%" + textBox1.Text + "%'or Договор.[Срок погашения] like '%" + textBox1.Text + "%'" +
+               "or  Сотрудники.Фамилия like '%" + textBox1.Text + "%'or  Банк.Название like '%" + textBox1.Text + "%'" +
+               "or  Договор.[Ежемесячный платеж] like '%" + textBox1.Text + "%'or  [Группа риска].Группа like '%" + textBox1.Text + "%'" +
+               "or [Вид кредита].[Вид] like '%" + textBox1.Text + "%';", Connection);
+            DataSet ds = new DataSet();
+            adapter.Fill(ds, "info");
+            dataGridView1.DataSource = ds.Tables[0];
+            Connection.Close();
+            int rows = dataGridView1.Rows.Count - 1;
+            label1.Text = "Количество записей " + rows.ToString();
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            int index = dataGridView1.CurrentRow.Index;
+            if (index != dataGridView1.Rows.Count - 2)
+            {
+                dataGridView1.Rows[index].Selected = true;
+                dataGridView1.CurrentCell = dataGridView1[0, index + 1];
+            }
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            int index = dataGridView1.CurrentRow.Index;
+            if (index != 0)
+            {
+                dataGridView1.Rows[index].Selected = true;
+                dataGridView1.CurrentCell = dataGridView1[0, index - 1];
+            }
         }
     }
 

@@ -51,8 +51,8 @@ namespace kr
             double Payment = SumCredit * (InterestRateMonth / (1 - Math.Pow(1 + InterestRateMonth, -CreditPeriod))); // Ежемесячный платеж
             double ItogCreditSum = Payment * CreditPeriod; // Итоговая сумма кредита
 
-            label7.Text = Payment.ToString("N2"); // Выводим в результаты ежемесячный платёж
-            label8.Text = (ItogCreditSum).ToString("N2"); // Выводим в результаты итоговую сумму кредита
+            label5.Text = "Ежемесячный платеж: "+Payment.ToString("N2"); // Выводим в результаты ежемесячный платёж
+            label4.Text = "Итоговая сумма: "+(ItogCreditSum).ToString("N2"); // Выводим в результаты итоговую сумму кредита
 
             // Заполняем график платежей
             double SumCreditOperation = SumCredit;
@@ -71,7 +71,7 @@ namespace kr
                 ItogCreditSumOperation -= Payment;
                 ItogPlus = Convert.ToDouble(dataGridView1[4, i].Value);
             }
-            label9.Text = (ItogCreditSum - SumCredit + ItogPlus).ToString("N2");
+            label6.Text ="Переплата: "+ (ItogCreditSum - SumCredit + ItogPlus).ToString("N2");
         }
 
         private void button1_Click(object sender, EventArgs e)
