@@ -228,7 +228,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(604, 572);
+            this.ClientSize = new System.Drawing.Size(565, 572);
             this.Controls.Add(this.dateTimePicker1);
             this.Controls.Add(this.sotr);
             this.Controls.Add(this.risk);

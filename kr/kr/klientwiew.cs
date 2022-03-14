@@ -72,37 +72,36 @@ namespace kr
         private void button2_Click(object sender, EventArgs e)
         {
             SqlDataAdapter adapter = new SqlDataAdapter("SELECT* FROM Клиенты where [Серия паспорта] like '%" + textBox7.Text + "%' or [Номер паспорта] like" +
-               " '%" + textBox7.Text + "%' or Имя like '%" + textBox7.Text + "%' or Отчество like '%" + textBox7.Text + "%'" + "%'or [Город прописки] like '%" + textBox7.Text + "%'" +
-               " or Фамилия like '%" + textBox7.Text + "%'or Телефон like '%" + textBox7.Text + "%'" + "%'or [Ссудный счет] like '%" + textBox7.Text + "%'" +
-               "or  ИНН like '%" + textBox7.Text + "%'or Счет like '%" + textBox7.Text + "%'" + "%'or Телефон like '%" + textBox7.Text + "%'" + "%'or Работа like '%" + textBox7.Text + "%'" +
-               "or [Улица прописки] like '%" + textBox7.Text + "%';", Connection);
-           /* "insert into Клиенты([Серия паспорта],[Номер паспорта],Фамилия, Имя, Отчество, Телефон, ИНН, Доход, Счет, Работа, Стаж, [Улица прописки], " +
-                "[Город прописки], [Дом прописки], [Ссудный счет], Подразделение, [Кем выдан], [Где выдан], [Дата выдачи]) Values" +
-                " ('" + seriya.Text + "','" + nomer.Text + "','" + LastName.Text + "','" + FirstName.Text + "','" + otchestvo.Text + "','" + phone.Text + "','" + INN.Text + "','" + dohod.Text + "','" + schet.Text + "','" + job.Text + "','" + stash.Text + "','" + street.Text + "','" + city.Text + "','"
-                + home.Text + "','" + ssuda.Text + "','" + podrazdel.Text + "','" + kem.Text + "','" + where.Text + "','" + date + "')";
-           */
+               " '%" + textBox7.Text + "%' or Имя like '%" + textBox7.Text + "%' or Отчество like '%" + textBox7.Text + "%' or [Город прописки] like '%" + textBox7.Text + "%'" +
+               " or Фамилия like '%" + textBox7.Text + "%'or Телефон like '%" + textBox7.Text + "%'or [Ссудный счет] like '%" + textBox7.Text + "%'" +
+               "or  ИНН like '%" + textBox7.Text + "%'or Счет like '%" + textBox7.Text + "%'or Телефон like '%" + textBox7.Text + "%'or Работа like '%" + textBox7.Text + "%'" +
+               "or [Улица прописки] like '%" + textBox7.Text + "%';", Connection);          
+             DataSet ds = new DataSet();
+             adapter.Fill(ds, "info");
+             dataGridView1.DataSource = ds.Tables[0];
+             Connection.Close();
+             int rows = dataGridView1.Rows.Count - 1;
+             label7.Text = "Количество записей " + rows.ToString();
+         }
 
-            DataSet ds = new DataSet();
-            adapter.Fill(ds, "info");
-            dataGridView1.DataSource = ds.Tables[0];
-            Connection.Close();
-            int rows = dataGridView1.Rows.Count - 1;
-            label7.Text = "Количество записей " + rows.ToString();
+         private void dataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+         {
+           /*  Connection.Open();
+             SqlCommand command = new SqlCommand("UPDATE [Клиенты] SET [Название] = '" + dataGridView1.CurrentRow.Cells[0].Value.ToString() + "', [Кор. счет]" +
+                 "='" + dataGridView1.CurrentRow.Cells[1].Value.ToString() + "', Подразделение='" + dataGridView1.CurrentRow.Cells[3].Value.ToString() + "'," +
+                 "Город='" + dataGridView1.CurrentRow.Cells[4].Value.ToString() + "', Улица='" + dataGridView1.CurrentRow.Cells[5].Value.ToString() + "'," +
+                 "Дом='" + dataGridView1.CurrentRow.Cells[6].Value.ToString() + "' WHERE [БИК]= " + dataGridView1.CurrentRow.Cells[2].Value, Connection);
+             command.Parameters.AddWithValue("@percent", dataGridView1.CurrentCell.Value);
+             if (command.ExecuteNonQuery() != 1)
+             {
+                 MessageBox.Show("Возникла ошибка при изменении");
+             }
+             Connection.Close();*/
         }
 
-        private void dataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        private void button1_Click(object sender, EventArgs e)
         {
-          /*  Connection.Open();
-            SqlCommand command = new SqlCommand("UPDATE [Клиенты] SET [Название] = '" + dataGridView1.CurrentRow.Cells[0].Value.ToString() + "', [Кор. счет]" +
-                "='" + dataGridView1.CurrentRow.Cells[1].Value.ToString() + "', Подразделение='" + dataGridView1.CurrentRow.Cells[3].Value.ToString() + "'," +
-                "Город='" + dataGridView1.CurrentRow.Cells[4].Value.ToString() + "', Улица='" + dataGridView1.CurrentRow.Cells[5].Value.ToString() + "'," +
-                "Дом='" + dataGridView1.CurrentRow.Cells[6].Value.ToString() + "' WHERE [БИК]= " + dataGridView1.CurrentRow.Cells[2].Value, Connection);
-            command.Parameters.AddWithValue("@percent", dataGridView1.CurrentCell.Value);
-            if (command.ExecuteNonQuery() != 1)
-            {
-                MessageBox.Show("Возникла ошибка при изменении");
-            }
-            Connection.Close();*/
+            klient frm2 = new klient(); frm2.Show();
         }
     }
 }
