@@ -34,6 +34,7 @@ namespace kr
         }
         private void sotrud()
         {
+            chart1.Series.Clear();
             if (comboBox2.SelectedIndex == 0)
             {
                 var months = DateTime.Today;
@@ -75,9 +76,21 @@ group by Договор.[№ сотрудника], Сотрудники.Фам�
                 dataGridView1.DataSource = ds.Tables[0];
                 Connection.Close();
             }
+          //  chart1.ChartAreas[0].AxisX.Maximum = Double.NaN;
+          //  chart1.ChartAreas[0].AxisY.Minimum = Double.NaN;    
+            chart1.Series.Add("Series1");
+            int rows = dataGridView1.Rows.Count - 1;
+            for (int i = 0; i != rows; i++)
+            {
+                chart1.Series["Series1"].Points.AddXY(dataGridView1.Rows[i].Cells[0].Value.ToString(), dataGridView1.Rows[i].Cells[2].Value);
+                chart1.ChartAreas[0].AxisX.Maximum = Double.NaN;
+                chart1.ChartAreas[0].AxisY.Maximum = Convert.ToDouble(dataGridView1.Rows[i].Cells[2].Value);
+
+            }
         }
         private void platesh ()
         {
+            chart1.Series.Clear();
             if (comboBox2.SelectedIndex == 0)
             {
                 var months = DateTime.Today;
@@ -112,10 +125,20 @@ group by Договор.[№ сотрудника], Сотрудники.Фам�
                 dataGridView1.DataSource = ds.Tables[0];
                 Connection.Close();
             }
+           // chart1.ChartAreas[0].AxisX.Maximum = Double.NaN;
+           // chart1.ChartAreas[0].AxisY.Maximum = Double.NaN;
+            chart1.Series.Add("Series1");
+            int rows = dataGridView1.Rows.Count - 1;
+            for (int i = 0; i != rows; i++)
+            {
+                chart1.Series["Series1"].Points.AddXY(dataGridView1.Rows[i].Cells[1].Value.ToString(), dataGridView1.Rows[i].Cells[2].Value);
+                chart1.ChartAreas[0].AxisX.Maximum = Double.NaN;
+            }
         }
 
         private void dogovor ()
         {
+            chart1.Series.Clear();
             if (comboBox2.SelectedIndex == 0)
             {
                var months = DateTime.Today;                 
@@ -146,8 +169,17 @@ group by Договор.[№ сотрудника], Сотрудники.Фам�
                 adapter.Fill(ds, "info");
                 dataGridView1.DataSource = ds.Tables[0];
                 Connection.Close();
-            }           
-           
+            }
+           // chart1.ChartAreas[0].AxisX.Maximum = Double.NaN;
+           // chart1.ChartAreas[0].AxisY.Maximum = Double.NaN;
+            chart1.Series.Add("Series1");
+            int rows = dataGridView1.Rows.Count - 1;
+            for (int i = 0; i != rows; i++)
+            {
+                chart1.Series["Series1"].Points.AddXY(dataGridView1.Rows[i].Cells[1].Value.ToString().Substring(0, 10), dataGridView1.Rows[i].Cells[0].Value);
+                chart1.ChartAreas[0].AxisX.Maximum = Double.NaN;
+                chart1.ChartAreas[0].AxisY.Maximum = Convert.ToDouble(dataGridView1.Rows[i].Cells[0].Value);
+            }
         }
 
         private void statistika_Load(object sender, EventArgs e)
