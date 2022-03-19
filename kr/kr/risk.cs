@@ -120,5 +120,10 @@ namespace kr
                 label2.Text = "Количество записей " + rows.ToString();
             }
         }
+
+        private void namebox_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

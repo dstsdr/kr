@@ -283,6 +283,11 @@ namespace kr
                 dataGridView1.CurrentCell = dataGridView1[0, index - 1];
             }
         }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 
 }

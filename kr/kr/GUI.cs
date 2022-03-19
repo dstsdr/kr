@@ -89,5 +89,82 @@ namespace kr
             sotridnik frm2 = new sotridnik(); frm2.Show();
 
         }
+
+        private void расчетКредитаToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.panel9.Controls.Clear();
+            raschet dogovor = new raschet() { Dock = DockStyle.Fill, TopLevel = false, TopMost = true };
+            dogovor.FormBorderStyle = FormBorderStyle.None;
+            this.panel9.Controls.Add(dogovor);
+            dogovor.Show();
+        }
+
+        private void договорыToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.panel9.Controls.Clear();
+            Dogovor dogovor = new Dogovor() { Dock = DockStyle.Fill, TopLevel = false, TopMost = true };
+            dogovor.FormBorderStyle = FormBorderStyle.None;
+            this.panel9.Controls.Add(dogovor);
+            dogovor.Show();
+        }
+
+        private void графикПлатежейToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.panel9.Controls.Clear();
+            kalendar dogovor = new kalendar() { Dock = DockStyle.Fill, TopLevel = false, TopMost = true };
+            dogovor.FormBorderStyle = FormBorderStyle.None;
+            this.panel9.Controls.Add(dogovor);
+            dogovor.Show();
+        }
+
+        private void рефинансированиеToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void статистикаToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.panel9.Controls.Clear();
+            statistika dogovor = new statistika() { Dock = DockStyle.Fill, TopLevel = false, TopMost = true };
+            dogovor.FormBorderStyle = FormBorderStyle.None;
+            this.panel9.Controls.Add(dogovor);
+            dogovor.Show();
+        }
+
+        private void toolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            this.panel9.Controls.Clear();
+            raschet dogovor = new raschet() { Dock = DockStyle.Fill, TopLevel = false, TopMost = true };
+            dogovor.FormBorderStyle = FormBorderStyle.None;
+            this.panel9.Controls.Add(dogovor);
+            dogovor.Show();
+        }
+
+        private void toolStripMenuItem5_Click(object sender, EventArgs e)
+        {
+            this.panel9.Controls.Clear();
+            statistika dogovor = new statistika() { Dock = DockStyle.Fill, TopLevel = false, TopMost = true };
+            dogovor.FormBorderStyle = FormBorderStyle.None;
+            this.panel9.Controls.Add(dogovor);
+            dogovor.Show();
+        }
+
+        private void toolStripMenuItem3_Click(object sender, EventArgs e)
+        {
+            this.panel9.Controls.Clear();
+            kalendar dogovor = new kalendar() { Dock = DockStyle.Fill, TopLevel = false, TopMost = true };
+            dogovor.FormBorderStyle = FormBorderStyle.None;
+            this.panel9.Controls.Add(dogovor);
+            dogovor.Show();
+        }
+
+        private void toolStripMenuItem2_Click(object sender, EventArgs e)
+        {
+            this.panel9.Controls.Clear();
+            Dogovor dogovor = new Dogovor() { Dock = DockStyle.Fill, TopLevel = false, TopMost = true };
+            dogovor.FormBorderStyle = FormBorderStyle.None;
+            this.panel9.Controls.Add(dogovor);
+            dogovor.Show();
+        }
     }
 }

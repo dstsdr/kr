@@ -25,6 +25,16 @@ namespace kr
         }
         private void kalendar (double vuplata, int CreditPeriod, double SumCredit, double InterestRateYear) // составление календаря
         {
+            Connection.Open();
+            SqlCommand cmd5 = Connection.CreateCommand(); // группа риска
+            cmd5.CommandType = CommandType.Text;
+            cmd5.CommandText = "SELECT MAX(Договор.[№]) FROM Договор";
+            cmd5.ExecuteNonQuery();
+            DataTable dt5 = new DataTable();
+            SqlDataAdapter da5 = new SqlDataAdapter(cmd5);
+            da5.Fill(dt5);
+            int dogovor = Convert.ToInt32(dt5.Rows[0][0]);
+            Connection.Close();
             double ItogCreditSum = vuplata * CreditPeriod; // Итоговая сумма кредита
             double SumCreditOperation = SumCredit;
             double ItogCreditSumOperation = ItogCreditSum;
@@ -48,9 +58,10 @@ namespace kr
                 /*   string sql = "insert into [Календарь]([Дата запланированная], [Основной долг], [Проценты], [Остаток]) Values" +
                    " ('" + months.ToString("dd'.'MM'.'yyyy") + "','" + osn + "','" + percent + "','" + ostatok + "')";
                  SqlCommand command = new SqlCommand(sql, Connection);*/
-                SqlCommand command = new SqlCommand("insert into [Календарь]([Дата запланированная], [Основной долг], [Проценты], [Остаток]) Values" +
-                  " (@date, @OSN, @PERCENT, @OST)", Connection);
+                SqlCommand command = new SqlCommand("insert into [Календарь]([Дата запланированная],[Номер договора], [Основной долг], [Проценты], [Остаток]) Values" +
+                  " (@date, @number, @OSN, @PERCENT, @OST)", Connection);
                 command.Parameters.AddWithValue("@date", months.ToString("dd'.'MM'.'yyyy"));
+                command.Parameters.AddWithValue("@number", dogovor);
                 command.Parameters.AddWithValue("@OSN", osn);
                 command.Parameters.AddWithValue("@PERCENT", percent);
                 command.Parameters.AddWithValue("@OST", ostatok);
@@ -70,7 +81,7 @@ namespace kr
            // int CreditPeriod = Convert.ToInt32(textBox2.Text); // Срок кредита, переводим в месяцы, если указан в годах
             CreditPeriod *= 12;
             decimal vuplata = Convert.ToDecimal(SumCredit * (InterestRateMonth / (1 - Math.Pow(1 + InterestRateMonth, -CreditPeriod)))); // Ежемесячный платеж
-            kalendar(Convert.ToDouble(vuplata), CreditPeriod, SumCredit, InterestRateYear);
+           
 
             string date = DateTime.Today.ToString("dd'.'MM'.'yyyy");          //дата  
            
@@ -137,6 +148,7 @@ namespace kr
             command.Parameters.AddWithValue("@neust", float.Parse(textBox1.Text));
             command.ExecuteNonQuery();
             Connection.Close();
+            kalendar(Convert.ToDouble(vuplata), CreditPeriod, SumCredit, InterestRateYear);
         }
 
         private void Dogovor___Load(object sender, EventArgs e)
