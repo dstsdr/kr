@@ -166,5 +166,6 @@ namespace kr
             this.panel9.Controls.Add(dogovor);
             dogovor.Show();
         }
+        
     }
 }

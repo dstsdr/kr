@@ -199,7 +199,7 @@
             this.Controls.Add(this.menuStrip2);
             this.Controls.Add(this.panel9);
             this.Controls.Add(this.dataGridView2);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "GUI";
             this.Text = "Потребительский кредит";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();

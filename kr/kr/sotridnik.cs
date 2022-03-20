@@ -55,12 +55,18 @@ namespace kr
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            switch (comboBox1.SelectedIndex)
+            {
+                   case 0:  dolznost frm2 = new dolznost(); frm2.Show(); break;
+            }
         }
 
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
-            
+            switch(comboBox2.SelectedIndex)
+            {
+                   case 0:  bank frm2 = new bank(); frm2.Show(); break;
+            }
         }
         private void dataset()
         {

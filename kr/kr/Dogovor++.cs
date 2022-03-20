@@ -18,6 +18,8 @@ namespace kr
         {
             InitializeComponent();
         }
+        public bool check = true;
+
 
         private void label1_Click(object sender, EventArgs e)
         {
@@ -69,86 +71,114 @@ namespace kr
                   Connection.Close();
             }
         }
-
-            private void button1_Click(object sender, EventArgs e)
+        private void Add (bool check)
         {
-            string vozvrat = dateTimePicker1.Value.ToString();
-            vozvrat = vozvrat.Substring(0, vozvrat.IndexOf(' ') + 1);
-            int CreditPeriod = ((dateTimePicker1.Value.Year - DateTime.Today.Year) * 12) + dateTimePicker1.Value.Month - DateTime.Today.Month;
-            double SumCredit = Convert.ToDouble(textBox3.Text); // Сумма кредита
-            double InterestRateYear = Convert.ToDouble(procent.Text); // Процентная ставка, ГОДОВАЯ
-            double InterestRateMonth = InterestRateYear / 100 / 12; // Процентная ставка, МЕСЯЧНАЯ
-           // int CreditPeriod = Convert.ToInt32(textBox2.Text); // Срок кредита, переводим в месяцы, если указан в годах
-            CreditPeriod *= 12;
-            decimal vuplata = Convert.ToDecimal(SumCredit * (InterestRateMonth / (1 - Math.Pow(1 + InterestRateMonth, -CreditPeriod)))); // Ежемесячный платеж
-           
+            
+        }
 
-            string date = DateTime.Today.ToString("dd'.'MM'.'yyyy");          //дата  
-           
+        private void button1_Click(object sender, EventArgs e)
+        {
+            string a = "";
+            if (sotr.SelectedIndex > 0) { sotr.BackColor = Color.White; }
+            else { sotr.BackColor = Color.DarkGray; a += "сотрудник\n"; check = false; }
+            if (klientcmb.SelectedIndex > 0) { klientcmb.BackColor = Color.White; }
+            else { klientcmb.BackColor = Color.DarkGray; a += "клиент\n"; check = false; }
+            if (vid.SelectedIndex > 0) { vid.BackColor = Color.White; }
+            else { vid.BackColor = Color.DarkGray; a += "вид кредита\n"; check = false; }
+            if (procent.SelectedIndex > 0) { procent.BackColor = Color.White; }
+            else { procent.BackColor = Color.DarkGray; a += "процентная ставка\n"; check = false; }
+            if (risk.SelectedIndex > 0) { risk.BackColor = Color.White; }
+            else { risk.BackColor = Color.DarkGray; a += "группа риска\n"; check = false; }
+            if (nazn.SelectedIndex > 0) { nazn.BackColor = Color.White; }
+            else { nazn.BackColor = Color.DarkGray; a += "назначение\n"; check = false; }
+            if (textBox3.Text != "") { textBox3.BackColor = Color.White; }
+            else { textBox3.BackColor = Color.DarkGray; a += "сумма\n"; check = false; }
+            if (textBox1.Text != "") { textBox1.BackColor = Color.White; }
+            else { textBox1.BackColor = Color.DarkGray; a += "нейстойка\n"; check = false; }
+            if (check == false)
+            {
+                MessageBox.Show("Для добавления записи заполните/выберите следующие поля:" + a);
+            }
+            if (check == true)
+            {
+                string vozvrat = dateTimePicker1.Value.ToString();
+                vozvrat = vozvrat.Substring(0, vozvrat.IndexOf(' ') + 1);
+                int CreditPeriod = ((dateTimePicker1.Value.Year - DateTime.Today.Year) * 12) + dateTimePicker1.Value.Month - DateTime.Today.Month;
+                double SumCredit = Convert.ToDouble(textBox3.Text); // Сумма кредита
+                double InterestRateYear = Convert.ToDouble(procent.Text); // Процентная ставка, ГОДОВАЯ
+                double InterestRateMonth = InterestRateYear / 100 / 12; // Процентная ставка, МЕСЯЧНАЯ
+                                                                        // int CreditPeriod = Convert.ToInt32(textBox2.Text); // Срок кредита, переводим в месяцы, если указан в годах
+                CreditPeriod *= 12;
+                decimal vuplata = Convert.ToDecimal(SumCredit * (InterestRateMonth / (1 - Math.Pow(1 + InterestRateMonth, -CreditPeriod)))); // Ежемесячный платеж
 
-            string group, naznach, percent, vid, sotrud, klient;
-            Connection.Open();
-            SqlCommand cmd5 = Connection.CreateCommand(); // группа риска
-            cmd5.CommandType = CommandType.Text;
-            cmd5.CommandText = "SELECT [№] FROM [Группа риска] WHERE [Группа]='" + risk.Text + "'";
-            cmd5.ExecuteNonQuery();
-            DataTable dt5 = new DataTable();
-            SqlDataAdapter da5 = new SqlDataAdapter(cmd5);
-            da5.Fill(dt5);
-            group = dt5.Rows[0][0].ToString();
-            SqlCommand cmd2 = Connection.CreateCommand(); //целевое назначение
-            cmd2.CommandType = CommandType.Text;
-            cmd2.CommandText = "SELECT [№] FROM [Целевое назначение кредита] WHERE [Название]='" + nazn.Text + "'";
-            cmd2.ExecuteNonQuery();
-            DataTable dt2 = new DataTable();
-            SqlDataAdapter da2 = new SqlDataAdapter(cmd2);
-            da2.Fill(dt2);
-            naznach=dt2.Rows[0][0].ToString();
-            SqlCommand cmd3 = Connection.CreateCommand(); // вид кредита
-            cmd3.CommandType = CommandType.Text;
-            cmd3.CommandText = "SELECT [Код] FROM [Вид кредита] WHERE [Вид]='" + this.vid.Text + "'";
-            cmd3.ExecuteNonQuery();
-            DataTable dt3 = new DataTable();
-            SqlDataAdapter da3 = new SqlDataAdapter(cmd3);
-            da3.Fill(dt3);            
-            vid=dt3.Rows[0][0].ToString();
-            SqlCommand cmd4 = Connection.CreateCommand(); //проценты
-            cmd4.CommandType = CommandType.Text;
-            string pr= procent.Text.Replace(",", ".");
-            cmd4.CommandText = "SELECT [№] FROM [Процентная ставка] WHERE [%]='" + pr + "'";
-            cmd4.ExecuteNonQuery();
-            DataTable dt4 = new DataTable();
-            SqlDataAdapter da4 = new SqlDataAdapter(cmd4);
-            da4.Fill(dt4);            
-            percent=dt4.Rows[0][0].ToString();
-            // сотрудник
-            string dolznost;
-            string Combo = sotr.Text;
-            string[] words = Combo.Split(' ');
-            sotrud = words[0];
-            // klient
-            Combo = klientcmb.Text;
-            words = Combo.Split(' ');
-            klient = words[0];
-            //добавление
-          /*   string sql = "insert into Договор([№ группы риска],[№ сотрудника],[ИНН клиента], [№ назначения], [№ вида], [дата заключения], [Срок погашения], [Ежемесячный платеж], [№ ставки], [Сумма], [Неустойка]) Values" +
-                " ('" + group + "','" + sotrud + "','" + klient + "','" + naznach + "','" + vid + "','" + date + "','" + vozvrat + "','" + vuplata + "','" + percent + "','" + textBox3.Text + "','" + textBox1.Text +"')";
-           */ SqlCommand command = new SqlCommand("insert into Договор([№ группы риска],[№ сотрудника],[ИНН клиента], [№ назначения], [№ вида], [дата заключения], [Срок погашения], [Ежемесячный платеж], [№ ставки], [Сумма], [Неустойка]) Values" +
-                " (@group, @sotr, @klient, @naznach, @vid, @date, @vozvrat, @vuplata, @percent, @summ, @neust)", Connection);
-            command.Parameters.AddWithValue("@group", group);
-            command.Parameters.AddWithValue("@sotr", sotrud);
-            command.Parameters.AddWithValue("@klient", klient);
-            command.Parameters.AddWithValue("@naznach", naznach);
-            command.Parameters.AddWithValue("@vid", vid);
-            command.Parameters.AddWithValue("@date", date);
-            command.Parameters.AddWithValue("@vozvrat", vozvrat);
-            command.Parameters.AddWithValue("@vuplata", vuplata);
-            command.Parameters.AddWithValue("@percent", percent);
-            command.Parameters.AddWithValue("@summ", Convert.ToDecimal(textBox3.Text));
-            command.Parameters.AddWithValue("@neust", float.Parse(textBox1.Text));
-            command.ExecuteNonQuery();
-            Connection.Close();
-            kalendar(Convert.ToDouble(vuplata), CreditPeriod, SumCredit, InterestRateYear);
+
+                string date = DateTime.Today.ToString("dd'.'MM'.'yyyy");          //дата  
+
+
+                string group, naznach, percent, vid, sotrud, klient;
+                Connection.Open();
+                SqlCommand cmd5 = Connection.CreateCommand(); // группа риска
+                cmd5.CommandType = CommandType.Text;
+                cmd5.CommandText = "SELECT [№] FROM [Группа риска] WHERE [Группа]='" + risk.Text + "'";
+                cmd5.ExecuteNonQuery();
+                DataTable dt5 = new DataTable();
+                SqlDataAdapter da5 = new SqlDataAdapter(cmd5);
+                da5.Fill(dt5);
+                group = dt5.Rows[0][0].ToString();
+                SqlCommand cmd2 = Connection.CreateCommand(); //целевое назначение
+                cmd2.CommandType = CommandType.Text;
+                cmd2.CommandText = "SELECT [№] FROM [Целевое назначение кредита] WHERE [Название]='" + nazn.Text + "'";
+                cmd2.ExecuteNonQuery();
+                DataTable dt2 = new DataTable();
+                SqlDataAdapter da2 = new SqlDataAdapter(cmd2);
+                da2.Fill(dt2);
+                naznach = dt2.Rows[0][0].ToString();
+                SqlCommand cmd3 = Connection.CreateCommand(); // вид кредита
+                cmd3.CommandType = CommandType.Text;
+                cmd3.CommandText = "SELECT [Код] FROM [Вид кредита] WHERE [Вид]='" + this.vid.Text + "'";
+                cmd3.ExecuteNonQuery();
+                DataTable dt3 = new DataTable();
+                SqlDataAdapter da3 = new SqlDataAdapter(cmd3);
+                da3.Fill(dt3);
+                vid = dt3.Rows[0][0].ToString();
+                SqlCommand cmd4 = Connection.CreateCommand(); //проценты
+                cmd4.CommandType = CommandType.Text;
+                string pr = procent.Text.Replace(",", ".");
+                cmd4.CommandText = "SELECT [№] FROM [Процентная ставка] WHERE [%]='" + pr + "'";
+                cmd4.ExecuteNonQuery();
+                DataTable dt4 = new DataTable();
+                SqlDataAdapter da4 = new SqlDataAdapter(cmd4);
+                da4.Fill(dt4);
+                percent = dt4.Rows[0][0].ToString();
+                // сотрудник
+                string dolznost;
+                string Combo = sotr.Text;
+                string[] words = Combo.Split(' ');
+                sotrud = words[0];
+                // klient
+                Combo = klientcmb.Text;
+                words = Combo.Split(' ');
+                klient = words[0];
+                MessageBox.Show("дошло");
+                //добавление
+                /* SqlCommand command = new SqlCommand("insert into Договор([№ группы риска],[№ сотрудника],[ИНН клиента], [№ назначения], [№ вида], [дата заключения], [Срок погашения], [Ежемесячный платеж], [№ ставки], [Сумма], [Неустойка]) Values" +
+                     " (@group, @sotr, @klient, @naznach, @vid, @date, @vozvrat, @vuplata, @percent, @summ, @neust)", Connection);
+                 command.Parameters.AddWithValue("@group", group);
+                 command.Parameters.AddWithValue("@sotr", sotrud);
+                 command.Parameters.AddWithValue("@klient", klient);
+                 command.Parameters.AddWithValue("@naznach", naznach);
+                 command.Parameters.AddWithValue("@vid", vid);
+                 command.Parameters.AddWithValue("@date", date);
+                 command.Parameters.AddWithValue("@vozvrat", vozvrat);
+                 command.Parameters.AddWithValue("@vuplata", vuplata);
+                 command.Parameters.AddWithValue("@percent", percent);
+                 command.Parameters.AddWithValue("@summ", Convert.ToDecimal(textBox3.Text));
+                 command.Parameters.AddWithValue("@neust", float.Parse(textBox1.Text));
+                 command.ExecuteNonQuery();
+                 Connection.Close();
+                 kalendar(Convert.ToDouble(vuplata), CreditPeriod, SumCredit, InterestRateYear);*/
+            }
+            
         }
 
         private void Dogovor___Load(object sender, EventArgs e)
@@ -226,40 +256,51 @@ namespace kr
 
         private void comboBox6_SelectedIndexChanged(object sender, EventArgs e)
         {
-            switch (sotr.Text)
+            switch (sotr.SelectedIndex)
             {
-                case "0": sotridnik frm2 = new sotridnik(); frm2.Show(); break;
+                case 0: sotridnik frm2 = new sotridnik(); frm2.Show(); break;
             }
 
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            switch (klientcmb.Text)
+            switch (klientcmb.SelectedIndex)
             {
-                case "0": klient frm2 = new klient(); frm2.Show(); break;
+                case 0: klient frm2 = new klient(); frm2.Show(); break;
             }
         }
 
         private void comboBox4_SelectedIndexChanged(object sender, EventArgs e)
         {
-            switch (procent.Text)
+            switch (procent.SelectedIndex)
             {
-               case "0":  percent frm2 = new percent(); frm2.Show(); break;
+               case 0:  percent frm2 = new percent(); frm2.Show(); break;
             }
         }
 
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
-            switch (nazn.Text)
+            switch (nazn.SelectedIndex)
             {
-                   case "0":  naznach frm2 = new naznach(); frm2.Show(); break;
+                   case 0:  naznach frm2 = new naznach(); frm2.Show(); break;
             }
         }
 
         private void comboBox5_SelectedIndexChanged(object sender, EventArgs e)
         {
+            switch (risk.SelectedIndex)
+            {
+                   case 0:  risk frm2 = new risk(); frm2.Show(); break;
+            }
+        }
 
+        private void vid_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            switch (vid.SelectedIndex)
+            {
+                case 0: vid frm2 = new vid(); frm2.Show(); break;
+            }
         }
     }
 }
