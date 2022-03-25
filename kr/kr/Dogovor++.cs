@@ -159,9 +159,8 @@ namespace kr
                 Combo = klientcmb.Text;
                 words = Combo.Split(' ');
                 klient = words[0];
-                MessageBox.Show("дошло");
                 //добавление
-                /* SqlCommand command = new SqlCommand("insert into Договор([№ группы риска],[№ сотрудника],[ИНН клиента], [№ назначения], [№ вида], [дата заключения], [Срок погашения], [Ежемесячный платеж], [№ ставки], [Сумма], [Неустойка]) Values" +
+                 SqlCommand command = new SqlCommand("insert into Договор([№ группы риска],[№ сотрудника],[ИНН клиента], [№ назначения], [№ вида], [дата заключения], [Срок погашения], [Ежемесячный платеж], [№ ставки], [Сумма], [Неустойка]) Values" +
                      " (@group, @sotr, @klient, @naznach, @vid, @date, @vozvrat, @vuplata, @percent, @summ, @neust)", Connection);
                  command.Parameters.AddWithValue("@group", group);
                  command.Parameters.AddWithValue("@sotr", sotrud);
@@ -176,7 +175,7 @@ namespace kr
                  command.Parameters.AddWithValue("@neust", float.Parse(textBox1.Text));
                  command.ExecuteNonQuery();
                  Connection.Close();
-                 kalendar(Convert.ToDouble(vuplata), CreditPeriod, SumCredit, InterestRateYear);*/
+                 kalendar(Convert.ToDouble(vuplata), CreditPeriod, SumCredit, InterestRateYear);
             }
             
         }

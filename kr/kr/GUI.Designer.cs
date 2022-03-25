@@ -76,6 +76,7 @@
             this.panel9.Name = "panel9";
             this.panel9.Size = new System.Drawing.Size(1574, 727);
             this.panel9.TabIndex = 23;
+            this.panel9.Paint += new System.Windows.Forms.PaintEventHandler(this.panel9_Paint);
             // 
             // menuStrip2
             // 
@@ -202,6 +203,7 @@
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "GUI";
             this.Text = "Потребительский кредит";
+            this.Load += new System.EventHandler(this.GUI_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
             this.menuStrip2.ResumeLayout(false);
             this.menuStrip2.PerformLayout();

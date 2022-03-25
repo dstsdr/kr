@@ -86,7 +86,7 @@ namespace kr
 
          private void dataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
          {
-           /*  Connection.Open();
+             Connection.Open();
              SqlCommand command = new SqlCommand("UPDATE [Клиенты] SET [Название] = '" + dataGridView1.CurrentRow.Cells[0].Value.ToString() + "', [Кор. счет]" +
                  "='" + dataGridView1.CurrentRow.Cells[1].Value.ToString() + "', Подразделение='" + dataGridView1.CurrentRow.Cells[3].Value.ToString() + "'," +
                  "Город='" + dataGridView1.CurrentRow.Cells[4].Value.ToString() + "', Улица='" + dataGridView1.CurrentRow.Cells[5].Value.ToString() + "'," +
@@ -96,12 +96,17 @@ namespace kr
              {
                  MessageBox.Show("Возникла ошибка при изменении");
              }
-             Connection.Close();*/
+             Connection.Close();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             klient frm2 = new klient(); frm2.Show();
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }

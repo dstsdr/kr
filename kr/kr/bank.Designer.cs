@@ -350,6 +350,10 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(770, 524);
+            this.Controls.Add(this.numberbox);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.label15);
             this.Controls.Add(this.label14);
             this.Controls.Add(this.label13);
@@ -368,15 +372,11 @@
             this.Controls.Add(this.button1);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.podrazdelbox);
-            this.Controls.Add(this.numberbox);
             this.Controls.Add(this.textBox4);
-            this.Controls.Add(this.label5);
             this.Controls.Add(this.streetbox);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.citybox);
-            this.Controls.Add(this.label3);
             this.Controls.Add(this.bikbox);
-            this.Controls.Add(this.label2);
             this.Controls.Add(this.korschetbox);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.namebox);
