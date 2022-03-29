@@ -107,5 +107,10 @@ namespace kr
             Connection.Close();
             dataset();
         }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
     }
 }

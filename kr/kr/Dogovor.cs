@@ -14,6 +14,7 @@ namespace kr
 {
     public partial class Dogovor : Form
     {
+        string klient, cel, summ, percent, neustoika, enddate, vid, vuplata, risk, sotr, bank;
         public Dogovor()
         {
             InitializeComponent();
@@ -25,113 +26,32 @@ namespace kr
         {
 
         }
-
         private void Form1_Load(object sender, EventArgs e)
         {
-            Getsotr();
-            Getklient2();
-            Getrisk();
-            Getpercent();
-            Getvid();
-            Getdogovor();
-            Getklient();
+            Connection.Open();
+            SqlDataAdapter adapter = new SqlDataAdapter("SELECT Договор.[№] AS [№],  CONCAT(Клиенты.ИНН, Клиенты.Фамилия) AS[Клиент], [Целевое назначение кредита].[Название] AS[Цель], " +
+                "Договор.[Сумма] AS[Сумма], [Процентная ставка].[%]  AS[%], Договор.[Неустойка] AS[Неустойка], Договор.[дата заключения] AS[Дата заключения]," +
+                " Договор.[Срок погашения] AS[Дата погашения], [Вид кредита].[Вид] AS[Вид], Договор.[Ежемесячный платеж] AS[Ежемесячная выплата], [Группа риска].Группа AS[Группа риска]," +
+                " CONCAT (Сотрудники.[№], ' ', Сотрудники.Фамилия) AS[Сотрудник], Банк.Название as [Банк] FROM Договор Inner join[Вид кредита] ON[Вид кредита].[Код] = Договор.[№ вида] Inner join[Группа риска] " +
+                "ON[Группа риска].[№] = Договор.[№ группы риска] Inner join Клиенты ON Клиенты.ИНН = Договор.[ИНН клиента] Inner join[Целевое назначение кредита] " +
+                "ON[Целевое назначение кредита].[№] = Договор.[№ назначения] Inner join(Сотрудники inner join Банк ON Сотрудники.БИК = Банк.БИК) " +
+                "ON Сотрудники.[№] = Договор.[№ сотрудника] Inner join[Процентная ставка] ON[Процентная ставка].[№] = Договор.[№ ставки]", Connection);
+            DataSet ds = new DataSet();
+            adapter.Fill(ds, "info");
+            dataGridView1.DataSource = ds.Tables[0];
+            Connection.Close();
+            int rows = dataGridView1.Rows.Count - 1;
+            label1.Text = "Количество записей " + rows.ToString();
         }
         string Con = @"Data Source=LAPTOP-862V88EF\SQLEXPRESS;Initial Catalog=kredit;Integrated Security=True";
-        void Getsotr ()
-        {
-            using (SqlConnection connection = new SqlConnection(Con.ToString()))
-            {
-                SqlCommand cmd1 = new SqlCommand("SELECT Сотрудники.[№], CONCAT (Сотрудники.[№], Сотрудники.[Фамилия], Должность.[Название]) as Sotr  FROM Должность INNER JOIN Сотрудники ON Должность.[№] = Сотрудники.[Должность]", connection); //мб просто сделать номер
-                DataTable tbl1 = new DataTable();
-                SqlDataAdapter da = new SqlDataAdapter(cmd1);
-                da.Fill(tbl1);
-                this.Column11.DataSource = tbl1;
-                this.Column11.DisplayMember = "Sotr";// столбец для отображения
-                this.Column11.ValueMember = "№";//столбец с id
-            }
-        }
-        void Getklient2 ()
-        {
-            using (SqlConnection connection = new SqlConnection(Con.ToString()))
-            {
-                SqlCommand cmd1 = new SqlCommand("SELECT ИНН, CONCAT (ИНН, Фамилия) as Клиент FROM Клиенты", connection); //мб просто сделать ИНН
-                DataTable tbl1 = new DataTable();
-                SqlDataAdapter da = new SqlDataAdapter(cmd1);
-                da.Fill(tbl1);
-                this.Column1.DataSource = tbl1;
-                this.Column1.DisplayMember = "Клиент";// столбец для отображения
-                this.Column1.ValueMember = "ИНН";//столбец с id
-            }
-        }
-        void Getrisk ()
-        {
-            using (SqlConnection connection = new SqlConnection(Con.ToString()))
-            {
-                SqlCommand cmd1 = new SqlCommand("SELECT * FROM [Группа риска]", connection);
-                DataTable tbl1 = new DataTable();
-                SqlDataAdapter da = new SqlDataAdapter(cmd1);
-                da.Fill(tbl1);
-                this.Column10.DataSource = tbl1;
-                this.Column10.DisplayMember = "Группа";// столбец для отображения
-                this.Column10.ValueMember = "№";//столбец с id
-            }
-        }
-        void Getpercent()
-        {
-            using (SqlConnection connection = new SqlConnection(Con.ToString()))
-            {
-                SqlCommand cmd1 = new SqlCommand("SELECT [№], [%] FROM [Процентная ставка]", connection);
-                DataTable tbl1 = new DataTable();
-                SqlDataAdapter da = new SqlDataAdapter(cmd1);
-                da.Fill(tbl1);
-                this.Column4.DataSource = tbl1;
-                this.Column4.DisplayMember = "%";// столбец для отображения
-                this.Column4.ValueMember = "№";//столбец с id
-            }
-        }
-        void Getvid ()
-        {
-            using (SqlConnection connection = new SqlConnection(Con.ToString()))
-            {
-                SqlCommand cmd1 = new SqlCommand("select * from [Вид кредита]", connection);
-                DataTable tbl1 = new DataTable();
-                SqlDataAdapter da = new SqlDataAdapter(cmd1);
-                da.Fill(tbl1);
-                this.Column8.DataSource = tbl1;
-                this.Column8.DisplayMember = "Вид";// столбец для отображения
-                this.Column8.ValueMember = "Код";//столбец с id
-            }
-        }
-        void Getdogovor()
-        {
-            using (SqlConnection connection = new SqlConnection(Con.ToString()))
-            {
-                SqlCommand cmd1 = new SqlCommand("select * from [Целевое назначение кредита]", connection);
-                DataTable tbl1 = new DataTable();
-                SqlDataAdapter da = new SqlDataAdapter(cmd1);
-                da.Fill(tbl1);
-                this.Column2.DataSource = tbl1;
-                this.Column2.DisplayMember = "Название";// столбец для отображения
-                this.Column2.ValueMember = "№";//столбец с id
-            }
-        }
-        void Getklient()
-        {
-            using (SqlConnection connection = new SqlConnection(Con.ToString()))
-            {
-                SqlCommand cmd = new SqlCommand("select * from Договор", connection);
-                connection.Open();
-                SqlDataReader dr = cmd.ExecuteReader();
-                DataTable dt = new DataTable();
-                dt.Load(dr);
-                dataGridView1.DataSource = dt;
-                connection.Close();
-            }
-        }
+        
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Dogovor__ frm2 = new Dogovor__(); frm2.Show();
+            Dogovor__ frm2 = new Dogovor__();
+            frm2.save.Visible = false;
+            frm2.button1.Visible = true;
+            frm2.Show();
         }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
@@ -170,6 +90,17 @@ namespace kr
             Connection.Close();
         }
         private readonly string document = @"C:\Users\1652090\OneDrive\Рабочий стол\dogovor-potrebitelskogo-kredita.doc";
+       /* private void sostavgrafic()
+        { 
+            string s = dataGridView1.CurrentCell.Value.ToString();
+            Connection.Open();
+            SqlDataAdapter adapter = new SqlDataAdapter("SELECT Календарь.[Дата запланированная], Договор.[Ежемесячный платеж], Календарь.Проценты, Календарь.[Основной долг], " +
+                "Календарь.Остаток FROM Календарь inner join Договор ON Календарь.[Номер договора] = Договор.[№] where Договор.[№] = '" + s + "'", Connection);
+            DataSet ds2 = new DataSet();
+            adapter.Fill(ds2, "info");
+            dataGridView3.DataSource = ds2.Tables[0];
+            Connection.Close();
+        }*/
         private void button2_Click(object sender, EventArgs e)
         {
              var wordApp = new Word.Application();
@@ -391,28 +322,42 @@ namespace kr
             }
         }
 
-        private void dataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
-        {           
-         /*   SqlCommand command = new SqlCommand("insert into Договор([№ группы риска],[№ сотрудника],[ИНН клиента], [№ назначения], [№ вида], [дата заключения], [Срок погашения], [Ежемесячный платеж], [№ ставки], [Сумма], [Неустойка]) Values" +
-                    " (@group, @sotr, @klient, @naznach, @vid, @date, @vozvrat, @vuplata, @percent, @summ, @neust)", Connection);
-            command.Parameters.AddWithValue("@group", group);
-            command.Parameters.AddWithValue("@sotr", sotrud);
-            command.Parameters.AddWithValue("@klient", klient);
-            command.Parameters.AddWithValue("@naznach", naznach);
-            command.Parameters.AddWithValue("@vid", vid);
-            command.Parameters.AddWithValue("@date", date);
-            command.Parameters.AddWithValue("@vozvrat", vozvrat);
-            command.Parameters.AddWithValue("@vuplata", vuplata);
-            command.Parameters.AddWithValue("@percent", percent);
-            command.Parameters.AddWithValue("@summ", Convert.ToDecimal(textBox3.Text));
-            command.Parameters.AddWithValue("@neust", float.Parse(textBox1.Text));
-            command.ExecuteNonQuery();
-            SqlCommand command = new SqlCommand(query, Connection);
-            if (command.ExecuteNonQuery() != 1)
-            {
-                MessageBox.Show("Возникла ошибка при изменении");
-            }
-            Connection.Close();*/
+
+        private void button9_Click(object sender, EventArgs e)
+        {
+            //        string N, klient, cel, summ, percent, neustoika, datazakluch, enddate, vid, vuplata, risk, sotr, bank;
+            int n = Convert.ToInt32(dataGridView1.CurrentCell.Value);
+            int s = dataGridView1.CurrentCell.RowIndex;
+            klient = dataGridView1[1, s].Value.ToString();
+            cel = dataGridView1[2, s].Value.ToString();
+            summ = dataGridView1[3, s].Value.ToString();
+            percent = dataGridView1[4, s].Value.ToString();
+            neustoika = dataGridView1[5, s].Value.ToString();
+            enddate = dataGridView1[7, s].Value.ToString();
+            vid = dataGridView1[8, s].Value.ToString();
+            vuplata = dataGridView1[9, s].Value.ToString();
+            risk = dataGridView1[10, s].Value.ToString();
+            sotr = dataGridView1[11, s].Value.ToString();
+            bank = dataGridView1[12, s].Value.ToString();
+
+            Dogovor__ frm = new Dogovor__();
+
+            frm.button1.Visible = false;
+            frm.save.Visible = true;
+            frm.sotr.Text = sotr;
+            frm.klientcmb.Text = klient;
+            frm.textBox3.Text = summ;
+            frm.vid.Text = vid;
+            frm.procent.Text = percent;
+            frm.textBox1.Text = neustoika;
+            frm.risk.Text = risk;
+            frm.nazn.Text = cel;
+            frm.dateTimePicker1.Text = enddate;
+            frm.s = n;
+            frm.ShowDialog();
+
+
+
         }
     }
 

@@ -57,11 +57,13 @@
             this.label17 = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
+            this.save = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(455, 529);
+            this.button1.Location = new System.Drawing.Point(411, 522);
             this.button1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(100, 31);
@@ -84,7 +86,7 @@
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(267, 303);
+            this.textBox1.Location = new System.Drawing.Point(225, 303);
             this.textBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(288, 22);
@@ -180,7 +182,7 @@
             // 
             // textBox3
             // 
-            this.textBox3.Location = new System.Drawing.Point(268, 137);
+            this.textBox3.Location = new System.Drawing.Point(226, 137);
             this.textBox3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textBox3.Name = "textBox3";
             this.textBox3.Size = new System.Drawing.Size(288, 22);
@@ -192,7 +194,7 @@
             this.klientcmb.ImeMode = System.Windows.Forms.ImeMode.On;
             this.klientcmb.Items.AddRange(new object[] {
             "Добавить клиента"});
-            this.klientcmb.Location = new System.Drawing.Point(267, 81);
+            this.klientcmb.Location = new System.Drawing.Point(225, 81);
             this.klientcmb.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.klientcmb.Name = "klientcmb";
             this.klientcmb.Size = new System.Drawing.Size(289, 24);
@@ -204,7 +206,7 @@
             this.nazn.FormattingEnabled = true;
             this.nazn.Items.AddRange(new object[] {
             "Добавить назначение"});
-            this.nazn.Location = new System.Drawing.Point(197, 466);
+            this.nazn.Location = new System.Drawing.Point(155, 466);
             this.nazn.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.nazn.Name = "nazn";
             this.nazn.Size = new System.Drawing.Size(357, 24);
@@ -216,7 +218,7 @@
             this.vid.FormattingEnabled = true;
             this.vid.Items.AddRange(new object[] {
             "Добавить вид"});
-            this.vid.Location = new System.Drawing.Point(267, 191);
+            this.vid.Location = new System.Drawing.Point(225, 191);
             this.vid.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.vid.Name = "vid";
             this.vid.Size = new System.Drawing.Size(288, 24);
@@ -228,7 +230,7 @@
             this.procent.FormattingEnabled = true;
             this.procent.Items.AddRange(new object[] {
             "Добавить процентную ставку"});
-            this.procent.Location = new System.Drawing.Point(267, 247);
+            this.procent.Location = new System.Drawing.Point(225, 247);
             this.procent.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.procent.Name = "procent";
             this.procent.Size = new System.Drawing.Size(288, 24);
@@ -240,7 +242,7 @@
             this.risk.FormattingEnabled = true;
             this.risk.Items.AddRange(new object[] {
             "Добавить группу"});
-            this.risk.Location = new System.Drawing.Point(267, 411);
+            this.risk.Location = new System.Drawing.Point(225, 411);
             this.risk.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.risk.Name = "risk";
             this.risk.Size = new System.Drawing.Size(289, 24);
@@ -253,7 +255,7 @@
             this.sotr.FormattingEnabled = true;
             this.sotr.Items.AddRange(new object[] {
             "Добавить сотрудника"});
-            this.sotr.Location = new System.Drawing.Point(267, 25);
+            this.sotr.Location = new System.Drawing.Point(225, 25);
             this.sotr.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.sotr.Name = "sotr";
             this.sotr.Size = new System.Drawing.Size(288, 24);
@@ -262,7 +264,7 @@
             // 
             // dateTimePicker1
             // 
-            this.dateTimePicker1.Location = new System.Drawing.Point(267, 358);
+            this.dateTimePicker1.Location = new System.Drawing.Point(225, 358);
             this.dateTimePicker1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.dateTimePicker1.Name = "dateTimePicker1";
             this.dateTimePicker1.Size = new System.Drawing.Size(289, 22);
@@ -368,12 +370,36 @@
             this.label19.TabIndex = 29;
             this.label19.Text = "*";
             // 
+            // save
+            // 
+            this.save.Location = new System.Drawing.Point(411, 522);
+            this.save.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.save.Name = "save";
+            this.save.Size = new System.Drawing.Size(100, 31);
+            this.save.TabIndex = 30;
+            this.save.Text = "Сохранить";
+            this.save.UseVisualStyleBackColor = true;
+            this.save.Click += new System.EventHandler(this.save_Click);
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(431, 588);
+            this.button2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(100, 31);
+            this.button2.TabIndex = 31;
+            this.button2.Text = "Закрыть";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
             // Dogovor__
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(565, 572);
+            this.ClientSize = new System.Drawing.Size(538, 625);
+            this.Controls.Add(this.button2);
+            this.Controls.Add(this.save);
             this.Controls.Add(this.label19);
             this.Controls.Add(this.label18);
             this.Controls.Add(this.label17);
@@ -413,10 +439,7 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
@@ -425,14 +448,6 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.ComboBox klientcmb;
-        private System.Windows.Forms.ComboBox nazn;
-        private System.Windows.Forms.ComboBox vid;
-        private System.Windows.Forms.ComboBox procent;
-        private System.Windows.Forms.ComboBox risk;
-        private System.Windows.Forms.ComboBox sotr;
-        private System.Windows.Forms.DateTimePicker dateTimePicker1;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label12;
@@ -443,5 +458,17 @@
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.Label label19;
+        public System.Windows.Forms.Button save;
+        public System.Windows.Forms.Button button1;
+        public System.Windows.Forms.TextBox textBox1;
+        public System.Windows.Forms.TextBox textBox3;
+        public System.Windows.Forms.ComboBox klientcmb;
+        public System.Windows.Forms.ComboBox nazn;
+        public System.Windows.Forms.ComboBox vid;
+        public System.Windows.Forms.ComboBox procent;
+        public System.Windows.Forms.ComboBox risk;
+        public System.Windows.Forms.ComboBox sotr;
+        public System.Windows.Forms.DateTimePicker dateTimePicker1;
+        public System.Windows.Forms.Button button2;
     }
 }

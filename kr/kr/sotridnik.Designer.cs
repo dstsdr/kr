@@ -62,6 +62,8 @@
             this.label16 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
+            this.button7 = new System.Windows.Forms.Button();
+            this.save = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -263,7 +265,7 @@
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label7.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.label7.Location = new System.Drawing.Point(16, 42);
+            this.label7.Location = new System.Drawing.Point(785, 45);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(156, 18);
             this.label7.TabIndex = 89;
@@ -271,7 +273,7 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(8, 325);
+            this.button3.Location = new System.Drawing.Point(107, 323);
             this.button3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(93, 27);
@@ -421,12 +423,37 @@
             this.label18.TabIndex = 101;
             this.label18.Text = "*";
             // 
+            // button7
+            // 
+            this.button7.Location = new System.Drawing.Point(8, 323);
+            this.button7.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.button7.Name = "button7";
+            this.button7.Size = new System.Drawing.Size(93, 27);
+            this.button7.TabIndex = 102;
+            this.button7.Text = "Изменить";
+            this.button7.UseVisualStyleBackColor = true;
+            this.button7.Click += new System.EventHandler(this.button7_Click);
+            // 
+            // save
+            // 
+            this.save.Location = new System.Drawing.Point(688, 458);
+            this.save.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.save.Name = "save";
+            this.save.Size = new System.Drawing.Size(93, 30);
+            this.save.TabIndex = 103;
+            this.save.Text = "Сохранить";
+            this.save.UseVisualStyleBackColor = true;
+            this.save.Visible = false;
+            this.save.Click += new System.EventHandler(this.save_Click);
+            // 
             // sotridnik
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(981, 539);
+            this.Controls.Add(this.save);
+            this.Controls.Add(this.button7);
             this.Controls.Add(this.label18);
             this.Controls.Add(this.label17);
             this.Controls.Add(this.label16);
@@ -507,5 +534,7 @@
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.Button button7;
+        private System.Windows.Forms.Button save;
     }
 }

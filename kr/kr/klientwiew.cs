@@ -86,18 +86,8 @@ namespace kr
 
          private void dataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
          {
-             Connection.Open();
-             SqlCommand command = new SqlCommand("UPDATE [Клиенты] SET [Название] = '" + dataGridView1.CurrentRow.Cells[0].Value.ToString() + "', [Кор. счет]" +
-                 "='" + dataGridView1.CurrentRow.Cells[1].Value.ToString() + "', Подразделение='" + dataGridView1.CurrentRow.Cells[3].Value.ToString() + "'," +
-                 "Город='" + dataGridView1.CurrentRow.Cells[4].Value.ToString() + "', Улица='" + dataGridView1.CurrentRow.Cells[5].Value.ToString() + "'," +
-                 "Дом='" + dataGridView1.CurrentRow.Cells[6].Value.ToString() + "' WHERE [БИК]= " + dataGridView1.CurrentRow.Cells[2].Value, Connection);
-             command.Parameters.AddWithValue("@percent", dataGridView1.CurrentCell.Value);
-             if (command.ExecuteNonQuery() != 1)
-             {
-                 MessageBox.Show("Возникла ошибка при изменении");
-             }
-             Connection.Close();
-        }
+             
+         }
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -107,6 +97,35 @@ namespace kr
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
+        }
+
+        private void button11_Click(object sender, EventArgs e)
+        {
+            int s = dataGridView1.CurrentCell.RowIndex;      
+
+            klient frm = new klient();
+            frm.button1.Visible = false;
+            frm.save.Visible = true;
+            frm.LastName.Text = dataGridView1[0, s].Value.ToString();
+            frm.FirstName.Text = dataGridView1[1, s].Value.ToString();
+            frm.otchestvo.Text = dataGridView1[2, s].Value.ToString();
+            frm.seriya.Text = dataGridView1[3, s].Value.ToString();
+            frm.nomer.Text = dataGridView1[4, s].Value.ToString();
+            frm.kem.Text = dataGridView1[5, s].Value.ToString();
+            frm.where.Text = dataGridView1[6, s].Value.ToString();
+            frm.dateTimePicker1.Text = dataGridView1[7, s].Value.ToString();
+            frm.phone.Text = dataGridView1[8, s].Value.ToString();
+            frm.INN.Text = dataGridView1[9, s].Value.ToString();
+            frm.job.Text = dataGridView1[10, s].Value.ToString();
+            frm.stash.Text = dataGridView1[11, s].Value.ToString();
+            frm.dohod.Text = dataGridView1[12, s].Value.ToString();
+            frm.city.Text = dataGridView1[13, s].Value.ToString();
+            frm.street.Text = dataGridView1[14, s].Value.ToString();
+            frm.home.Text = dataGridView1[15, s].Value.ToString();
+            frm.schet.Text = dataGridView1[16, s].Value.ToString();
+            frm.ssuda.Text = dataGridView1[17, s].Value.ToString();
+            frm.podrazdel.Text = dataGridView1[18, s].Value.ToString();
+            frm.ShowDialog();
         }
     }
 }

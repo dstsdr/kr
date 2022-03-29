@@ -26,7 +26,10 @@ namespace kr
 
         private void comboBox6_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            switch (comboBox6.SelectedIndex)
+            {
+                case 0: percent frm2 = new percent(); frm2.Show(); break;
+            }
         }
         SQLiteConnection Connection = new SQLiteConnection(@"Data Source=C:\Users\1652090\OneDrive\Рабочий стол\kredit.db");
 
@@ -51,8 +54,8 @@ namespace kr
             double Payment = SumCredit * (InterestRateMonth / (1 - Math.Pow(1 + InterestRateMonth, -CreditPeriod))); // Ежемесячный платеж
             double ItogCreditSum = Payment * CreditPeriod; // Итоговая сумма кредита
 
-            label5.Text = "Ежемесячный платеж: "+Payment.ToString("N2"); // Выводим в результаты ежемесячный платёж
-            label4.Text = "Итоговая сумма: "+(ItogCreditSum).ToString("N2"); // Выводим в результаты итоговую сумму кредита
+            label5.Text = Payment.ToString("N2") + " руб"; ; // Выводим в результаты ежемесячный платёж
+            label4.Text = (ItogCreditSum).ToString("N2") + " руб"; ; // Выводим в результаты итоговую сумму кредита
 
             // Заполняем график платежей
             double SumCreditOperation = SumCredit;
@@ -71,19 +74,30 @@ namespace kr
                 ItogCreditSumOperation -= Payment;
                 ItogPlus = Convert.ToDouble(dataGridView1[4, i].Value);
             }
-            label6.Text ="Переплата: "+ (ItogCreditSum - SumCredit + ItogPlus).ToString("N2");
+            label6.Text = (ItogCreditSum - SumCredit + ItogPlus).ToString("N2") + " руб";
+            int rows = dataGridView1.Rows.Count - 1;
+            label9.Text = "Количество записей " + rows.ToString();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             dataGridView1.Rows.Clear(); // Очищаем таблицу
-            double SumCredit = Convert.ToDouble(textBox1.Text); // Сумма кредита
+            double SumCredit = Convert.ToDouble(maskedTextBox1.Text); // Сумма кредита
             double InterestRateYear = Convert.ToDouble(comboBox6.Text); // Процентная ставка, ГОДОВАЯ
             double InterestRateMonth = InterestRateYear / 100 / 12; // Процентная ставка, МЕСЯЧНАЯ
-            int CreditPeriod = Convert.ToInt32(textBox3.Text); // Срок кредита, переводим в месяцы, если указан в годах
-            CreditPeriod *= 12;
+            int CreditPeriod = Convert.ToInt32(maskedTextBox2.Text); // Срок кредита, переводим в месяцы, если указан в годах
             PaymentScheduleAnnuitet(SumCredit, InterestRateYear, InterestRateMonth, CreditPeriod);
             
+        }
+
+        private void maskedTextBox2_MaskInputRejected(object sender, MaskInputRejectedEventArgs e)
+        {
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+
         }
     }
     

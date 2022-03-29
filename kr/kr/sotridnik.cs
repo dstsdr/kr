@@ -173,5 +173,49 @@ namespace kr
         {
 
         }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            int s = dataGridView1.CurrentRow.Index;
+            textBox1.Text = dataGridView1[1, s].Value.ToString();//фамилия
+            textBox2.Text = dataGridView1[2, s].Value.ToString();//имя
+            textBox3.Text = dataGridView1[3, s].Value.ToString();// отчество
+            textBox4.Text = dataGridView1[4, s].Value.ToString();//серия
+            textBox5.Text = dataGridView1[5, s].Value.ToString();//номер
+            comboBox1.Text = dataGridView1[6, s].Value.ToString();//должн
+            textBox6.Text = dataGridView1[7, s].Value.ToString();//телефон
+            comboBox2.Text = dataGridView1[8, s].Value.ToString(); //банк           
+        }
+
+        private void save_Click(object sender, EventArgs e)
+        {
+            string dolznost;
+            string Combo = comboBox2.Text;
+            string[] words = Combo.Split(' ');
+            string BIK = words[0];
+            /*   Combo = comboBox1.Text;
+               words = Combo.Split(' ');
+               string dolznost = words[0];*/
+            Connection.Open();
+            SqlCommand cmd2 = Connection.CreateCommand();
+            cmd2.CommandType = CommandType.Text;
+            cmd2.CommandText = "SELECT [№] FROM Должность WHERE Название='" + comboBox1.Text + "'";
+            cmd2.ExecuteNonQuery();
+            DataTable dt2 = new DataTable();
+            SqlDataAdapter da2 = new SqlDataAdapter(cmd2);
+            da2.Fill(dt2);
+            dolznost = dt2.Rows[0][0].ToString();
+            string sql = "UPDATE Сотрудники SET[Серия паспорта]='" + textBox4.Text + "', [Номер паспорта]='" + textBox5.Text + "', Фамилия=='" + textBox1.Text + "'" +
+                ", Имя='" + textBox2.Text + "', Отчество='" + textBox3.Text + "', БИК='" + BIK + "', [Должность]='" + dolznost + "', Телефон='" + textBox6.Text + "'" ;
+            SqlCommand command = new SqlCommand(sql, Connection);
+            command.ExecuteNonQuery();
+            Connection.Close();
+            textBox1.Clear();
+            textBox2.Clear();
+            textBox3.Clear();
+            textBox4.Clear();   
+            textBox5.Clear();
+            textBox6.Clear();
+        }
     }  
 }

@@ -178,5 +178,54 @@ namespace kr
         {
             
         }
+
+        private void toolStripMenuItem7_Click(object sender, EventArgs e)
+        {
+            klientwiew klient = new klientwiew();
+            klient.Show();
+        }
+
+        private void toolStripMenuItem8_Click(object sender, EventArgs e)
+        {
+            sotridnik sotr = new sotridnik();
+            sotr.Show();
+        }
+
+        private void toolStripMenuItem9_Click(object sender, EventArgs e)
+        {
+            dolznost dolznost = new dolznost();
+            dolznost.Show();
+        }
+
+        private void toolStripMenuItem10_Click(object sender, EventArgs e)
+        {
+            naznach naznach = new naznach();    
+            naznach.Show(); 
+        }
+
+        private void toolStripMenuItem11_Click(object sender, EventArgs e)
+        {
+            percent percent = new percent();    
+            percent.Show(); 
+        }
+
+        private void toolStripMenuItem12_Click(object sender, EventArgs e)
+        {
+            risk risk = new risk();
+            risk.Show();   
+        }
+
+        private void toolStripMenuItem13_Click(object sender, EventArgs e)
+        {
+            vid vid = new vid();    
+            vid.Show(); 
+        }
+
+        private void выходToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Login vid = new Login();
+            vid.Show();
+            this.Hide();
+        }
     }
 }

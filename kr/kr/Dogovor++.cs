@@ -14,6 +14,7 @@ namespace kr
     public partial class Dogovor__ : Form
     {
         SqlConnection Connection = new SqlConnection(@"Data Source=LAPTOP-862V88EF\SQLEXPRESS;Initial Catalog=kredit;Integrated Security=True");
+        public int s;
         public Dogovor__()
         {
             InitializeComponent();
@@ -300,6 +301,74 @@ namespace kr
             {
                 case 0: vid frm2 = new vid(); frm2.Show(); break;
             }
+        }
+
+        private void save_Click(object sender, EventArgs e)
+        {
+            string vozvrat = dateTimePicker1.Value.ToString();
+            string group, naznach, percent, vid, sotrud, klient;
+            Connection.Open();
+            SqlCommand cmd5 = Connection.CreateCommand(); // группа риска
+            cmd5.CommandType = CommandType.Text;
+            cmd5.CommandText = "SELECT [№] FROM [Группа риска] WHERE [Группа]='" + risk.Text + "'";
+            cmd5.ExecuteNonQuery();
+            DataTable dt5 = new DataTable();
+            SqlDataAdapter da5 = new SqlDataAdapter(cmd5);
+            da5.Fill(dt5);
+            group = dt5.Rows[0][0].ToString();
+            SqlCommand cmd2 = Connection.CreateCommand(); //целевое назначение
+            cmd2.CommandType = CommandType.Text;
+            cmd2.CommandText = "SELECT [№] FROM [Целевое назначение кредита] WHERE [Название]='" + nazn.Text + "'";
+            cmd2.ExecuteNonQuery();
+            DataTable dt2 = new DataTable();
+            SqlDataAdapter da2 = new SqlDataAdapter(cmd2);
+            da2.Fill(dt2);
+            naznach = dt2.Rows[0][0].ToString();
+            SqlCommand cmd3 = Connection.CreateCommand(); // вид кредита
+            cmd3.CommandType = CommandType.Text;
+            cmd3.CommandText = "SELECT [Код] FROM [Вид кредита] WHERE [Вид]='" + this.vid.Text + "'";
+            cmd3.ExecuteNonQuery();
+            DataTable dt3 = new DataTable();
+            SqlDataAdapter da3 = new SqlDataAdapter(cmd3);
+            da3.Fill(dt3);
+            vid = dt3.Rows[0][0].ToString();
+            SqlCommand cmd4 = Connection.CreateCommand(); //проценты
+            cmd4.CommandType = CommandType.Text;
+            string pr = procent.Text.Replace(",", ".");
+            cmd4.CommandText = "SELECT [№] FROM [Процентная ставка] WHERE [%]='" + pr + "'";
+            cmd4.ExecuteNonQuery();
+            DataTable dt4 = new DataTable();
+            SqlDataAdapter da4 = new SqlDataAdapter(cmd4);
+            da4.Fill(dt4);
+            percent = dt4.Rows[0][0].ToString();
+            // сотрудник
+            string dolznost;
+            string Combo = sotr.Text;
+            string[] words = Combo.Split(' ');
+            sotrud = words[0];
+            // klient
+            Combo = klientcmb.Text;
+            words = Combo.Split(' ');
+            klient = words[0];
+            //добавление
+            SqlCommand command = new SqlCommand("UPDATE Договор SET [№ группы риска]=@group,[№ сотрудника]=@sotr,[ИНН клиента]=@klient, [№ назначения]=@naznach," +
+                " [№ вида]=@vid, [Срок погашения]=@vozvrat, [№ ставки]=@percent, [Сумма]=@summ, [Неустойка]=@neust WHERE [№]= " + s, Connection);
+            command.Parameters.AddWithValue("@group", group);
+            command.Parameters.AddWithValue("@sotr", sotrud);
+            command.Parameters.AddWithValue("@klient", klient);
+            command.Parameters.AddWithValue("@naznach", naznach);
+            command.Parameters.AddWithValue("@vid", vid);
+            command.Parameters.AddWithValue("@vozvrat", vozvrat);
+            command.Parameters.AddWithValue("@percent", percent);
+            command.Parameters.AddWithValue("@summ", Convert.ToDecimal(textBox3.Text));
+            command.Parameters.AddWithValue("@neust", float.Parse(textBox1.Text));
+            command.ExecuteNonQuery();
+            Connection.Close();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
