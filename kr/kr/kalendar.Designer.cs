@@ -59,7 +59,7 @@
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToDisplayedHeaders;
             this.dataGridView1.RowTemplate.Height = 24;
-            this.dataGridView1.Size = new System.Drawing.Size(1035, 501);
+            this.dataGridView1.Size = new System.Drawing.Size(1097, 501);
             this.dataGridView1.TabIndex = 29;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             this.dataGridView1.CellEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellEnter);
@@ -107,7 +107,7 @@
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(1007, 665);
+            this.button5.Location = new System.Drawing.Point(1092, 674);
             this.button5.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(33, 26);
@@ -118,7 +118,7 @@
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(972, 665);
+            this.button4.Location = new System.Drawing.Point(1057, 674);
             this.button4.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(33, 26);
@@ -130,7 +130,7 @@
             // dateTimePicker1
             // 
             this.dateTimePicker1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.dateTimePicker1.Location = new System.Drawing.Point(1252, 279);
+            this.dateTimePicker1.Location = new System.Drawing.Point(1322, 279);
             this.dateTimePicker1.Name = "dateTimePicker1";
             this.dateTimePicker1.Size = new System.Drawing.Size(183, 24);
             this.dateTimePicker1.TabIndex = 89;
@@ -139,7 +139,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label2.Location = new System.Drawing.Point(1069, 237);
+            this.label2.Location = new System.Drawing.Point(1139, 237);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(161, 18);
             this.label2.TabIndex = 90;
@@ -149,7 +149,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label3.Location = new System.Drawing.Point(1069, 279);
+            this.label3.Location = new System.Drawing.Point(1139, 279);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(99, 18);
             this.label3.TabIndex = 91;
@@ -163,7 +163,7 @@
             this.add.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.add.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.add.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.add.Location = new System.Drawing.Point(1270, 332);
+            this.add.Location = new System.Drawing.Point(1340, 332);
             this.add.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.add.Name = "add";
             this.add.Size = new System.Drawing.Size(165, 38);
@@ -174,7 +174,7 @@
             // 
             // textBox2
             // 
-            this.textBox2.Location = new System.Drawing.Point(1252, 233);
+            this.textBox2.Location = new System.Drawing.Point(1322, 233);
             this.textBox2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(183, 22);

@@ -31,8 +31,8 @@ namespace kr
             Connection.Open();
             SqlDataAdapter adapter = new SqlDataAdapter("SELECT Договор.[№] AS [№],  CONCAT(Клиенты.ИНН, Клиенты.Фамилия) AS[Клиент], [Целевое назначение кредита].[Название] AS[Цель], " +
                 "Договор.[Сумма] AS[Сумма], [Процентная ставка].[%]  AS[%], Договор.[Неустойка] AS[Неустойка], Договор.[дата заключения] AS[Дата заключения]," +
-                " Договор.[Срок погашения] AS[Дата погашения], [Вид кредита].[Вид] AS[Вид], Договор.[Ежемесячный платеж] AS[Ежемесячная выплата], [Группа риска].Группа AS[Группа риска]," +
-                " CONCAT (Сотрудники.[№], ' ', Сотрудники.Фамилия) AS[Сотрудник], Банк.Название as [Банк] FROM Договор Inner join[Вид кредита] ON[Вид кредита].[Код] = Договор.[№ вида] Inner join[Группа риска] " +
+                " Договор.[Срок погашения] AS[Дата погашения], [Вид кредита].[Вид] AS[Вид], Договор.[Ежемесячный платеж] AS[Платеж], [Группа риска].Группа AS[Группа риска]," +
+                " CONCAT (Сотрудники.[№], ' ', Сотрудники.Фамилия) AS[Сотрудник], Банк.Название as [Банк], Договор.Статус FROM Договор Inner join[Вид кредита] ON[Вид кредита].[Код] = Договор.[№ вида] Inner join[Группа риска] " +
                 "ON[Группа риска].[№] = Договор.[№ группы риска] Inner join Клиенты ON Клиенты.ИНН = Договор.[ИНН клиента] Inner join[Целевое назначение кредита] " +
                 "ON[Целевое назначение кредита].[№] = Договор.[№ назначения] Inner join(Сотрудники inner join Банк ON Сотрудники.БИК = Банк.БИК) " +
                 "ON Сотрудники.[№] = Договор.[№ сотрудника] Inner join[Процентная ставка] ON[Процентная ставка].[№] = Договор.[№ ставки]", Connection);
@@ -42,6 +42,9 @@ namespace kr
             Connection.Close();
             int rows = dataGridView1.Rows.Count - 1;
             label1.Text = "Количество записей " + rows.ToString();
+            dataGridView1.Columns[6].Width = 150;
+            dataGridView1.Columns[7].Width = 150;
+
         }
         string Con = @"Data Source=LAPTOP-862V88EF\SQLEXPRESS;Initial Catalog=kredit;Integrated Security=True";
         
@@ -90,7 +93,7 @@ namespace kr
             Connection.Close();
         }
         private readonly string document = @"C:\Users\1652090\OneDrive\Рабочий стол\dogovor-potrebitelskogo-kredita.doc";
-       /* private void sostavgrafic()
+       private void sostavgrafic()
         { 
             string s = dataGridView1.CurrentCell.Value.ToString();
             Connection.Open();
@@ -100,7 +103,7 @@ namespace kr
             adapter.Fill(ds2, "info");
             dataGridView3.DataSource = ds2.Tables[0];
             Connection.Close();
-        }*/
+        }
         private void button2_Click(object sender, EventArgs e)
         {
              var wordApp = new Word.Application();
@@ -126,6 +129,7 @@ namespace kr
                 string summa = dataGridView1.CurrentRow.Cells[3].Value.ToString();
                 string naznach = dataGridView1.CurrentRow.Cells[2].Value.ToString();
                 string percent = dataGridView1.CurrentRow.Cells[4].Value.ToString();
+                string platesh = dataGridView1.CurrentRow.Cells[9].Value.ToString();
                 string adres = "г. "+city.ToString() + ", ул. "+ street.ToString() + ", "+ hn.ToString();
                 string date = dataGridView1.CurrentRow.Cells[6].Value.ToString();
                 date = date.Substring(0, date.IndexOf(' ') + 1);
@@ -190,6 +194,9 @@ namespace kr
                 ReplaceWordStub("{dv}", chZ, wordDocument);
                 ReplaceWordStub("{monthv}", monthZ, wordDocument);
                 ReplaceWordStub("{yearv}", yearZ, wordDocument);
+                ReplaceWordStub("{dv1}", chZ, wordDocument);
+                ReplaceWordStub("{monthv1}", monthZ, wordDocument);
+                ReplaceWordStub("{yearv1}", yearZ, wordDocument);
                 string adresK = "г. " + kcity.ToString() + ", ул. " + kstreet.ToString() + ", " + khn.ToString();
                 dateP = dateP.Substring(0, dateP.IndexOf(' ') + 1);
                 string[] pass = dateP.Split('.');
@@ -239,11 +246,25 @@ namespace kr
                 ReplaceWordStub("{adresBanka}", adres.ToString(), wordDocument);
                 ReplaceWordStub("{number}", s, wordDocument);
                 ReplaceWordStub("{summa}", summa, wordDocument);
+                ReplaceWordStub("{summa1}", summa, wordDocument);
+                ReplaceWordStub("{summa2}", summa, wordDocument);
+                ReplaceWordStub("{summa3}", summa, wordDocument);
+
+
                 ReplaceWordStub("{naznach}", naznach, wordDocument);
                 ReplaceWordStub("{percent}", percent, wordDocument);
+                ReplaceWordStub("{percent1}", percent, wordDocument);
+
                 ReplaceWordStub("{d}", ch, wordDocument);
                 ReplaceWordStub("{month}", month, wordDocument);
                 ReplaceWordStub("{year}", year, wordDocument);
+                ReplaceWordStub("{d1}", ch, wordDocument);
+                ReplaceWordStub("{d2}", ch, wordDocument);
+                ReplaceWordStub("{month1}", month, wordDocument);
+                ReplaceWordStub("{year1}", year, wordDocument);
+
+                ReplaceWordStub("{platesh}", platesh, wordDocument);
+
                 Connection.Close();
             } 
             wordDocument.SaveAs(@"C:\Users\1652090\OneDrive\Рабочий стол\" + s + "");

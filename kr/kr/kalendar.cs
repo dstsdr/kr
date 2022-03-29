@@ -27,7 +27,7 @@ namespace kr
         private void Update()
         {
             Connection.Open();
-            SqlDataAdapter adapter = new SqlDataAdapter("Select Календарь.[Номер договора] as[№ договора], Календарь.[Дата запланированная] as [Плановая дата], Календарь.[Дата фактическая] as [Дата оплаты], Договор.[Ежемесячный платеж], Календарь.[Сумма оплаты], Календарь.[Основной долг], Календарь.Проценты as [%], Календарь.Остаток FROM Календарь inner join Договор ON Календарь.[Номер договора]=Договор.[№] ", Connection);
+            SqlDataAdapter adapter = new SqlDataAdapter("Select Календарь.[Номер договора] as[№ договора], Календарь.[Дата запланированная] as [Плановая дата], Календарь.[Дата фактическая] as [Дата оплаты], Договор.[Ежемесячный платеж], Календарь.[Сумма оплаты], Календарь.[Основной долг], Календарь.Проценты as [%], Календарь.Остаток, Календарь.Статус FROM Календарь inner join Договор ON Календарь.[Номер договора]=Договор.[№] ", Connection);
             DataSet ds = new DataSet();
             adapter.Fill(ds, "info");
             dataGridView1.DataSource = ds.Tables[0];
@@ -72,25 +72,75 @@ namespace kr
         {
 
         }
-
-        private void add_Click(object sender, EventArgs e)
+        private string status ()
+        {
+            int s = dataGridView1.CurrentRow.Index;
+            string status="";
+            decimal st = Convert.ToDecimal(dataGridView1[3, s].Value.ToString()) - Convert.ToDecimal(textBox2.Text);
+            if (st == 0)
+            {
+                status = "Выполнен"; return status;
+            }
+            if (st < 0)
+            { status = "Переплачено"; return status; }
+            if (st > 0) { status = "Недоплачено"; return status; }
+            return status;
+        }
+        private void obnovstatus ()
         {
             Connection.Open();
-            string query = "UPDATE [Календарь] SET [Сумма оплаты]=@summ, [Дата фактическая]=@date  WHERE [Номер договора]= " + dataGridView1.CurrentRow.Cells[0].Value +" AND [Дата запланированная]=@dateplan";
+            SqlCommand command = new SqlCommand("UPDATE Договор SET Статус=@status WHERE [№]= " + dataGridView1.CurrentRow.Cells[0].Value, Connection);
+         command.Parameters.AddWithValue("@status", statusd());            
+            command.ExecuteNonQuery();
+            Connection.Close();
+        }
+        private string statusd ()
+        {
+            //  Connection.Open();         
+
+            string query = "select COUNT(Календарь.Код) FROM Календарь WHERE Календарь.[Номер договора]= " + dataGridView1.CurrentRow.Cells[0].Value;
+            SqlCommand command = new SqlCommand(query, Connection);
+            decimal kolichestvo = (Int32)command.ExecuteScalar();
+            kolichestvo=kolichestvo* Convert.ToDecimal(dataGridView1.CurrentRow.Cells[3].Value);
+          //  Connection.Close();
+          //  Connection.Open();
+            string query2 = "select SUM(Календарь.[Сумма оплаты]) FROM Календарь WHERE Календарь.[Номер договора]= " + dataGridView1.CurrentRow.Cells[0].Value;
+            SqlCommand command2 = new SqlCommand(query2, Connection);
+            decimal vuplacheno = (Decimal)command2.ExecuteScalar();
+          //  Connection.Close();
+            kolichestvo = kolichestvo - vuplacheno;
+            if (kolichestvo <= 0) { query = "Завершен"; return query; }
+            else
+            {
+                
+                string query3 = "DECLARE @Min FLOAT = DATEDIFF(DD, (SELECT MAX(Календарь.[Дата запланированная]) from Календарь Where Календарь.[Номер договора] = " + dataGridView1.CurrentRow.Cells[0].Value+ "), GETDATE()) select @MIN";
+                SqlCommand command3 = new SqlCommand(query3, Connection);
+                float date = float.Parse(command3.ExecuteScalar().ToString());
+                textBox1.Text = date.ToString();
+                if (date<0) { query = "Незавершен"; return query; }
+                else { query = "Просрочен"; return query; }
+            }
+        }
+        private void add_Click(object sender, EventArgs e)
+        {
+            obnovstatus(); 
+          /*  Connection.Open();
+            string query = "UPDATE [Календарь] SET [Сумма оплаты]=@summ, [Дата фактическая]=@date, Статус=@status WHERE [Номер договора]= " + dataGridView1.CurrentRow.Cells[0].Value +" AND [Дата запланированная]=@dateplan";
             
             SqlCommand command = new SqlCommand(query, Connection);
+            command.Parameters.AddWithValue("@status", status());
             command.Parameters.AddWithValue("@summ", Convert.ToDecimal(textBox2.Text));
             command.Parameters.AddWithValue("@date", dateTimePicker1.Value.ToString());
             command.Parameters.AddWithValue("@dateplan", dataGridView1.CurrentRow.Cells[1].Value.ToString());
 
             /*SqlCommand query = new SqlCommand("insert into Календарь([Сумма оплаты],[Дата фактическая]) Values" +
                     " (@summ, @date) WHERE [Номер договора]= " + dataGridView1.CurrentRow.Cells[0].Value + " AND [Дата запланированная]=@dateplan", Connection);
-           */ if (command.ExecuteNonQuery() != 1)
+            if (command.ExecuteNonQuery() != 1)
             {
                 MessageBox.Show("Возникла ошибка при добавлении");
             }
             Connection.Close();
-            Update();
+            Update();*/
         }
 
         private void dataGridView1_CellEnter(object sender, DataGridViewCellEventArgs e)
