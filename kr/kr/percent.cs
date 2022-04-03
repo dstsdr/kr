@@ -106,5 +106,20 @@ namespace kr
                 dataGridView1.CurrentCell = dataGridView1[0, index - 1];
             }
         }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            this.Close();
+
+        }
+
+        private void namebox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar) && e.KeyChar != ',')
+            {
+                e.Handled = true;
+
+            }
+        }
     }
 }

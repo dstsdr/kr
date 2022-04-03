@@ -90,5 +90,144 @@ namespace kr
             }
             Connection.Close();
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            this.Close();
+
+        }
+
+        private void LastName_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = !(char.IsLetter(e.KeyChar) || e.KeyChar == (char)Keys.Back);
+            if (LastName.Text.Length == 0)
+            {
+                string BigFirstLetter = e.KeyChar.ToString().ToUpper();
+                e.KeyChar = BigFirstLetter[0];
+            }
+
+        }
+
+        private void FirstName_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = !(char.IsLetter(e.KeyChar) || e.KeyChar == (char)Keys.Back);
+            if (FirstName.Text.Length == 0)
+            {
+                string BigFirstLetter = e.KeyChar.ToString().ToUpper();
+                e.KeyChar = BigFirstLetter[0];
+            }
+        }
+
+        private void otchestvo_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = !(char.IsLetter(e.KeyChar) || e.KeyChar == (char)Keys.Back);
+            if (otchestvo.Text.Length == 0)
+            {
+                string BigFirstLetter = e.KeyChar.ToString().ToUpper();
+                e.KeyChar = BigFirstLetter[0];
+            }
+        }
+
+        private void city_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = !(char.IsLetter(e.KeyChar) || e.KeyChar == (char)Keys.Back);
+            if (city.Text.Length == 0)
+            {
+                string BigFirstLetter = e.KeyChar.ToString().ToUpper();
+                e.KeyChar = BigFirstLetter[0];
+            }
+        }
+
+        private void street_KeyPress(object sender, KeyPressEventArgs e)
+        {
+           
+        }
+
+        private void street_KeyPress_1(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = !(char.IsLetter(e.KeyChar) || e.KeyChar == (char)Keys.Back);
+            if (street.Text.Length == 0)
+            {
+                string BigFirstLetter = e.KeyChar.ToString().ToUpper();
+                e.KeyChar = BigFirstLetter[0];
+            }
+        }
+
+        private void INN_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            INN.MaxLength = 12;
+            char number = e.KeyChar;
+            if (!Char.IsDigit(number))
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void seriya_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            seriya.MaxLength = 4;
+            char number = e.KeyChar;
+            if (!Char.IsDigit(number))
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void nomer_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            nomer.MaxLength = 6;
+            char number = e.KeyChar;
+            if (!Char.IsDigit(number))
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void schet_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            schet.MaxLength = 20;
+            char number = e.KeyChar;
+            if (!Char.IsDigit(number))
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void ssuda_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            ssuda.MaxLength = 10;
+            char number = e.KeyChar;
+            if (!Char.IsDigit(number))
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void stash_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            char number = e.KeyChar;
+            if (!Char.IsDigit(number))
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void dohod_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar) && e.KeyChar != ',')
+            {
+                e.Handled = true;
+
+            }
+        }
+
+        private void podrazdel_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar) && e.KeyChar != ',')
+            {
+                e.Handled = true;
+
+            }
+        }
     }
 }

@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SQLite;
-
+using System.Data.SqlClient;
 
 namespace kr
 {
@@ -31,21 +31,22 @@ namespace kr
                 case 0: percent frm2 = new percent(); frm2.Show(); break;
             }
         }
-        SQLiteConnection Connection = new SQLiteConnection(@"Data Source=C:\Users\1652090\OneDrive\Рабочий стол\kredit.db");
+        SqlConnection Connection = new SqlConnection(@"Data Source=LAPTOP-862V88EF\SQLEXPRESS;Initial Catalog=kredit;Integrated Security=True");
 
         private void raschet_Load(object sender, EventArgs e)
         {
+            
             Connection.Open();
-            SQLiteCommand cmd4 = Connection.CreateCommand();
+            SqlCommand cmd4 = Connection.CreateCommand();
             cmd4.CommandType = CommandType.Text;
-            cmd4.CommandText = "SELECT percent FROM [Процентная ставка]";
+            cmd4.CommandText = "SELECT [%] FROM [Процентная ставка]";
             cmd4.ExecuteNonQuery();
             DataTable dt4 = new DataTable();
-            SQLiteDataAdapter da4 = new SQLiteDataAdapter(cmd4);
+            SqlDataAdapter da4 = new SqlDataAdapter(cmd4);
             da4.Fill(dt4);
             foreach (DataRow dr4 in dt4.Rows)
             {
-                comboBox6.Items.Add(dr4["percent"].ToString());
+                comboBox6.Items.Add(dr4["%"].ToString());
             }
         }
 
@@ -98,6 +99,32 @@ namespace kr
         private void button2_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            this.Close();
+
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            int index = dataGridView1.CurrentRow.Index;
+            if (index != dataGridView1.Rows.Count - 2)
+            {
+                dataGridView1.Rows[index].Selected = true;
+                dataGridView1.CurrentCell = dataGridView1[0, index + 1];
+            }
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            int index = dataGridView1.CurrentRow.Index;
+            if (index != 0)
+            {
+                dataGridView1.Rows[index].Selected = true;
+                dataGridView1.CurrentCell = dataGridView1[0, index - 1];
+            }
         }
     }
     

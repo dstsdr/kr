@@ -227,5 +227,16 @@ namespace kr
             vid.Show();
             this.Hide();
         }
+
+        private void toolStripMenuItem14_Click(object sender, EventArgs e)
+        {
+            refinans vid = new refinans();
+            vid.Show();
+        }
+
+        private void button6_Click_1(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }

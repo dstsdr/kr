@@ -55,17 +55,28 @@ namespace kr
             }
         }
 
-        private void button3_Click(object sender, EventArgs e)//add
+        private void button3_Click(object sender, EventArgs e)
         {
-
+            Connection.Open();
+            SqlDataAdapter adapter = new SqlDataAdapter("Select Календарь.[Номер договора] as[№ договора], Календарь.[Дата запланированная] as [Плановая дата], Календарь.[Дата фактическая] as " +
+                "[Дата оплаты], Договор.[Ежемесячный платеж], Календарь.[Сумма оплаты], Календарь.[Основной долг], Календарь.Проценты as [%], Календарь.Остаток, Календарь.Статус " +
+                "FROM Календарь inner join Договор ON Календарь.[Номер договора]=Договор.[№] where " +
+                "Кадендарь.[Номер договора] like " + "'%" + textBox1.Text +
+                "%' or Календарь.[Дата запланированная] like '%" + textBox1.Text + "%' or Календарь.[Дата фактическая] like '%" + textBox1.Text + "%' or Договор.[Ежемесячный платеж] like '%" + textBox1.Text + "%'" +
+               " or Календарь.[Сумма оплаты] like '%" + textBox1.Text + "%'or Календарь.[Основной долг] like '%" + textBox1.Text + "%'" +
+                "or   Календарь.Проценты like '%" + textBox1.Text + "%'or Календарь.Остаток, like '%" + textBox1.Text + "%'" +
+               "or  Календарь.Статус like '%" + textBox1.Text + "%'", Connection);
+            DataSet ds = new DataSet();
+            adapter.Fill(ds, "info");
+            dataGridView1.DataSource = ds.Tables[0];
+            Connection.Close();
+            int rows = dataGridView1.Rows.Count - 1;
+            label1.Text = "Количество записей " + rows.ToString();
         }
 
 
         private void button1_Click(object sender, EventArgs e) //izmen
         {
-            int s = dataGridView1.CurrentCell.RowIndex;
-            dateTimePicker1.Text = dataGridView1[1, s].Value.ToString();
-            textBox2.Text = dataGridView1[3, s].Value.ToString();
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -79,7 +90,7 @@ namespace kr
             decimal st = Convert.ToDecimal(dataGridView1[3, s].Value.ToString()) - Convert.ToDecimal(textBox2.Text);
             if (st == 0)
             {
-                status = "Выполнен"; return status;
+                status = "Выплачено"; return status;
             }
             if (st < 0)
             { status = "Переплачено"; return status; }
@@ -124,10 +135,14 @@ namespace kr
         private void add_Click(object sender, EventArgs e)
         {
             obnovstatus(); 
-          /*  Connection.Open();
+            Connection.Open();
             string query = "UPDATE [Календарь] SET [Сумма оплаты]=@summ, [Дата фактическая]=@date, Статус=@status WHERE [Номер договора]= " + dataGridView1.CurrentRow.Cells[0].Value +" AND [Дата запланированная]=@dateplan";
             
             SqlCommand command = new SqlCommand(query, Connection);
+            if (command.ExecuteNonQuery() != 1)
+            {
+                MessageBox.Show("Возникла ошибка при изменении");
+            }
             command.Parameters.AddWithValue("@status", status());
             command.Parameters.AddWithValue("@summ", Convert.ToDecimal(textBox2.Text));
             command.Parameters.AddWithValue("@date", dateTimePicker1.Value.ToString());
@@ -145,12 +160,12 @@ namespace kr
 
         private void dataGridView1_CellEnter(object sender, DataGridViewCellEventArgs e)
         {
-            int s = dataGridView1.CurrentRow.Index;
+          /*  int s = dataGridView1.CurrentRow.Index;
             if (dataGridView1[2, s].Value.ToString() != "")
             {
                 textBox2.Text = dataGridView1[4, s].Value.ToString();
                 dateTimePicker1.Value = Convert.ToDateTime(dataGridView1.Rows[s].Cells[2].Value);
-            }             
+            }   */          
 
         }
 
@@ -161,6 +176,135 @@ namespace kr
                 e.Handled = true;
 
             }
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            this.Close();
+
+        }
+
+        private void textBox2_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            obnovstatus();
+            Connection.Open();
+            string query = "UPDATE [Календарь] SET [Сумма оплаты]=@summ, [Дата фактическая]=@date, Статус=@status WHERE [Номер договора]= " + dataGridView1.CurrentRow.Cells[0].Value + " AND [Дата запланированная]=@dateplan";
+
+            SqlCommand command = new SqlCommand(query, Connection);            
+            command.Parameters.AddWithValue("@status", status());
+            command.Parameters.AddWithValue("@summ", Convert.ToDecimal(textBox2.Text));
+            command.Parameters.AddWithValue("@date", dateTimePicker1.Value.ToString());
+            command.Parameters.AddWithValue("@dateplan", dataGridView1.CurrentRow.Cells[1].Value.ToString());
+            if (command.ExecuteNonQuery() != 1)
+            {
+                MessageBox.Show("Возникла ошибка при изменении");
+            }
+            /*SqlCommand query = new SqlCommand("insert into Календарь([Сумма оплаты],[Дата фактическая]) Values" +
+                    " (@summ, @date) WHERE [Номер договора]= " + dataGridView1.CurrentRow.Cells[0].Value + " AND [Дата запланированная]=@dateplan", Connection);
+            if (command.ExecuteNonQuery() != 1)
+            {
+                MessageBox.Show("Возникла ошибка при добавлении");
+            }*/
+            Connection.Close();
+            Update();
+        }
+
+        private void checkBox2_CheckedChanged(object sender, EventArgs e)
+        {
+           
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void checkBox3_CheckedChanged(object sender, EventArgs e)
+        {
+        }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            int s = dataGridView1.CurrentCell.RowIndex;
+            dateTimePicker1.Text = dataGridView1[1, s].Value.ToString();
+            textBox2.Text = dataGridView1[3, s].Value.ToString();
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void checkBox3_Click(object sender, EventArgs e)
+        {
+            if (checkBox3.CheckState == CheckState.Checked)
+                   {
+                Connection.Open();
+            SqlDataAdapter adapter = new SqlDataAdapter("Select Календарь.[Номер договора] as[№ договора], Календарь.[Дата запланированная] as [Плановая дата], Календарь.[Дата фактическая]" +
+                " as [Дата оплаты], Договор.[Ежемесячный платеж], Календарь.[Сумма оплаты], Календарь.[Основной долг], Календарь.Проценты as [%], Календарь.Остаток, Календарь.Статус " +
+                "FROM Календарь inner join Договор ON Календарь.[Номер договора]=Договор.[№] Where Календарь.Статус='Недоплачено' ", Connection);
+            DataSet ds = new DataSet();
+            adapter.Fill(ds, "info");
+                if (ds.Tables[0].Rows.Count == 0)
+                {
+                    MessageBox.Show("Не обнаружены записи удовлетворяющие условию", "Записи не найдены");
+                }
+                dataGridView1.DataSource = ds.Tables[0];
+            Connection.Close();
+            int rows = dataGridView1.Rows.Count - 1;
+            label1.Text = "Количество записей " + rows.ToString();
+               }
+              else { Update(); }
+        }
+
+        private void checkBox1_Click(object sender, EventArgs e)
+        {
+            if (checkBox1.CheckState == CheckState.Checked)
+            {
+                Connection.Open();
+                SqlDataAdapter adapter = new SqlDataAdapter("Select Календарь.[Номер договора] as[№ договора], Календарь.[Дата запланированная] as [Плановая дата], Календарь.[Дата фактическая]" +
+                    " as [Дата оплаты], Договор.[Ежемесячный платеж], Календарь.[Сумма оплаты], Календарь.[Основной долг], Календарь.Проценты as [%], Календарь.Остаток, Календарь.Статус " +
+                    "FROM Календарь inner join Договор ON Календарь.[Номер договора]=Договор.[№] Where Календарь.Статус='Переплачено' ", Connection);
+                DataSet ds = new DataSet();
+                adapter.Fill(ds, "info");
+                if (ds.Tables[0].Rows.Count == 0)
+                {
+                    MessageBox.Show("Не обнаружены записи удовлетворяющие условию", "Записи не найдены");
+                }
+                dataGridView1.DataSource = ds.Tables[0];
+                Connection.Close();
+                int rows = dataGridView1.Rows.Count - 1;
+                label1.Text = "Количество записей " + rows.ToString();
+            }
+            else { Update(); }
+
+        }
+
+        private void checkBox2_Click(object sender, EventArgs e)
+        {
+            if (checkBox1.CheckState == CheckState.Checked)
+                 {
+                Connection.Open();
+                SqlDataAdapter adapter = new SqlDataAdapter("Select Календарь.[Номер договора] as[№ договора], Календарь.[Дата запланированная] as [Плановая дата], Календарь.[Дата фактическая]" +
+                        " as [Дата оплаты], Договор.[Ежемесячный платеж], Календарь.[Сумма оплаты], Календарь.[Основной долг], Календарь.Проценты as [%], Календарь.Остаток, Календарь.Статус " +
+                        "FROM Календарь inner join Договор ON Календарь.[Номер договора]=Договор.[№] Where Календарь.Статус like '%Выплачено%' ", Connection);
+                DataSet ds = new DataSet();                
+                adapter.Fill(ds, "info");
+                if (ds.Tables[0].Rows.Count == 1)
+                {
+                    MessageBox.Show("Не обнаружены записи удовлетворяющие условию", "Записи не найдены");
+                }
+                dataGridView1.DataSource = ds.Tables[0];
+                Connection.Close();
+                int rows = dataGridView1.Rows.Count - 1;
+                label1.Text = "Количество записей " + rows.ToString();
+              }
+              else { Update(); }
         }
     }
 }

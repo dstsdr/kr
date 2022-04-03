@@ -74,6 +74,7 @@
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.button2 = new System.Windows.Forms.Button();
             this.save = new System.Windows.Forms.Button();
+            this.label13 = new System.Windows.Forms.Label();
             this.Прописка.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -101,6 +102,7 @@
             this.LastName.Size = new System.Drawing.Size(287, 22);
             this.LastName.TabIndex = 8;
             this.LastName.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+            this.LastName.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.LastName_KeyPress);
             // 
             // label3
             // 
@@ -129,7 +131,7 @@
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label5.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.label5.Location = new System.Drawing.Point(18, 771);
+            this.label5.Location = new System.Drawing.Point(18, 743);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(46, 20);
             this.label5.TabIndex = 19;
@@ -137,18 +139,19 @@
             // 
             // INN
             // 
-            this.INN.Location = new System.Drawing.Point(189, 769);
+            this.INN.Location = new System.Drawing.Point(189, 741);
             this.INN.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.INN.Name = "INN";
             this.INN.Size = new System.Drawing.Size(287, 22);
             this.INN.TabIndex = 18;
+            this.INN.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.INN_KeyPress);
             // 
             // label7
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label7.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.label7.Location = new System.Drawing.Point(18, 802);
+            this.label7.Location = new System.Drawing.Point(18, 774);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(85, 20);
             this.label7.TabIndex = 21;
@@ -156,7 +159,7 @@
             // 
             // phone
             // 
-            this.phone.Location = new System.Drawing.Point(189, 796);
+            this.phone.Location = new System.Drawing.Point(189, 768);
             this.phone.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.phone.Name = "phone";
             this.phone.Size = new System.Drawing.Size(287, 22);
@@ -180,6 +183,7 @@
             this.schet.Name = "schet";
             this.schet.Size = new System.Drawing.Size(287, 22);
             this.schet.TabIndex = 22;
+            this.schet.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.schet_KeyPress);
             // 
             // label9
             // 
@@ -218,6 +222,7 @@
             this.stash.Name = "stash";
             this.stash.Size = new System.Drawing.Size(285, 22);
             this.stash.TabIndex = 26;
+            this.stash.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.stash_KeyPress);
             // 
             // label11
             // 
@@ -237,6 +242,7 @@
             this.dohod.Name = "dohod";
             this.dohod.Size = new System.Drawing.Size(285, 22);
             this.dohod.TabIndex = 28;
+            this.dohod.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.dohod_KeyPress);
             // 
             // label12
             // 
@@ -256,6 +262,7 @@
             this.ssuda.Name = "ssuda";
             this.ssuda.Size = new System.Drawing.Size(287, 22);
             this.ssuda.TabIndex = 30;
+            this.ssuda.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.ssuda_KeyPress);
             // 
             // city
             // 
@@ -264,6 +271,7 @@
             this.city.Name = "city";
             this.city.Size = new System.Drawing.Size(287, 22);
             this.city.TabIndex = 32;
+            this.city.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.city_KeyPress);
             // 
             // otchestvo
             // 
@@ -272,6 +280,7 @@
             this.otchestvo.Name = "otchestvo";
             this.otchestvo.Size = new System.Drawing.Size(287, 22);
             this.otchestvo.TabIndex = 34;
+            this.otchestvo.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.otchestvo_KeyPress);
             // 
             // FirstName
             // 
@@ -280,6 +289,7 @@
             this.FirstName.Name = "FirstName";
             this.FirstName.Size = new System.Drawing.Size(287, 22);
             this.FirstName.TabIndex = 35;
+            this.FirstName.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FirstName_KeyPress);
             // 
             // seriya
             // 
@@ -288,6 +298,7 @@
             this.seriya.Name = "seriya";
             this.seriya.Size = new System.Drawing.Size(287, 22);
             this.seriya.TabIndex = 36;
+            this.seriya.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.seriya_KeyPress);
             // 
             // nomer
             // 
@@ -297,6 +308,7 @@
             this.nomer.Size = new System.Drawing.Size(287, 22);
             this.nomer.TabIndex = 37;
             this.nomer.TextChanged += new System.EventHandler(this.textBox5_TextChanged);
+            this.nomer.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nomer_KeyPress);
             // 
             // label1
             // 
@@ -345,7 +357,7 @@
             this.where.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.where.Multiline = true;
             this.where.Name = "where";
-            this.where.Size = new System.Drawing.Size(442, 85);
+            this.where.Size = new System.Drawing.Size(442, 64);
             this.where.TabIndex = 42;
             // 
             // label15
@@ -378,6 +390,7 @@
             this.street.Size = new System.Drawing.Size(285, 22);
             this.street.TabIndex = 44;
             this.street.TextChanged += new System.EventHandler(this.textBox16_TextChanged);
+            this.street.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.street_KeyPress_1);
             // 
             // label17
             // 
@@ -416,10 +429,11 @@
             this.podrazdel.Name = "podrazdel";
             this.podrazdel.Size = new System.Drawing.Size(287, 22);
             this.podrazdel.TabIndex = 49;
+            this.podrazdel.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.podrazdel_KeyPress);
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(527, 790);
+            this.button1.Location = new System.Drawing.Point(527, 765);
             this.button1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(104, 28);
@@ -466,7 +480,7 @@
             this.Прописка.Controls.Add(this.street);
             this.Прописка.Controls.Add(this.label16);
             this.Прописка.Controls.Add(this.label17);
-            this.Прописка.Location = new System.Drawing.Point(16, 414);
+            this.Прописка.Location = new System.Drawing.Point(16, 386);
             this.Прописка.Name = "Прописка";
             this.Прописка.Size = new System.Drawing.Size(470, 136);
             this.Прописка.TabIndex = 54;
@@ -489,7 +503,7 @@
             this.groupBox1.Controls.Add(this.where);
             this.groupBox1.Location = new System.Drawing.Point(16, 131);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(621, 279);
+            this.groupBox1.Size = new System.Drawing.Size(621, 254);
             this.groupBox1.TabIndex = 55;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Данные паспорта";
@@ -517,7 +531,7 @@
             this.groupBox3.Controls.Add(this.stash);
             this.groupBox3.Controls.Add(this.label10);
             this.groupBox3.Controls.Add(this.label11);
-            this.groupBox3.Location = new System.Drawing.Point(12, 554);
+            this.groupBox3.Location = new System.Drawing.Point(12, 526);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(474, 125);
             this.groupBox3.TabIndex = 57;
@@ -530,7 +544,7 @@
             this.groupBox4.Controls.Add(this.schet);
             this.groupBox4.Controls.Add(this.label8);
             this.groupBox4.Controls.Add(this.ssuda);
-            this.groupBox4.Location = new System.Drawing.Point(12, 683);
+            this.groupBox4.Location = new System.Drawing.Point(12, 655);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(474, 78);
             this.groupBox4.TabIndex = 58;
@@ -539,31 +553,45 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(527, 837);
+            this.button2.Location = new System.Drawing.Point(527, 797);
             this.button2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(104, 28);
             this.button2.TabIndex = 59;
             this.button2.Text = "Закрыть";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // save
             // 
-            this.save.Location = new System.Drawing.Point(527, 724);
+            this.save.Location = new System.Drawing.Point(527, 764);
             this.save.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.save.Name = "save";
             this.save.Size = new System.Drawing.Size(104, 28);
             this.save.TabIndex = 60;
             this.save.Text = "Сохранить";
             this.save.UseVisualStyleBackColor = true;
+            this.save.Visible = false;
             this.save.Click += new System.EventHandler(this.save_Click);
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.ForeColor = System.Drawing.Color.Red;
+            this.label13.Location = new System.Drawing.Point(19, 806);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(262, 16);
+            this.label13.TabIndex = 61;
+            this.label13.Text = "Все поля обязательны для заполнения";
             // 
             // klient
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(647, 883);
+            this.ClientSize = new System.Drawing.Size(647, 832);
+            this.ControlBox = false;
+            this.Controls.Add(this.label13);
             this.Controls.Add(this.save);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.groupBox4);
@@ -577,8 +605,10 @@
             this.Controls.Add(this.label5);
             this.Controls.Add(this.INN);
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "klient";
-            this.Text = "Добавление клиента";
+            this.Text = "Работа с клиентом";
             this.Load += new System.EventHandler(this.klient_Load);
             this.Прописка.ResumeLayout(false);
             this.Прописка.PerformLayout();
@@ -643,5 +673,6 @@
         public System.Windows.Forms.DateTimePicker dateTimePicker1;
         public System.Windows.Forms.Button save;
         public System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Label label13;
     }
 }

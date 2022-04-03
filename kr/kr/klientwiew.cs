@@ -127,5 +127,21 @@ namespace kr
             frm.podrazdel.Text = dataGridView1[18, s].Value.ToString();
             frm.ShowDialog();
         }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            this.Close();
+
+        }
+
+        private void button9_Click(object sender, EventArgs e)
+        {
+            dataGridView1.CurrentCell = dataGridView1.CurrentRow.Cells[dataGridView1.ColumnCount - 1];
+        }
+
+        private void button10_Click(object sender, EventArgs e)
+        {
+            dataGridView1.CurrentCell = dataGridView1.CurrentRow.Cells[0];
+        }
     }
 }

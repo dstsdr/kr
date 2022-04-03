@@ -217,5 +217,51 @@ namespace kr
             textBox5.Clear();
             textBox6.Clear();
         }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            this.Close();
+
+        }
+
+        private void textBox1_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = !(char.IsLetter(e.KeyChar) || e.KeyChar == (char)Keys.Back);
+            if (textBox1.Text.Length == 0)
+            {
+                string BigFirstLetter = e.KeyChar.ToString().ToUpper();
+                e.KeyChar = BigFirstLetter[0];
+            }
+        }
+
+        private void textBox2_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = !(char.IsLetter(e.KeyChar) || e.KeyChar == (char)Keys.Back);
+            if (textBox2.Text.Length == 0)
+            {
+                string BigFirstLetter = e.KeyChar.ToString().ToUpper();
+                e.KeyChar = BigFirstLetter[0];
+            }
+        }
+
+        private void textBox3_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = !(char.IsLetter(e.KeyChar) || e.KeyChar == (char)Keys.Back);
+            if (textBox3.Text.Length == 0)
+            {
+                string BigFirstLetter = e.KeyChar.ToString().ToUpper();
+                e.KeyChar = BigFirstLetter[0];
+            }
+        }
+
+        private void button12_Click(object sender, EventArgs e)
+        {
+            dataGridView1.CurrentCell = dataGridView1.CurrentRow.Cells[dataGridView1.ColumnCount - 1];
+        }
+
+        private void button11_Click(object sender, EventArgs e)
+        {
+            dataGridView1.CurrentCell = dataGridView1.CurrentRow.Cells[0];
+        }
     }  
 }

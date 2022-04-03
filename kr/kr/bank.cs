@@ -116,5 +116,104 @@ namespace kr
                 dataGridView1.CurrentCell = dataGridView1[0, index - 1];
             }
         }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            this.Close();
+
+        }
+
+        private void citybox_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void citybox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = !(char.IsLetter(e.KeyChar) || e.KeyChar == (char)Keys.Back);
+            if (citybox.Text.Length == 0)
+            {
+                string BigFirstLetter = e.KeyChar.ToString().ToUpper();
+                e.KeyChar = BigFirstLetter[0];
+            }
+        }
+
+        private void streetbox_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void streetbox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = !(char.IsLetter(e.KeyChar) || e.KeyChar == (char)Keys.Back);
+            if (streetbox.Text.Length == 0)
+            {
+                string BigFirstLetter = e.KeyChar.ToString().ToUpper();
+                e.KeyChar = BigFirstLetter[0];
+            }
+        }
+
+        private void namebox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = !(char.IsLetter(e.KeyChar) || e.KeyChar == (char)Keys.Back);
+            if (namebox.Text.Length == 0)
+            {
+                string BigFirstLetter = e.KeyChar.ToString().ToUpper();
+                e.KeyChar = BigFirstLetter[0];
+            }
+        }
+
+        private void bikbox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            bikbox.MaxLength = 9;
+            char number = e.KeyChar;
+            if (!Char.IsDigit(number))
+            {
+                e.Handled = true;
+            }
+
+        }
+
+        private void textBox4_TextChanged(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void textBox4_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            
+        }
+
+        private void korschetbox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            korschetbox.MaxLength = 20;
+            char number = e.KeyChar;
+            if (!Char.IsDigit(number))
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void podrazdelbox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            podrazdelbox.MaxLength = 10;
+            char number = e.KeyChar;
+            if (!Char.IsDigit(number))
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void button12_Click(object sender, EventArgs e)
+        {
+            dataGridView1.CurrentCell = dataGridView1.CurrentRow.Cells[dataGridView1.ColumnCount - 1];
+
+        }
+
+        private void button11_Click(object sender, EventArgs e)
+        {
+            dataGridView1.CurrentCell = dataGridView1.CurrentRow.Cells[0];
+
+        }
     }
 }

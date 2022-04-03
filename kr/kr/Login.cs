@@ -61,5 +61,11 @@ namespace kr
                 else MessageBox.Show("Неверные данные", "Error");
             }
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            this.Close();
+
+        }
     }
 }
