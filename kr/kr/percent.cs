@@ -19,7 +19,7 @@ namespace kr
             InitializeComponent();
         }
         SqlConnection Connection = new SqlConnection(@"Data Source=LAPTOP-862V88EF\SQLEXPRESS;Initial Catalog=kredit;Integrated Security=True");
-
+        private bool check;
         private void percent_Load(object sender, EventArgs e)
         {
             dataset();
@@ -37,12 +37,30 @@ namespace kr
         }
         private void button1_Click(object sender, EventArgs e)
         {
-            Connection.Open();
-            string sql = "insert into [Процентная ставка]([%]) Values ('" + namebox.Text + "')";
-            SqlCommand command = new SqlCommand(sql, Connection);
-            command.ExecuteNonQuery();
-            Connection.Close();
-            dataset();
+            string a = "";
+            if (namebox.Text != "") { namebox.BackColor = Color.White; }
+            else { namebox.BackColor = Color.DarkGray; a += "проценты\n"; check = false; }
+
+            {
+                MessageBox.Show("Для добавления записи заполните/выберите следующие поля:" + a);
+            }
+            if (check == true)
+            {
+                Connection.Open();
+                string sql = "insert into [Процентная ставка]([%]) Values ('" + namebox.Text + "')";
+                SqlCommand command = new SqlCommand(sql, Connection);
+                command.ExecuteNonQuery();
+                if (command.ExecuteNonQuery() != 1)
+                {
+                    MessageBox.Show("Возникла ошибка при добавлении процентной ставки");
+                }
+                else
+                {
+                    MessageBox.Show("Процентная ставка изменена");
+                }
+                Connection.Close();
+                dataset();
+            }
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -76,15 +94,22 @@ namespace kr
         }
 
         private void dataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
-        {           
-            Connection.Open();
-            SqlCommand command = new SqlCommand("UPDATE [Процентная ставка] SET [%] = @percent WHERE [№]= " + dataGridView1.CurrentRow.Cells[0].Value, Connection);
-            command.Parameters.AddWithValue("@percent", dataGridView1.CurrentCell.Value);
-            if (command.ExecuteNonQuery() != 1)
+        {
+            if (dataGridView1.CurrentCell.Value.ToString() == "")
             {
-                MessageBox.Show("Возникла ошибка при изменении");
+                MessageBox.Show("заполните поле");
             }
-            Connection.Close();
+            else
+            {
+                Connection.Open();
+                SqlCommand command = new SqlCommand("UPDATE [Процентная ставка] SET [%] = @percent WHERE [№]= " + dataGridView1.CurrentRow.Cells[0].Value, Connection);
+                command.Parameters.AddWithValue("@percent", dataGridView1.CurrentCell.Value);
+                if (command.ExecuteNonQuery() != 1)
+                {
+                    MessageBox.Show("Возникла ошибка при изменении");
+                }
+                Connection.Close();
+            }
         }
 
         private void button5_Click(object sender, EventArgs e)
@@ -120,6 +145,11 @@ namespace kr
                 e.Handled = true;
 
             }
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }

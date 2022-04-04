@@ -18,7 +18,7 @@ namespace kr
             InitializeComponent();
         }
         SqlConnection Connection = new SqlConnection(@"Data Source=LAPTOP-862V88EF\SQLEXPRESS;Initial Catalog=kredit;Integrated Security=True");
-
+        public bool check = true;
         private void vid_Load(object sender, EventArgs e)
         {
             dataset();
@@ -58,12 +58,30 @@ namespace kr
 
         private void button1_Click_1(object sender, EventArgs e)
         {
-            Connection.Open();
-            string sql = "insert into [Вид кредита](Вид) Values ('" + namebox.Text + "')";
-            SqlCommand command = new SqlCommand(sql, Connection);
-            command.ExecuteNonQuery();
-            Connection.Close();
-            dataset();
+            string a = "";
+            if (namebox.Text != "") { namebox.BackColor = Color.White; }
+            else { namebox.BackColor = Color.DarkGray; a += "вид\n"; check = false; }
+           
+            {
+                MessageBox.Show("Для добавления записи заполните/выберите следующие поля:" + a);
+            }
+            if (check == true)
+            {
+                Connection.Open();
+                string sql = "insert into [Вид кредита](Вид) Values ('" + namebox.Text + "')";
+                SqlCommand command = new SqlCommand(sql, Connection);
+                command.ExecuteNonQuery();
+                if (command.ExecuteNonQuery() != 1)
+                {
+                    MessageBox.Show("Возникла ошибка при добавлении вида кредита");
+                }
+                else
+                {
+                    MessageBox.Show("Вид кредита изменен");
+                }
+                Connection.Close();
+                dataset();
+            }
         }
 
         private void button2_Click_1(object sender, EventArgs e)
@@ -120,14 +138,22 @@ namespace kr
 
         private void dataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
-            Connection.Open();
-            string query = "UPDATE [Вид кредита] SET [Вид] =  '" + dataGridView1.CurrentCell.Value.ToString() + "' WHERE [Код]= " + dataGridView1.CurrentRow.Cells[0].Value;
-            SqlCommand command = new SqlCommand(query, Connection);
-            if (command.ExecuteNonQuery() != 1)
+            if (dataGridView1.CurrentCell.Value.ToString()=="")
             {
-                MessageBox.Show("Возникла ошибка при изменении");
+                MessageBox.Show("заполните поле");
             }
-            Connection.Close();
+            else
+            {
+                Connection.Open();
+                string query = "UPDATE [Вид кредита] SET [Вид] =  '" + dataGridView1.CurrentCell.Value.ToString() + "' WHERE [Код]= " + dataGridView1.CurrentRow.Cells[0].Value;
+                SqlCommand command = new SqlCommand(query, Connection);
+                if (command.ExecuteNonQuery() != 1)
+                {
+                    MessageBox.Show("Возникла ошибка при изменении");
+                }
+                Connection.Close();
+            }
+           
         }
 
         private void button6_Click(object sender, EventArgs e)
@@ -144,6 +170,11 @@ namespace kr
                 string BigFirstLetter = e.KeyChar.ToString().ToUpper();
                 e.KeyChar = BigFirstLetter[0];
             }
+        }
+
+        private void dataGridView1_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }

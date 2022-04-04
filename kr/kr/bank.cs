@@ -18,6 +18,8 @@ namespace kr
         {
             InitializeComponent();
         }
+        public bool check = true;
+
         SqlConnection Connection = new SqlConnection(@"Data Source=LAPTOP-862V88EF\SQLEXPRESS;Initial Catalog=kredit;Integrated Security=True");
         private void dataset()
         {
@@ -38,13 +40,42 @@ namespace kr
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Connection.Open();
-            string sql = "insert into Банк(Название,[Кор. счет],БИК,Подразделение,Город,Улица,Дом ) Values" +
-                " ('" + namebox.Text + "','" + korschetbox.Text + "','" + bikbox.Text + "','" + podrazdelbox.Text + "','" + citybox.Text + "','" + streetbox.Text + "','" + textBox4.Text +"')";
-            SqlCommand command = new SqlCommand(sql, Connection);
-            command.ExecuteNonQuery();
-            Connection.Close();
-            dataset();
+            string a = "";            
+            if (namebox.Text != "") { namebox.BackColor = Color.White; }
+            else { namebox.BackColor = Color.DarkGray; a += "название банка\n"; check = false; }
+            if (korschetbox.Text != "") { korschetbox.BackColor = Color.White; }
+            else { korschetbox.BackColor = Color.DarkGray; a += "кор. счет\n"; check = false; }
+            if (bikbox.Text != "") { bikbox.BackColor = Color.White; }
+            else { bikbox.BackColor = Color.DarkGray; a += "БИК\n"; check = false; }
+            if (citybox.Text != "") { citybox.BackColor = Color.White; }
+            else { citybox.BackColor = Color.DarkGray; a += "город\n"; check = false; }
+            if (streetbox.Text != "") { streetbox.BackColor = Color.White; }
+            else { streetbox.BackColor = Color.DarkGray; a += "улица\n"; check = false; }
+            if (podrazdelbox.Text != "") { podrazdelbox.BackColor = Color.White; }
+            else { podrazdelbox.BackColor = Color.DarkGray; a += "подразделение\n"; check = false; }
+            if (textBox4.Text != "") { textBox4.BackColor = Color.White; }
+            else { textBox4.BackColor = Color.DarkGray; a += "номер здания\n"; check = false; }
+            {
+                MessageBox.Show("Для добавления записи заполните/выберите следующие поля:" + a);
+            }
+            if (check == true)
+            {
+                Connection.Open();
+                string sql = "insert into Банк(Название,[Кор. счет],БИК,Подразделение,Город,Улица,Дом ) Values" +
+                    " ('" + namebox.Text + "','" + korschetbox.Text + "','" + bikbox.Text + "','" + podrazdelbox.Text + "','" + citybox.Text + "','" + streetbox.Text + "','" + textBox4.Text + "')";
+                SqlCommand command = new SqlCommand(sql, Connection);
+                command.ExecuteNonQuery();
+                if (command.ExecuteNonQuery() != 1)
+                {
+                    MessageBox.Show("Возникла ошибка при добавлении банка");
+                }
+                else
+                {
+                    MessageBox.Show("Банк добавлен");
+                }
+                Connection.Close();
+                dataset();
+            }
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -84,17 +115,7 @@ namespace kr
 
         private void dataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
-            Connection.Open();
-            SqlCommand command = new SqlCommand("UPDATE [Банк] SET [Название] = '"+dataGridView1.CurrentRow.Cells[0].Value.ToString()+ "', [Кор. счет]" +
-                "='" + dataGridView1.CurrentRow.Cells[1].Value.ToString() + "', Подразделение='" + dataGridView1.CurrentRow.Cells[3].Value.ToString() + "'," +
-                "Город='" + dataGridView1.CurrentRow.Cells[4].Value.ToString() + "', Улица='" + dataGridView1.CurrentRow.Cells[5].Value.ToString() + "'," +
-                "Дом='" + dataGridView1.CurrentRow.Cells[6].Value.ToString() + "' WHERE [БИК]= " + dataGridView1.CurrentRow.Cells[2].Value, Connection);
-                 command.Parameters.AddWithValue("@percent", dataGridView1.CurrentCell.Value);
-            if (command.ExecuteNonQuery() != 1)
-            {
-                MessageBox.Show("Возникла ошибка при изменении");
-            }
-            Connection.Close();
+           
         }
 
         private void button5_Click(object sender, EventArgs e)
@@ -214,6 +235,60 @@ namespace kr
         {
             dataGridView1.CurrentCell = dataGridView1.CurrentRow.Cells[0];
 
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            int s = dataGridView1.CurrentRow.Index;
+            namebox.Text = dataGridView1[1, s].Value.ToString();//фамилия
+            korschetbox.Text = dataGridView1[2, s].Value.ToString();//имя
+            bikbox.Text = dataGridView1[3, s].Value.ToString();// отчество
+            podrazdelbox.Text = dataGridView1[4, s].Value.ToString();//серия
+            citybox.Text = dataGridView1[5, s].Value.ToString();//номер
+            streetbox.Text = dataGridView1[6, s].Value.ToString();//должн
+            textBox4.Text = dataGridView1[7, s].Value.ToString();//телефон
+            button8.Visible = true;
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            string a = "";
+            if (namebox.Text != "") { namebox.BackColor = Color.White; }
+            else { namebox.BackColor = Color.DarkGray; a += "название банка\n"; check = false; }
+            if (korschetbox.Text != "") { korschetbox.BackColor = Color.White; }
+            else { korschetbox.BackColor = Color.DarkGray; a += "кор. счет\n"; check = false; }
+            if (bikbox.Text != "") { bikbox.BackColor = Color.White; }
+            else { bikbox.BackColor = Color.DarkGray; a += "БИК\n"; check = false; }
+            if (citybox.Text != "") { citybox.BackColor = Color.White; }
+            else { citybox.BackColor = Color.DarkGray; a += "город\n"; check = false; }
+            if (streetbox.Text != "") { streetbox.BackColor = Color.White; }
+            else { streetbox.BackColor = Color.DarkGray; a += "улица\n"; check = false; }
+            if (podrazdelbox.Text != "") { podrazdelbox.BackColor = Color.White; }
+            else { podrazdelbox.BackColor = Color.DarkGray; a += "подразделение\n"; check = false; }
+            if (textBox4.Text != "") { textBox4.BackColor = Color.White; }
+            else { textBox4.BackColor = Color.DarkGray; a += "номер здания\n"; check = false; }
+            {
+                MessageBox.Show("Для обновления записи заполните/выберите следующие поля:" + a);
+            }
+            if (check == true)
+            {
+                Connection.Open();
+                SqlCommand command = new SqlCommand("UPDATE [Банк] SET [Название] = '" + namebox.Text + "', [Кор. счет]" +
+                    "='" + korschetbox.Text + "', Подразделение='" + podrazdelbox.Text + "'," +
+                    "Город='" + citybox.Text + "', Улица='" + streetbox.Text + "'," +
+                    "Дом='" + textBox4.Text + "' WHERE [БИК]= " + dataGridView1.CurrentRow.Cells[2].Value, Connection);
+                command.Parameters.AddWithValue("@percent", dataGridView1.CurrentCell.Value);
+                if (command.ExecuteNonQuery() != 1)
+                {
+                    MessageBox.Show("Возникла ошибка при изменении банка");
+                }
+                else
+                {
+                    MessageBox.Show("Банк изменен");
+                }
+                Connection.Close();
+                button8.Visible = false;
+            }
         }
     }
 }

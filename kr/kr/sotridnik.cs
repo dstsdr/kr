@@ -18,6 +18,7 @@ namespace kr
         {
             InitializeComponent();
         }
+        public bool check = true;
 
         private void textBox9_TextChanged(object sender, EventArgs e)
         {
@@ -31,26 +32,60 @@ namespace kr
         SqlConnection Connection = new SqlConnection(@"Data Source=LAPTOP-862V88EF\SQLEXPRESS;Initial Catalog=kredit;Integrated Security=True");
         private void button1_Click(object sender, EventArgs e)
         {
-            string dolznost;
-            string Combo = comboBox2.Text;
-            string[] words = Combo.Split(' ');
-            string BIK = words[0];
-         /*   Combo = comboBox1.Text;
-            words = Combo.Split(' ');
-            string dolznost = words[0];*/
-            Connection.Open();
-            SqlCommand cmd2 = Connection.CreateCommand();
-            cmd2.CommandType = CommandType.Text;
-            cmd2.CommandText = "SELECT [№] FROM Должность WHERE Название='" + comboBox1.Text + "'";
-            cmd2.ExecuteNonQuery();
-            DataTable dt2 = new DataTable();
-            SqlDataAdapter da2 = new SqlDataAdapter(cmd2);
-            da2.Fill(dt2);
-            dolznost = dt2.Rows[0][0].ToString();            
-            string sql = "insert into Сотрудники([Серия паспорта], [Номер паспорта], Фамилия, Имя, Отчество, БИК, [Должность], Телефон) " + "Values ('" + textBox4.Text + "','" + textBox5.Text + "','" + textBox1.Text + "','" + textBox2.Text + "','" + textBox3.Text + "','" + BIK + "','" + dolznost + "','" + textBox6.Text + "')";
-            SqlCommand command = new SqlCommand(sql, Connection);
-            command.ExecuteNonQuery();
-            Connection.Close();
+            string a = "";
+            if (textBox2.Text != "") { textBox2.BackColor = Color.White; }
+            else { textBox2.BackColor = Color.DarkGray; a += "имя\n"; check = false; }
+            // if (textBox3.Text!="") { textBox3.BackColor = Color.White; }
+            //else { textBox3.BackColor = Color.DarkGray; a += "клиент\n"; check = false; }
+            if (textBox4.Text != "") { textBox4.BackColor = Color.White; }
+            else { textBox4.BackColor = Color.DarkGray; a += "серия паспорта\n"; check = false; }
+            if (textBox5.Text != "") { textBox5.BackColor = Color.White; }
+            else { textBox5.BackColor = Color.DarkGray; a += "номер паспорта\n"; check = false; }
+            if (textBox6.Text != "") { textBox6.BackColor = Color.White; }
+            else { textBox6.BackColor = Color.DarkGray; a += "телефон\n"; check = false; }
+            if (comboBox1.SelectedIndex > 0) { comboBox1.BackColor = Color.White; }
+            else { comboBox1.BackColor = Color.DarkGray; a += "должность\n"; check = false; }
+            if (comboBox2.SelectedIndex > 0) { comboBox2.BackColor = Color.White; }
+            else { comboBox2.BackColor = Color.DarkGray; a += "банк\n"; check = false; }
+            if (textBox3.Text != "") { textBox3.BackColor = Color.White; }
+            else { textBox3.BackColor = Color.DarkGray; a += "отчество\n"; check = false; }
+            if (textBox1.Text != "") { textBox1.BackColor = Color.White; }
+            else { textBox1.BackColor = Color.DarkGray; a += "фамилия\n"; check = false; }
+            if (check == false)
+            {
+                MessageBox.Show("Для добавления записи заполните/выберите следующие поля:" + a);
+            }
+            if (check == true)
+            {
+                string dolznost;
+                string Combo = comboBox2.Text;
+                string[] words = Combo.Split(' ');
+                string BIK = words[0];
+                /*   Combo = comboBox1.Text;
+                   words = Combo.Split(' ');
+                   string dolznost = words[0];*/
+                Connection.Open();
+                SqlCommand cmd2 = Connection.CreateCommand();
+                cmd2.CommandType = CommandType.Text;
+                cmd2.CommandText = "SELECT [№] FROM Должность WHERE Название='" + comboBox1.Text + "'";
+                cmd2.ExecuteNonQuery();
+                DataTable dt2 = new DataTable();
+                SqlDataAdapter da2 = new SqlDataAdapter(cmd2);
+                da2.Fill(dt2);
+                dolznost = dt2.Rows[0][0].ToString();
+                string sql = "insert into Сотрудники([Серия паспорта], [Номер паспорта], Фамилия, Имя, Отчество, БИК, [Должность], Телефон) " + "Values ('" + textBox4.Text + "','" + textBox5.Text + "','" + textBox1.Text + "','" + textBox2.Text + "','" + textBox3.Text + "','" + BIK + "','" + dolznost + "','" + textBox6.Text + "')";
+                SqlCommand command = new SqlCommand(sql, Connection);
+                command.ExecuteNonQuery();
+                if (command.ExecuteNonQuery() != 1)
+                {
+                    MessageBox.Show("Возникла ошибка при добавлении сотрудника");
+                }
+                else
+                {
+                    MessageBox.Show("Сотрудник добавлен");
+                }
+                Connection.Close();
+            }
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -189,33 +224,67 @@ namespace kr
 
         private void save_Click(object sender, EventArgs e)
         {
-            string dolznost;
-            string Combo = comboBox2.Text;
-            string[] words = Combo.Split(' ');
-            string BIK = words[0];
-            /*   Combo = comboBox1.Text;
-               words = Combo.Split(' ');
-               string dolznost = words[0];*/
-            Connection.Open();
-            SqlCommand cmd2 = Connection.CreateCommand();
-            cmd2.CommandType = CommandType.Text;
-            cmd2.CommandText = "SELECT [№] FROM Должность WHERE Название='" + comboBox1.Text + "'";
-            cmd2.ExecuteNonQuery();
-            DataTable dt2 = new DataTable();
-            SqlDataAdapter da2 = new SqlDataAdapter(cmd2);
-            da2.Fill(dt2);
-            dolznost = dt2.Rows[0][0].ToString();
-            string sql = "UPDATE Сотрудники SET[Серия паспорта]='" + textBox4.Text + "', [Номер паспорта]='" + textBox5.Text + "', Фамилия=='" + textBox1.Text + "'" +
-                ", Имя='" + textBox2.Text + "', Отчество='" + textBox3.Text + "', БИК='" + BIK + "', [Должность]='" + dolznost + "', Телефон='" + textBox6.Text + "'" ;
-            SqlCommand command = new SqlCommand(sql, Connection);
-            command.ExecuteNonQuery();
-            Connection.Close();
-            textBox1.Clear();
-            textBox2.Clear();
-            textBox3.Clear();
-            textBox4.Clear();   
-            textBox5.Clear();
-            textBox6.Clear();
+            string a = "";
+            if (textBox2.Text!="") { textBox2.BackColor = Color.White; }
+            else { textBox2.BackColor = Color.DarkGray; a += "имя\n"; check = false; }
+           // if (textBox3.Text!="") { textBox3.BackColor = Color.White; }
+            //else { textBox3.BackColor = Color.DarkGray; a += "клиент\n"; check = false; }
+            if (textBox4.Text !="") { textBox4.BackColor = Color.White; }
+            else { textBox4.BackColor = Color.DarkGray; a += "серия паспорта\n"; check = false; }
+            if (textBox5.Text!="") { textBox5.BackColor = Color.White; }
+            else { textBox5.BackColor = Color.DarkGray; a += "номер паспорта\n"; check = false; }
+            if (textBox6.Text!="") { textBox6.BackColor = Color.White; }
+            else { textBox6.BackColor = Color.DarkGray; a += "телефон\n"; check = false; }
+            if (comboBox1.SelectedIndex > 0) { comboBox1.BackColor = Color.White; }
+            else { comboBox1.BackColor = Color.DarkGray; a += "должность\n"; check = false; }
+            if (comboBox2.SelectedIndex > 0) { comboBox2.BackColor = Color.White; }
+            else { comboBox2.BackColor = Color.DarkGray; a += "банк\n"; check = false; }
+            if (textBox3.Text != "") { textBox3.BackColor = Color.White; }
+            else { textBox3.BackColor = Color.DarkGray; a += "отчество\n"; check = false; }
+            if (textBox1.Text != "") { textBox1.BackColor = Color.White; }
+            else { textBox1.BackColor = Color.DarkGray; a += "фамилия\n"; check = false; }
+            if (check == false)
+            {
+                MessageBox.Show("Для добавления записи заполните/выберите следующие поля:" + a);
+            }
+            if (check == true)
+            {
+                string dolznost;
+                string Combo = comboBox2.Text;
+                string[] words = Combo.Split(' ');
+                string BIK = words[0];
+                /*   Combo = comboBox1.Text;
+                   words = Combo.Split(' ');
+                   string dolznost = words[0];*/
+                Connection.Open();
+                SqlCommand cmd2 = Connection.CreateCommand();
+                cmd2.CommandType = CommandType.Text;
+                cmd2.CommandText = "SELECT [№] FROM Должность WHERE Название='" + comboBox1.Text + "'";
+                cmd2.ExecuteNonQuery();
+                DataTable dt2 = new DataTable();
+                SqlDataAdapter da2 = new SqlDataAdapter(cmd2);
+                da2.Fill(dt2);
+                dolznost = dt2.Rows[0][0].ToString();
+                string sql = "UPDATE Сотрудники SET[Серия паспорта]='" + textBox4.Text + "', [Номер паспорта]='" + textBox5.Text + "', Фамилия=='" + textBox1.Text + "'" +
+                    ", Имя='" + textBox2.Text + "', Отчество='" + textBox3.Text + "', БИК='" + BIK + "', [Должность]='" + dolznost + "', Телефон='" + textBox6.Text + "'";
+                SqlCommand command = new SqlCommand(sql, Connection);
+                command.ExecuteNonQuery();
+                if (command.ExecuteNonQuery() != 1)
+                {
+                    MessageBox.Show("Возникла ошибка при изменении сотрудника");
+                }
+                else
+                {
+                    MessageBox.Show("Данные изменены");
+                }
+                Connection.Close();
+                textBox1.Clear();
+                textBox2.Clear();
+                textBox3.Clear();
+                textBox4.Clear();
+                textBox5.Clear();
+                textBox6.Clear();
+            }
         }
 
         private void button6_Click(object sender, EventArgs e)

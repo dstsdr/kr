@@ -238,5 +238,11 @@ namespace kr
         {
             this.Close();
         }
+
+        private void банкиToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            bank vid = new bank();
+            vid.Show();
+        }
     }
 }

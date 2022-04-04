@@ -49,6 +49,7 @@
             this.выходToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip2 = new System.Windows.Forms.MenuStrip();
             this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
+            this.банкиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             this.panel9.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -147,6 +148,7 @@
             this.toolStripMenuItem7,
             this.toolStripMenuItem8,
             this.toolStripMenuItem9,
+            this.банкиToolStripMenuItem,
             this.toolStripMenuItem10,
             this.toolStripMenuItem11,
             this.toolStripMenuItem12,
@@ -244,6 +246,13 @@
             this.toolStripMenuItem4.Text = "Рефинансирование";
             this.toolStripMenuItem4.Visible = false;
             // 
+            // банкиToolStripMenuItem
+            // 
+            this.банкиToolStripMenuItem.Name = "банкиToolStripMenuItem";
+            this.банкиToolStripMenuItem.Size = new System.Drawing.Size(226, 26);
+            this.банкиToolStripMenuItem.Text = "Банки";
+            this.банкиToolStripMenuItem.Click += new System.EventHandler(this.банкиToolStripMenuItem_Click);
+            // 
             // GUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -291,5 +300,6 @@
         public System.Windows.Forms.MenuStrip menuStrip2;
         public System.Windows.Forms.ToolStripMenuItem toolStripMenuItem4;
         private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.ToolStripMenuItem банкиToolStripMenuItem;
     }
 }

@@ -175,7 +175,15 @@ namespace kr
                  command.Parameters.AddWithValue("@summ", Convert.ToDecimal(textBox3.Text));
                  command.Parameters.AddWithValue("@neust", float.Parse(textBox1.Text));
                  command.ExecuteNonQuery();
-                 Connection.Close();
+                if (command.ExecuteNonQuery() != 1)
+                {
+                    MessageBox.Show("Возникла ошибка при добавлении договора");
+                }
+                else
+                {
+                    MessageBox.Show("Договор добавлен");
+                }
+                Connection.Close();
                  kalendar(Convert.ToDouble(vuplata), CreditPeriod, SumCredit, InterestRateYear);
             }
             
@@ -252,6 +260,7 @@ namespace kr
                 sotr.Items.Add(dr6["№"].ToString()+ " " + dr6["Фамилия"] + " " + dr6["Название"]);
             }
             Connection.Close();
+            selectkalendar();
         }
 
         private void comboBox6_SelectedIndexChanged(object sender, EventArgs e)
@@ -305,65 +314,196 @@ namespace kr
 
         private void save_Click(object sender, EventArgs e)
         {
-            string vozvrat = dateTimePicker1.Value.ToString();
-            string group, naznach, percent, vid, sotrud, klient;
+            string a = "";
+            if (sotr.SelectedIndex > 0) { sotr.BackColor = Color.White; }
+            else { sotr.BackColor = Color.DarkGray; a += "сотрудник\n"; check = false; }
+            if (klientcmb.SelectedIndex > 0) { klientcmb.BackColor = Color.White; }
+            else { klientcmb.BackColor = Color.DarkGray; a += "клиент\n"; check = false; }
+            if (vid.SelectedIndex > 0) { vid.BackColor = Color.White; }
+            else { vid.BackColor = Color.DarkGray; a += "вид кредита\n"; check = false; }
+            if (procent.SelectedIndex > 0) { procent.BackColor = Color.White; }
+            else { procent.BackColor = Color.DarkGray; a += "процентная ставка\n"; check = false; }
+            if (risk.SelectedIndex > 0) { risk.BackColor = Color.White; }
+            else { risk.BackColor = Color.DarkGray; a += "группа риска\n"; check = false; }
+            if (nazn.SelectedIndex > 0) { nazn.BackColor = Color.White; }
+            else { nazn.BackColor = Color.DarkGray; a += "назначение\n"; check = false; }
+            if (textBox3.Text != "") { textBox3.BackColor = Color.White; }
+            else { textBox3.BackColor = Color.DarkGray; a += "сумма\n"; check = false; }
+            if (textBox1.Text != "") { textBox1.BackColor = Color.White; }
+            else { textBox1.BackColor = Color.DarkGray; a += "нейстойка\n"; check = false; }
+            if (check == false)
+            {
+                MessageBox.Show("Для изменения записи заполните/выберите следующие поля:" + a);
+            }
+            if (check == true)
+            {
+                string vozvrat = dateTimePicker1.Value.ToString();
+                string group, naznach, percent, vid, sotrud, klient;
+                Connection.Open();
+                SqlCommand cmd5 = Connection.CreateCommand(); // группа риска
+                cmd5.CommandType = CommandType.Text;
+                cmd5.CommandText = "SELECT [№] FROM [Группа риска] WHERE [Группа]='" + risk.Text + "'";
+                cmd5.ExecuteNonQuery();
+                DataTable dt5 = new DataTable();
+                SqlDataAdapter da5 = new SqlDataAdapter(cmd5);
+                da5.Fill(dt5);
+                group = dt5.Rows[0][0].ToString();
+                SqlCommand cmd2 = Connection.CreateCommand(); //целевое назначение
+                cmd2.CommandType = CommandType.Text;
+                cmd2.CommandText = "SELECT [№] FROM [Целевое назначение кредита] WHERE [Название]='" + nazn.Text + "'";
+                cmd2.ExecuteNonQuery();
+                DataTable dt2 = new DataTable();
+                SqlDataAdapter da2 = new SqlDataAdapter(cmd2);
+                da2.Fill(dt2);
+                naznach = dt2.Rows[0][0].ToString();
+                SqlCommand cmd3 = Connection.CreateCommand(); // вид кредита
+                cmd3.CommandType = CommandType.Text;
+                cmd3.CommandText = "SELECT [Код] FROM [Вид кредита] WHERE [Вид]='" + this.vid.Text + "'";
+                cmd3.ExecuteNonQuery();
+                DataTable dt3 = new DataTable();
+                SqlDataAdapter da3 = new SqlDataAdapter(cmd3);
+                da3.Fill(dt3);
+                vid = dt3.Rows[0][0].ToString();
+                SqlCommand cmd4 = Connection.CreateCommand(); //проценты
+                cmd4.CommandType = CommandType.Text;
+                string pr = procent.Text.Replace(",", ".");
+                cmd4.CommandText = "SELECT [№] FROM [Процентная ставка] WHERE [%]='" + pr + "'";
+                cmd4.ExecuteNonQuery();
+                DataTable dt4 = new DataTable();
+                SqlDataAdapter da4 = new SqlDataAdapter(cmd4);
+                da4.Fill(dt4);
+                percent = dt4.Rows[0][0].ToString();
+                // сотрудник
+                string dolznost;
+                string Combo = sotr.Text;
+                string[] words = Combo.Split(' ');
+                sotrud = words[0];
+                // klient
+                Combo = klientcmb.Text;
+                words = Combo.Split(' ');
+                klient = words[0];
+                //добавление
+                SqlCommand command = new SqlCommand("UPDATE Договор SET [№ группы риска]=@group,[№ сотрудника]=@sotr,[ИНН клиента]=@klient, [№ назначения]=@naznach," +
+                    " [№ вида]=@vid, [Срок погашения]=@vozvrat, [№ ставки]=@percent, [Сумма]=@summ, [Неустойка]=@neust WHERE [№]= " + s, Connection);
+                command.Parameters.AddWithValue("@group", group);
+                command.Parameters.AddWithValue("@sotr", sotrud);
+                command.Parameters.AddWithValue("@klient", klient);
+                command.Parameters.AddWithValue("@naznach", naznach);
+                command.Parameters.AddWithValue("@vid", vid);
+                command.Parameters.AddWithValue("@vozvrat", vozvrat);
+                command.Parameters.AddWithValue("@percent", percent);
+                command.Parameters.AddWithValue("@summ", Convert.ToDecimal(textBox3.Text));
+                command.Parameters.AddWithValue("@neust", float.Parse(textBox1.Text));
+                command.ExecuteNonQuery();
+                if (command.ExecuteNonQuery() != 1)
+                {
+                    MessageBox.Show("Возникла ошибка при изменении договора");
+                }
+                else
+                {
+                    MessageBox.Show("Договор изменен");
+                }
+                Connection.Close();
+                updatekalendar();
+            }
+        }
+
+        private void selectkalendar()
+        {
             Connection.Open();
-            SqlCommand cmd5 = Connection.CreateCommand(); // группа риска
-            cmd5.CommandType = CommandType.Text;
-            cmd5.CommandText = "SELECT [№] FROM [Группа риска] WHERE [Группа]='" + risk.Text + "'";
-            cmd5.ExecuteNonQuery();
-            DataTable dt5 = new DataTable();
-            SqlDataAdapter da5 = new SqlDataAdapter(cmd5);
-            da5.Fill(dt5);
-            group = dt5.Rows[0][0].ToString();
-            SqlCommand cmd2 = Connection.CreateCommand(); //целевое назначение
-            cmd2.CommandType = CommandType.Text;
-            cmd2.CommandText = "SELECT [№] FROM [Целевое назначение кредита] WHERE [Название]='" + nazn.Text + "'";
-            cmd2.ExecuteNonQuery();
-            DataTable dt2 = new DataTable();
-            SqlDataAdapter da2 = new SqlDataAdapter(cmd2);
-            da2.Fill(dt2);
-            naznach = dt2.Rows[0][0].ToString();
-            SqlCommand cmd3 = Connection.CreateCommand(); // вид кредита
-            cmd3.CommandType = CommandType.Text;
-            cmd3.CommandText = "SELECT [Код] FROM [Вид кредита] WHERE [Вид]='" + this.vid.Text + "'";
-            cmd3.ExecuteNonQuery();
-            DataTable dt3 = new DataTable();
-            SqlDataAdapter da3 = new SqlDataAdapter(cmd3);
-            da3.Fill(dt3);
-            vid = dt3.Rows[0][0].ToString();
-            SqlCommand cmd4 = Connection.CreateCommand(); //проценты
-            cmd4.CommandType = CommandType.Text;
-            string pr = procent.Text.Replace(",", ".");
-            cmd4.CommandText = "SELECT [№] FROM [Процентная ставка] WHERE [%]='" + pr + "'";
-            cmd4.ExecuteNonQuery();
-            DataTable dt4 = new DataTable();
-            SqlDataAdapter da4 = new SqlDataAdapter(cmd4);
-            da4.Fill(dt4);
-            percent = dt4.Rows[0][0].ToString();
-            // сотрудник
-            string dolznost;
-            string Combo = sotr.Text;
-            string[] words = Combo.Split(' ');
-            sotrud = words[0];
-            // klient
-            Combo = klientcmb.Text;
-            words = Combo.Split(' ');
-            klient = words[0];
-            //добавление
-            SqlCommand command = new SqlCommand("UPDATE Договор SET [№ группы риска]=@group,[№ сотрудника]=@sotr,[ИНН клиента]=@klient, [№ назначения]=@naznach," +
-                " [№ вида]=@vid, [Срок погашения]=@vozvrat, [№ ставки]=@percent, [Сумма]=@summ, [Неустойка]=@neust WHERE [№]= " + s, Connection);
-            command.Parameters.AddWithValue("@group", group);
-            command.Parameters.AddWithValue("@sotr", sotrud);
-            command.Parameters.AddWithValue("@klient", klient);
-            command.Parameters.AddWithValue("@naznach", naznach);
-            command.Parameters.AddWithValue("@vid", vid);
-            command.Parameters.AddWithValue("@vozvrat", vozvrat);
-            command.Parameters.AddWithValue("@percent", percent);
-            command.Parameters.AddWithValue("@summ", Convert.ToDecimal(textBox3.Text));
-            command.Parameters.AddWithValue("@neust", float.Parse(textBox1.Text));
-            command.ExecuteNonQuery();
+            SqlDataAdapter adapter = new SqlDataAdapter("SELECT * FROM Календарь WHERE [Номер договора]=" + s, Connection);
+            DataSet ds = new DataSet();
+            adapter.Fill(ds, "info");
+            dataGridView1.DataSource = ds.Tables[0];
             Connection.Close();
+        }
+
+        private void updaterashet ()
+        {
+            int CreditPeriod = dataGridView1.RowCount;
+            double SumCredit = Convert.ToDouble(textBox3.Text); // Сумма кредита
+            double InterestRateYear = Convert.ToDouble(procent.Text); // Процентная ставка, ГОДОВАЯ
+            double InterestRateMonth = InterestRateYear / 100 / 12; // Процентная ставка, МЕСЯЧНАЯ
+            decimal vuplata = Convert.ToDecimal(SumCredit * (InterestRateMonth / (1 - Math.Pow(1 + InterestRateMonth, -CreditPeriod)))); // Ежемесячный платеж
+            double ItogCreditSum = Convert.ToDouble(vuplata) * CreditPeriod; // Итоговая сумма кредита
+            double SumCreditOperation = SumCredit;
+            double ItogCreditSumOperation = ItogCreditSum;
+            double ItogPlus = 0;
+            for (int i = 0; i < dataGridView1.RowCount; ++i)
+            {
+                double procent = SumCreditOperation * (InterestRateYear / 100) / 12;
+                SumCreditOperation -= Convert.ToDouble(vuplata) - procent;
+                decimal ostatok;
+                dataGridView1.Rows[i].Cells[5].Value = Convert.ToDecimal(Convert.ToDouble(vuplata) - procent); //Платеж за основной долг
+                dataGridView1.Rows[i].Cells[6].Value = Convert.ToDecimal(procent); //Платеж процента
+                ostatok = Convert.ToDecimal(SumCreditOperation); //Основной остаток
+                dataGridView1.Rows[i].Cells[7].Value = Convert.ToDecimal(SumCreditOperation); //Основной остаток
+                ItogCreditSumOperation -= Convert.ToDouble(vuplata);
+                ItogPlus = Convert.ToDouble(ostatok);
+            }
+            Connection.Open();
+            for (int i = 0; i < dataGridView1.RowCount; i++)
+             {   SqlCommand command = new SqlCommand("UPDATE [Календарь] SET [Дата запланированная]=@date,[Номер договора]=@number, [Основной долг]=@OSN, [Проценты]=@PERCENT, [Остаток]=@OST " +
+                     "WHERE [Код]=@kod", Connection);
+                command.Parameters.AddWithValue("@kod", dataGridView1.Rows[i].Cells[4].Value.ToString());//если дата будет кривая, то проблема здесь
+                command.Parameters.AddWithValue("@date", dataGridView1.Rows[i].Cells[0].Value.ToString());//если дата будет кривая, то проблема здесь
+                 command.Parameters.AddWithValue("@number", dataGridView1.Rows[i].Cells[2].Value);
+                 command.Parameters.AddWithValue("@OSN", dataGridView1.Rows[i].Cells[5].Value);
+                 command.Parameters.AddWithValue("@PERCENT", dataGridView1.Rows[i].Cells[6].Value);
+                 command.Parameters.AddWithValue("@OST", dataGridView1.Rows[i].Cells[7].Value);
+                 command.ExecuteNonQuery();
+             }
+            Connection.Close();
+        }
+        private void updatekalendar()
+        {
+            // selectkalendar();
+          //  string vozvrat = dateTimePicker1.Value.ToString();
+          //  vozvrat = vozvrat.Substring(0, vozvrat.IndexOf(' ') + 1);
+            int s = dataGridView1.RowCount - 1;
+            DateTime olddate = Convert.ToDateTime(dataGridView1.Rows[s].Cells[0].Value);
+            if (olddate < dateTimePicker1.Value)
+            {
+                int raznica = ((dateTimePicker1.Value.Year - olddate.Year) * 12) + dateTimePicker1.Value.Month - olddate.Month;
+                while (raznica > 0)
+                {
+                    olddate = olddate.AddMonths(1);
+                    Connection.Open();
+                    SqlCommand command = new SqlCommand("insert into [Календарь]([Дата запланированная],[Номер договора]) Values (@date, @number)", Connection);
+                    command.Parameters.AddWithValue("@date", olddate.ToString("dd'.'MM'.'yyyy"));
+                    command.Parameters.AddWithValue("@number", dataGridView1.Rows[0].Cells[2].Value);
+                    command.ExecuteNonQuery();
+                    Connection.Close();
+                    raznica--;
+                    selectkalendar();
+                }
+                updaterashet();
+            }
+            else
+            {
+                int raznica = ((olddate.Year - dateTimePicker1.Value.Year) * 12) + olddate.Month - dateTimePicker1.Value.Month;
+                while (raznica > 0)
+                {
+                    s = dataGridView1.RowCount - 1;
+                    //int kod = Convert.ToInt32(dataGridView1.Rows[s].Cells[4].Value);
+                    Connection.Open();
+                    string query = "DELETE FROM [Календарь] WHERE [Код]= " + dataGridView1.Rows[s].Cells[4].Value;
+                    SqlCommand command = new SqlCommand(query, Connection);
+                    if (command.ExecuteNonQuery() != 1)
+                    {
+                        MessageBox.Show("Возникла ошибка при удалении календаря");
+                    }
+                    Connection.Close();
+                    dataGridView1.Rows.RemoveAt(s); //удаление строки из датагридвиев
+                    selectkalendar();
+                    raznica--;
+                }
+                updaterashet();
+            }
+            if (olddate == dateTimePicker1.Value)
+            {
+                updaterashet();
+            }
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -385,7 +525,6 @@ namespace kr
             if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar))
             {
                 e.Handled = true;
-
             }
         }
     }

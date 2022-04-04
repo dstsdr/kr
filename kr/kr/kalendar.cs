@@ -60,8 +60,7 @@ namespace kr
             Connection.Open();
             SqlDataAdapter adapter = new SqlDataAdapter("Select Календарь.[Номер договора] as[№ договора], Календарь.[Дата запланированная] as [Плановая дата], Календарь.[Дата фактическая] as " +
                 "[Дата оплаты], Договор.[Ежемесячный платеж], Календарь.[Сумма оплаты], Календарь.[Основной долг], Календарь.Проценты as [%], Календарь.Остаток, Календарь.Статус " +
-                "FROM Календарь inner join Договор ON Календарь.[Номер договора]=Договор.[№] where " +
-                "Кадендарь.[Номер договора] like " + "'%" + textBox1.Text +
+                "FROM Календарь inner join Договор ON Календарь.[Номер договора]=Договор.[№] where Кадендарь.[Номер договора] like '%" + textBox1.Text +
                 "%' or Календарь.[Дата запланированная] like '%" + textBox1.Text + "%' or Календарь.[Дата фактическая] like '%" + textBox1.Text + "%' or Договор.[Ежемесячный платеж] like '%" + textBox1.Text + "%'" +
                " or Календарь.[Сумма оплаты] like '%" + textBox1.Text + "%'or Календарь.[Основной долг] like '%" + textBox1.Text + "%'" +
                 "or   Календарь.Проценты like '%" + textBox1.Text + "%'or Календарь.Остаток, like '%" + textBox1.Text + "%'" +
@@ -141,7 +140,11 @@ namespace kr
             SqlCommand command = new SqlCommand(query, Connection);
             if (command.ExecuteNonQuery() != 1)
             {
-                MessageBox.Show("Возникла ошибка при изменении");
+                MessageBox.Show("Возникла ошибка при добавлении");
+            }
+            else
+            {
+                MessageBox.Show("Платеж добавлен");
             }
             command.Parameters.AddWithValue("@status", status());
             command.Parameters.AddWithValue("@summ", Convert.ToDecimal(textBox2.Text));
@@ -203,6 +206,10 @@ namespace kr
             if (command.ExecuteNonQuery() != 1)
             {
                 MessageBox.Show("Возникла ошибка при изменении");
+            }
+            else
+            {
+                    MessageBox.Show("Данные изменены");              
             }
             /*SqlCommand query = new SqlCommand("insert into Календарь([Сумма оплаты],[Дата фактическая]) Values" +
                     " (@summ, @date) WHERE [Номер договора]= " + dataGridView1.CurrentRow.Cells[0].Value + " AND [Дата запланированная]=@dateplan", Connection);
