@@ -307,9 +307,9 @@
             this.label9.ForeColor = System.Drawing.SystemColors.WindowText;
             this.label9.Location = new System.Drawing.Point(1219, 136);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(44, 16);
+            this.label9.Size = new System.Drawing.Size(146, 16);
             this.label9.TabIndex = 37;
-            this.label9.Text = "label9";
+            this.label9.Text = "Количество записей:";
             // 
             // button5
             // 
@@ -380,6 +380,7 @@
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "raschet";
             this.Text = "raschet";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.raschet_FormClosed);
             this.Load += new System.EventHandler(this.raschet_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.groupBox1.ResumeLayout(false);

@@ -183,8 +183,7 @@ namespace kr
 
         private void button6_Click(object sender, EventArgs e)
         {
-            this.Close();
-
+            Application.Exit();
         }
 
         private void textBox2_TextChanged(object sender, EventArgs e)
@@ -197,7 +196,7 @@ namespace kr
             obnovstatus();
             Connection.Open();
             string query = "UPDATE [Календарь] SET [Сумма оплаты]=@summ, [Дата фактическая]=@date, Статус=@status WHERE [Номер договора]= " + dataGridView1.CurrentRow.Cells[0].Value + " AND [Дата запланированная]=@dateplan";
-
+            int kod = Convert.ToInt32(dataGridView1.CurrentRow.Cells[0].Value);
             SqlCommand command = new SqlCommand(query, Connection);            
             command.Parameters.AddWithValue("@status", status());
             command.Parameters.AddWithValue("@summ", Convert.ToDecimal(textBox2.Text));
@@ -218,9 +217,52 @@ namespace kr
                 MessageBox.Show("Возникла ошибка при добавлении");
             }*/
             Connection.Close();
-            Update();
+            Update();            
+          //  uchet(kod);
         }
 
+        private void selectuchet(int kod)
+        {
+            
+        }
+      /*  private void uchet(int kod)
+        {
+            decimal summa = Convert.ToDecimal(dataGridView2.Rows[0].Cells[0].Value);
+            for (int i = 0; i < dataGridView1.RowCount; i++)
+            {
+                if (kod == Convert.ToInt32(dataGridView1.Rows[i].Cells[0].Value))
+                {
+                    if (dataGridView1.Rows[i].Cells[4].Value.ToString()!="0")
+                    {
+                        summa = Convert.ToDecimal(dataGridView2.Rows[0].Cells[0].Value) - Convert.ToDecimal(dataGridView1.Rows[i].Cells[4].Value);
+                        dataGridView2.Rows[0].Cells[0].Value = summa.ToString();
+                        Connection.Open();
+                        string query = "UPDATE [Календарь] SET [Остаток]=@summ, WHERE [Номер договора]= " + dataGridView1.CurrentRow.Cells[0].Value + " AND [Дата запланированная]=@dateplan";
+
+                        SqlCommand command = new SqlCommand(query, Connection);
+                        command.Parameters.AddWithValue("@summ", summa);
+                        command.Parameters.AddWithValue("@date", dateTimePicker1.Value.ToString());
+                        command.Parameters.AddWithValue("@dateplan", dataGridView1.CurrentRow.Cells[1].Value.ToString());
+                        Connection.Close();
+                    }
+                    else
+                        {
+                        summa = Convert.ToDecimal(textBox3.Text) - Convert.ToDecimal(dataGridView1.Rows[i].Cells[3].Value);
+                        textBox3.Text = summa.ToString();
+                        Connection.Open();
+                        string query = "UPDATE [Календарь] SET [Остаток]=@summ, WHERE [Номер договора]= " + dataGridView1.CurrentRow.Cells[0].Value + " AND [Дата запланированная]=@dateplan";
+
+                        SqlCommand command = new SqlCommand(query, Connection);
+                        command.Parameters.AddWithValue("@summ", summa);
+                        command.Parameters.AddWithValue("@date", dateTimePicker1.Value.ToString());
+                        command.Parameters.AddWithValue("@dateplan", dataGridView1.CurrentRow.Cells[1].Value.ToString());
+                        Connection.Close();
+                        //обновление в бд
+                    }
+                }
+                
+            }
+        }*/
         private void checkBox2_CheckedChanged(object sender, EventArgs e)
         {
            
@@ -239,12 +281,30 @@ namespace kr
         {
             int s = dataGridView1.CurrentCell.RowIndex;
             dateTimePicker1.Text = dataGridView1[1, s].Value.ToString();
-            textBox2.Text = dataGridView1[3, s].Value.ToString();
+            textBox2.Text = dataGridView1[4, s].Value.ToString();
         }
 
         private void button7_Click(object sender, EventArgs e)
         {
+            Connection.Open();
+            string nul = " ";
 
+            string query = "UPDATE [Календарь] SET [Сумма оплаты]=@summ, Статус=@status WHERE [Номер договора]= " + dataGridView1.CurrentRow.Cells[0].Value + " AND [Дата запланированная]=@dateplan";
+            int kod = Convert.ToInt32(dataGridView1.CurrentRow.Cells[0].Value);
+            SqlCommand command = new SqlCommand(query, Connection);
+            command.Parameters.AddWithValue("@status", nul);
+            command.Parameters.AddWithValue("@summ", 0);
+            //command.Parameters.AddWithValue("@date", nul);
+            command.Parameters.AddWithValue("@dateplan", dataGridView1.CurrentRow.Cells[1].Value.ToString());
+            if (command.ExecuteNonQuery() != 1)
+            {
+                MessageBox.Show("Возникла ошибка при изменении");
+            }
+            else
+            {
+                MessageBox.Show("Данные изменены");
+            }
+         //   uchet(kod);
         }
 
         private void checkBox3_Click(object sender, EventArgs e)

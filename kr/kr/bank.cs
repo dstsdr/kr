@@ -240,13 +240,13 @@ namespace kr
         private void button7_Click(object sender, EventArgs e)
         {
             int s = dataGridView1.CurrentRow.Index;
-            namebox.Text = dataGridView1[1, s].Value.ToString();//фамилия
-            korschetbox.Text = dataGridView1[2, s].Value.ToString();//имя
-            bikbox.Text = dataGridView1[3, s].Value.ToString();// отчество
-            podrazdelbox.Text = dataGridView1[4, s].Value.ToString();//серия
-            citybox.Text = dataGridView1[5, s].Value.ToString();//номер
-            streetbox.Text = dataGridView1[6, s].Value.ToString();//должн
-            textBox4.Text = dataGridView1[7, s].Value.ToString();//телефон
+            namebox.Text = dataGridView1[0, s].Value.ToString();//фамилия
+            korschetbox.Text = dataGridView1[1, s].Value.ToString();//имя
+            bikbox.Text = dataGridView1[2, s].Value.ToString();// отчество
+            podrazdelbox.Text = dataGridView1[3, s].Value.ToString();//серия
+            citybox.Text = dataGridView1[4, s].Value.ToString();//номер
+            streetbox.Text = dataGridView1[5, s].Value.ToString();//должн
+            textBox4.Text = dataGridView1[6, s].Value.ToString();//телефон
             button8.Visible = true;
         }
 
@@ -267,8 +267,9 @@ namespace kr
             else { podrazdelbox.BackColor = Color.DarkGray; a += "подразделение\n"; check = false; }
             if (textBox4.Text != "") { textBox4.BackColor = Color.White; }
             else { textBox4.BackColor = Color.DarkGray; a += "номер здания\n"; check = false; }
+            if (check == false)
             {
-                MessageBox.Show("Для обновления записи заполните/выберите следующие поля:" + a);
+                MessageBox.Show("Для изменения записи заполните/выберите следующие поля:" + a);
             }
             if (check == true)
             {

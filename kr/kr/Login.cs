@@ -33,6 +33,7 @@ namespace kr
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 DataTable dt = new DataTable();
                 da.Fill(dt);
+                Connection.Close();
                 if (dt.Rows.Count > 0)
                 {
                     if (textBox1.Text=="director")
@@ -43,18 +44,27 @@ namespace kr
                         frm.toolStripMenuItem3.Visible=false;   
                         frm.toolStripMenuItem4.Visible=false;
                         frm.toolStripMenuItem6.Visible=false;
-                        frm.Show();  
+                        frm.Show();
+                        refinans help = new refinans();
+                      //  help.sotrud.Visible = true;
+                        help.admin.Visible = false;
                     }
                     if (textBox1.Text == "sotrudnik")
                     {
                         GUI frm = new GUI();
                         frm.toolStripMenuItem5.Visible = false;                        
                         frm.Show();
+                        refinans help = new refinans();
+                      //  help.sotrud.Visible = true;
+                        help.admin.Visible = false;
                     }
                     if (textBox1.Text == "admin")
                     {
                         GUI frm = new GUI();
                         frm.Show();
+                        refinans help = new refinans();
+                      //  help.sotrud.Visible = false;
+                        help.admin.Visible = true;
                     }
                     this.Hide();
                 }

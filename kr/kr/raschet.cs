@@ -103,8 +103,7 @@ namespace kr
 
         private void button6_Click(object sender, EventArgs e)
         {
-            this.Close();
-
+            Application.Exit();
         }
 
         private void button5_Click(object sender, EventArgs e)
@@ -125,6 +124,11 @@ namespace kr
                 dataGridView1.Rows[index].Selected = true;
                 dataGridView1.CurrentCell = dataGridView1[0, index - 1];
             }
+        }
+
+        private void raschet_FormClosed(object sender, FormClosedEventArgs e)
+        {
+
         }
     }
     

@@ -30,7 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(refinans));
             this.label8 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
+            this.admin = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.button6 = new System.Windows.Forms.Button();
             this.SuspendLayout();
@@ -47,15 +47,15 @@
             this.label8.TabIndex = 86;
             this.label8.Text = "Помощь";
             // 
-            // label1
+            // admin
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label1.Location = new System.Drawing.Point(17, 87);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(1443, 260);
-            this.label1.TabIndex = 87;
-            this.label1.Text = resources.GetString("label1.Text");
+            this.admin.AutoSize = true;
+            this.admin.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.admin.Location = new System.Drawing.Point(17, 87);
+            this.admin.Name = "admin";
+            this.admin.Size = new System.Drawing.Size(1463, 300);
+            this.admin.TabIndex = 87;
+            this.admin.Text = resources.GetString("admin.Text");
             // 
             // label2
             // 
@@ -93,7 +93,7 @@
             this.ControlBox = false;
             this.Controls.Add(this.button6);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.admin);
             this.Controls.Add(this.label8);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
@@ -108,8 +108,8 @@
         #endregion
 
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button button6;
+        public System.Windows.Forms.Label admin;
     }
 }

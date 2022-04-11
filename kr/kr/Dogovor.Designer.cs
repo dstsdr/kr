@@ -293,6 +293,7 @@
             this.button10.TabIndex = 94;
             this.button10.Text = "Удалить договор";
             this.button10.UseVisualStyleBackColor = false;
+            this.button10.Click += new System.EventHandler(this.button10_Click);
             // 
             // checkBox4
             // 

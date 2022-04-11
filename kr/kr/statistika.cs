@@ -227,8 +227,18 @@ namespace kr
 
         private void button6_Click(object sender, EventArgs e)
         {
-            this.Close();
+            Application.Exit();
 
+        }
+
+        private void button11_Click(object sender, EventArgs e)
+        {
+            dataGridView1.CurrentCell = dataGridView1.CurrentRow.Cells[0];
+        }
+
+        private void button12_Click(object sender, EventArgs e)
+        {
+            dataGridView1.CurrentCell = dataGridView1.CurrentRow.Cells[0];
         }
     }
 }

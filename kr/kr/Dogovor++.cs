@@ -61,13 +61,15 @@ namespace kr
                 /*   string sql = "insert into [Календарь]([Дата запланированная], [Основной долг], [Проценты], [Остаток]) Values" +
                    " ('" + months.ToString("dd'.'MM'.'yyyy") + "','" + osn + "','" + percent + "','" + ostatok + "')";
                  SqlCommand command = new SqlCommand(sql, Connection);*/
-                SqlCommand command = new SqlCommand("insert into [Календарь]([Дата запланированная],[Номер договора], [Основной долг], [Проценты], [Остаток]) Values" +
-                  " (@date, @number, @OSN, @PERCENT, @OST)", Connection);
+                SqlCommand command = new SqlCommand("insert into [Календарь]([Дата запланированная],[Номер договора], [Основной долг], [Проценты], [Остаток], [Сумма оплаты]) Values" +
+                  " (@date, @number, @OSN, @PERCENT, @OST,@nol)", Connection);
                 command.Parameters.AddWithValue("@date", months.ToString("dd'.'MM'.'yyyy"));
                 command.Parameters.AddWithValue("@number", dogovor);
                 command.Parameters.AddWithValue("@OSN", osn);
                 command.Parameters.AddWithValue("@PERCENT", percent);
                 command.Parameters.AddWithValue("@OST", ostatok);
+                command.Parameters.AddWithValue("@nol", 0);
+
                 command.ExecuteNonQuery();
                   Connection.Close();
             }
@@ -315,18 +317,6 @@ namespace kr
         private void save_Click(object sender, EventArgs e)
         {
             string a = "";
-            if (sotr.SelectedIndex > 0) { sotr.BackColor = Color.White; }
-            else { sotr.BackColor = Color.DarkGray; a += "сотрудник\n"; check = false; }
-            if (klientcmb.SelectedIndex > 0) { klientcmb.BackColor = Color.White; }
-            else { klientcmb.BackColor = Color.DarkGray; a += "клиент\n"; check = false; }
-            if (vid.SelectedIndex > 0) { vid.BackColor = Color.White; }
-            else { vid.BackColor = Color.DarkGray; a += "вид кредита\n"; check = false; }
-            if (procent.SelectedIndex > 0) { procent.BackColor = Color.White; }
-            else { procent.BackColor = Color.DarkGray; a += "процентная ставка\n"; check = false; }
-            if (risk.SelectedIndex > 0) { risk.BackColor = Color.White; }
-            else { risk.BackColor = Color.DarkGray; a += "группа риска\n"; check = false; }
-            if (nazn.SelectedIndex > 0) { nazn.BackColor = Color.White; }
-            else { nazn.BackColor = Color.DarkGray; a += "назначение\n"; check = false; }
             if (textBox3.Text != "") { textBox3.BackColor = Color.White; }
             else { textBox3.BackColor = Color.DarkGray; a += "сумма\n"; check = false; }
             if (textBox1.Text != "") { textBox1.BackColor = Color.White; }
@@ -453,6 +443,9 @@ namespace kr
                  command.Parameters.AddWithValue("@OST", dataGridView1.Rows[i].Cells[7].Value);
                  command.ExecuteNonQuery();
              }
+            SqlCommand command1 = new SqlCommand("UPDATE Договор SET [Ежемесячный платеж]=@group WHERE [№]= " + dataGridView1.Rows[0].Cells[2].Value, Connection);
+            command1.Parameters.AddWithValue("@group", vuplata);
+            command1.ExecuteNonQuery();
             Connection.Close();
         }
         private void updatekalendar()

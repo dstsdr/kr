@@ -198,6 +198,20 @@ namespace kr
             else { Update(); }
         }
 
+        private void button10_Click(object sender, EventArgs e)
+        {
+            Connection.Open();
+            string query = "DELETE FROM [Договор] WHERE [№]= " + dataGridView1.CurrentRow.Cells[0].Value;
+            SqlCommand command = new SqlCommand(query, Connection);
+            if (command.ExecuteNonQuery() != 1)
+            {
+                MessageBox.Show("Возникла ошибка при удалении должности");
+            }
+            else MessageBox.Show("Договор удален");
+            Connection.Close();
+            Update();
+        }
+
         private void raschet ()
         {
             string s = dataGridView1.CurrentCell.Value.ToString();
@@ -211,7 +225,11 @@ namespace kr
         }
         private void button2_Click(object sender, EventArgs e)
         {
-            dataGridView3.Rows.Clear();
+            if (dataGridView3.RowCount!=0)
+            {
+                dataGridView3.Rows.Clear();
+
+            }
             raschet();
             string summa = dataGridView1.CurrentRow.Cells[3].Value.ToString();
             string percent = dataGridView1.CurrentRow.Cells[4].Value.ToString();
@@ -407,53 +425,6 @@ namespace kr
             Connection.Close();
 
         }
-     /*   private void grafic()
-        {
-
-
-
-
-            var wordApp = new Word.Application();
-            wordApp.Visible = false;
-            var wordDocument = wordApp.Documents.Open(document);
-            string s = dataGridView3.CurrentCell.Value.ToString();
-            Object newTemplate = false;
-            Object documentType = Word.WdNewDocumentType.wdNewBlankDocument;
-            Object visible = true;
-            //Создаем документ
-
-          
-            object  bookmarkNameObj = "Table";
-            Word.Range bookmarkRange = null;
-            bookmarkRange = wordDocument.Bookmarks.get_Item(ref bookmarkNameObj).Range;
-            Object behiavor = Word.WdDefaultTableBehavior.wdWord9TableBehavior;
-            Object autoFitBehiavor = Word.WdAutoFitBehavior.wdAutoFitFixed;
-            int columns = 5;
-            int rows = dataGridView3.RowCount+1;
-            wordDocument.Tables.Add(bookmarkRange, rows, columns, ref behiavor, ref autoFitBehiavor);
-            //Заголовок
-            wordDocument.Tables[1].Cell(1, 1).Range.Text = "Дата платежа";
-            wordDocument.Tables[1].Cell(1, 2).Range.Text = "Сумма платежа (в руб., коп.)";
-            wordDocument.Tables[1].Cell(1, 3).Range.Text = "Проценты (в руб., коп.)";
-            wordDocument.Tables[1].Cell(1, 4).Range.Text = "Основная сумма кредита (в руб., коп.)";
-            wordDocument.Tables[1].Cell(1, 5).Range.Text = "Остаток задолженности по кредиту";
-
-
-            //ориентация страницы
-            wordDocument.PageSetup.Orientation = Word.WdOrientation.wdOrientPortrait;
-            for (int p = 0; p < rows - 1; p++)
-            {
-                for (int t = 0; t < columns; t++)
-                {
-                    wordDocument.Tables[1].Cell(p + 2, t + 1).Range.Text = dataGridView3[t, p].Value.ToString();//ругается на данную строку 
-                }
-            }
-          //  wordDocument.Visible = true;
-        
-            dataGridView3.Visible = true;
-            wordDocument.SaveAs(@"C:\Users\1652090\OneDrive\Рабочий стол\" + s + "");
-
-        }*/
 
         private void ReplaceWordStub(string stubToReplace, string text, Word.Document wordDocument)
         {
@@ -507,7 +478,7 @@ namespace kr
 
         private void button6_Click(object sender, EventArgs e)
         {
-            this.Close();
+            Application.Exit();
 
         }
 
@@ -559,9 +530,6 @@ namespace kr
             frm.dateTimePicker1.Text = enddate;
             frm.s = n;
             frm.ShowDialog();
-
-
-
         }
     }
 

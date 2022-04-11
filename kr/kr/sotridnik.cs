@@ -85,6 +85,12 @@ namespace kr
                     MessageBox.Show("Сотрудник добавлен");
                 }
                 Connection.Close();
+                textBox1.Clear();
+                textBox2.Clear();
+                textBox3.Clear();
+                textBox4.Clear();
+                textBox5.Clear();
+                textBox6.Clear();
             }
         }
 
@@ -219,7 +225,8 @@ namespace kr
             textBox5.Text = dataGridView1[5, s].Value.ToString();//номер
             comboBox1.Text = dataGridView1[6, s].Value.ToString();//должн
             textBox6.Text = dataGridView1[7, s].Value.ToString();//телефон
-            comboBox2.Text = dataGridView1[8, s].Value.ToString(); //банк           
+            comboBox2.Text = dataGridView1[8, s].Value.ToString(); //банк
+            save.Visible = true;
         }
 
         private void save_Click(object sender, EventArgs e)
@@ -284,6 +291,7 @@ namespace kr
                 textBox4.Clear();
                 textBox5.Clear();
                 textBox6.Clear();
+                save.Visible = false;
             }
         }
 
